@@ -1,0 +1,39 @@
+// PRODUCT ITEM
+product = {
+    name: '',
+    price: 1200000,
+    imgs: ['link1', 'link2', 'link3'],
+    category: 'Samsung',
+    description: '',
+    details: {
+        size: '',
+        screen: '',
+        SIM: '',
+        memory: '',
+        RAM: '3GB',
+        Bluetooth: '',
+        WLAN: '',
+        GPS: '',
+        Pin: '',
+        frontCam: '',
+        behindCam: '',
+        color: 'white',
+// https://didongthongminh.vn/xiaomi/xiaomi-mi4-p1041 -> Show như phần thông số kỹ thuật 
+    },
+    comments: [
+        {
+            user: 'Nguyễn văn A',
+            comment: 'Điện thoại như sịt'
+        }
+    ]
+}
+
+// Categories
+categories = ['SAMSUNG', 'SONY', ...]
+
+// News
+
+// Contact -- Phần phía dưới footer
+
+// Cart
+
