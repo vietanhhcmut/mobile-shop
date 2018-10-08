@@ -1,6 +1,7 @@
 // PRODUCT ITEM
 product = {
-    name: '',
+    id: '123',
+    name: 'Samsung Galaxy S3',
     price: 1200000,
     imgs: ['link1', 'link2', 'link3'],
     category: 'Samsung',
@@ -18,22 +19,74 @@ product = {
         frontCam: '',
         behindCam: '',
         color: 'white',
-// https://didongthongminh.vn/xiaomi/xiaomi-mi4-p1041 -> Show như phần thông số kỹ thuật 
-    },
-    comments: [
+    // https://didongthongminh.vn/xiaomi/xiaomi-mi4-p1041 -> Show như phần thông số kỹ thuật 
+    }
+}
+
+// Category
+category = {
+    id: '345',
+    name: 'Samsung'
+}
+
+// News
+news = {
+    id: '12',
+    title: 'Iphone S4',
+    decription: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+    img: 'link'
+}
+
+// Contact -- Phần phía dưới footer
+contact = {
+    decription: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+    address: '123 Đường Vành Đai, Tân Lập, Đông Hòa, Dĩ An, Bình Dương'
+    phonenumber: '0374584321',
+    email: 'mobileshop@gmail.com',
+    socialmedia: {
+        facebook: 'abc',
+        zalo: 'def',
+        youtube: 'as'
+    }
+}
+
+// Cart
+cart = {
+    id: '123456',
+    ofUser: '789',
+    products: [
         {
-            user: 'Nguyễn văn A',
-            comment: 'Điện thoại như sịt'
+            productId: 'id1',
+            count: 2,
+        },
+        {
+            productId: 'id2',
+            count: 1,
         }
     ]
 }
 
-// Categories
-categories = ['SAMSUNG', 'SONY', ...]
+// User
+user = {
+    id: '2',
+    username: 'myduyen',
+    passord: '123456',
+    name: 'Mỹ Duyên',
+    email: 'myduyen@gmail.com',
+    phonenumber: '0398475667',
+    address: 'KTX khu A ĐHQG'
+}
 
-// News
+// Comment
+comment = {
+    ofUser: '2',
+    ofProduct: '123'
+    content: 'Great'
+}
 
-// Contact -- Phần phía dưới footer
-
-// Cart
-
+// Rating
+rating = {
+    ofUser: '2',
+    ofProduct: '123'
+    stars: 4
+}
