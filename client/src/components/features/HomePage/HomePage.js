@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import './HomePage.css';
+import Section from './Section/Section';
 
 class HomePage extends Component {
     render() {
         return (
-            <div>
+            <div className="home">
+                <Section title="Sản phẩm nổi bật"/>
+                <Section title="Điện thoại" brand/>
             </div>
         );
     }
