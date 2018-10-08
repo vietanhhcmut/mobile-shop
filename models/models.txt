@@ -40,7 +40,7 @@ news = {
 // Contact -- Phần phía dưới footer
 contact = {
     decription: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
-    address: '123 Đường Vành Đai, Tân Lập, Đông Hòa, Dĩ An, Bình Dương'
+    address: '123 Đường Vành Đai, Tân Lập, Đông Hòa, Dĩ An, Bình Dương',
     phonenumber: '0374584321',
     email: 'mobileshop@gmail.com',
     socialmedia: {
@@ -80,13 +80,13 @@ user = {
 // Comment
 comment = {
     ofUser: '2',
-    ofProduct: '123'
+    ofProduct: '123',
     content: 'Great'
 }
 
 // Rating
 rating = {
     ofUser: '2',
-    ofProduct: '123'
+    ofProduct: '123',
     stars: 4
 }
