@@ -3,9 +3,11 @@ product = {
     id: '123',
     name: 'Samsung Galaxy S3',
     price: 1200000,
+    saleoff: 10, //10%
     imgs: ['link1', 'link2', 'link3'],
     category: 'Samsung',
-    description: '',
+    description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
+    colors: ['Black', 'White', 'Gold']
     details: {
         size: '',
         screen: '',
@@ -17,8 +19,7 @@ product = {
         GPS: '',
         Pin: '',
         frontCam: '',
-        behindCam: '',
-        color: 'white',
+        behindCam: ''
     // https://didongthongminh.vn/xiaomi/xiaomi-mi4-p1041 -> Show như phần thông số kỹ thuật 
     }
 }
@@ -57,11 +58,13 @@ cart = {
     products: [
         {
             productId: 'id1',
-            count: 2,
+            quantity: 2,
+            color: 'Black'
         },
         {
             productId: 'id2',
-            count: 1,
+            quantity: 1,
+            color: 'Gold'
         }
     ]
 }
