@@ -25,10 +25,10 @@ product = {
 }
 
 // Category
-category = {
+categories = [{
     id: '345',
     name: 'Samsung'
-}
+}]
 
 // News
 news = {
