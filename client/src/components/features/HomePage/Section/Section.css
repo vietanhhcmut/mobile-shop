@@ -78,7 +78,7 @@
 }
 .item-gallery {
     display: flex;
-    width: 2600px;
+    width: 2100px;
     transition: 0.5s;
 }
 .item-gallery > div {

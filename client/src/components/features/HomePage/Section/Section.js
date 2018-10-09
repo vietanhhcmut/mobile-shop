@@ -8,9 +8,9 @@ class Section extends Component {
         items: [
             {
                 id: 1,
-                name: 'Samsung Galaxy S3',
+                name: 'Iphone XSMax',
                 price: 1200000,
-                saleoff: 10, //10%
+                saleoff: 0,
                 imgs: [
                     'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
                     'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
@@ -39,9 +39,9 @@ class Section extends Component {
                 price: 1200000,
                 saleoff: 10, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://images-na.ssl-images-amazon.com/images/I/51odjdfuPTL.jpg',
+                    'http://media.4rgos.it/i/Argos/5399785_R_Z001A?$Web$&$DefaultPDP570$',
+                    'https://cdn.shopify.com/s/files/1/1847/2275/products/black_collage_87c37d78-7ac0-44d5-8b6c-5dbc1cb052e5_1000x1000.png?v=1519328585'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -315,13 +315,13 @@ class Section extends Component {
         let { slidedWidth } = this.state;
         switch (type) {
             case 'add':
-            slidedWidth += 260;
+            slidedWidth += 210;
             break;
             default:
-            slidedWidth -= 260;
+            slidedWidth -= 210;
             break;
         }
-        if (slidedWidth <= -2500 || slidedWidth >= 0) {
+        if (slidedWidth <= -2000 || slidedWidth >= 0) {
             slidedWidth = 0;
         }
         console.log(slidedWidth);
