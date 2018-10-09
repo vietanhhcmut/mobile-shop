@@ -1,11 +1,11 @@
 .home__news {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 }
 .news__top-news {
     width: 100%;
     max-height: 100px;
-    margin-bottom: 1em;
+    margin: 1em auto;
 }
 .news__center-news {
     display: flex;

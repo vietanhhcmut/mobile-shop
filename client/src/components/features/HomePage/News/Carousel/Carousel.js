@@ -132,13 +132,13 @@ class Carousel extends Component {
             <div className='carousel'>
                 <div className='wrapper'  style={style}>
                     <div className='slide' style={{ order: order[0]}}>
-                        <img src="http://thuthuatphanmem.vn/uploads/2018/04/10/hinh-anh-dep-ve-tinh-yeu-54_052634251.jpg" alt="image1" />
+                        <img src="https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/leoslideshow/slide-1.jpg" alt="image1" />
                     </div>
                     <div className='slide' style={{ order: order[1] }}>
                         <img src="https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/leoslideshow/slide-2.jpg" alt="image2" />
                     </div>
                     <div className='slide' style={{ order: order[2] }}>
-                        <img src="http://thuthuatphanmem.vn/uploads/2018/09/11/hinh-anh-dep-11_044127919.jpg" alt="image3" />
+                        <img src="http://thuthuatphanmem.vn/uploads/2018/04/10/hinh-anh-dep-ve-tinh-yeu-54_052634251.jpg" alt="image3" />
                     </div>
                     <div className='slide' style={{ order: order[3] }}>
                         <img src="https://dantricdn.com/thumb_w/640/2018/anh-drone-1-1514880827496.jpg" alt="image3" />
