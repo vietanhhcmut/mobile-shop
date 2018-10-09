@@ -35,7 +35,8 @@ news = {
     id: '12',
     title: 'Iphone S4',
     decription: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
-    img: 'link'
+    img: 'link',
+    link: 'url'
 }
 
 // Contact -- Phần phía dưới footer
