@@ -84,6 +84,10 @@ a:hover {
   animation: mymove 0.6s ease-in;
 }
 
+.table-categories__item1 item {
+  background: black;
+}
+
 @keyframes mymove {
   from {
     opacity: 0;

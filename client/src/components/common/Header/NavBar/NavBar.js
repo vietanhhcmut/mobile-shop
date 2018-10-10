@@ -5,7 +5,7 @@ import "./NavBar.css";
 const Navbar = ({ categories }) => (
   <ul className="navbar-items">
     <li className="navbar-item">
-      <Link to="/home" className="link">
+      <Link to="/" className="link">
         Home
       </Link>
     </li>
@@ -30,7 +30,7 @@ const Navbar = ({ categories }) => (
       </div>
     </li>
     <li className="navbar-item">
-      <Link to="/about-us" className="link">
+      <Link to="/about" className="link">
         About us
       </Link>
     </li>
