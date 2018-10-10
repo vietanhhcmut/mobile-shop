@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Section.css';
 import ProductItem from './../../../../common/ProductItem/ProductItem';
+import PreviewedItem from './../../../../common/ProductItem/PreviewedItem/PreviewedItem';
 
 class Section extends Component {
     state = {
@@ -302,6 +303,8 @@ class Section extends Component {
         slidedWidth: 0,
         screenWidth: 0,
         firstVisibleChild: 0,
+        previewItem: false,
+        item: 0,
     }
     componentDidMount() {
         this.updateWindowDimensions();
@@ -343,6 +346,12 @@ class Section extends Component {
             firstVisibleChild,
         });
     }
+    handleTogglePreviewItem = id => e => {
+        this.setState(prevState => ({
+                previewItem: !prevState.previewItem,
+                item: id,
+        }));
+    }
     render() {
         const brands = this.handleRandomizeBrand().map((brd, id) => (
             <button className={`section-action__button brand${this.state.activeBrand === id ? ' active' : ''}`} key={brd.id}>
@@ -356,41 +365,53 @@ class Section extends Component {
             :
             null;
         const itemSection = this.state.items.map((item,id) => (
-            <ProductItem item={item} key={item.id} isFirst={id === this.state.firstVisibleChild} />
+            <ProductItem
+                item={item}
+                key={item.id}
+                isFirst={id === this.state.firstVisibleChild}
+                handleTogglePreviewItem={this.handleTogglePreviewItem(id)}
+            />
         ));
-        const slideStyle = {
+        let slideStyle = {
             transform: `translateX(${this.state.slidedWidth}%)`
         };
         return (
-            <div className={`section${this.props.brand ? ' has-brand' : ''}`}>
-                <div className="section__header">
-                    <h4 className="section-title">
-                        <i className="material-icons">
-                            stay_current_portrait
-                        </i>
-                        {this.props.title}
-                    </h4>
-                    <div className="section-action">
-                        <button className="section-action__button" onClick={this.handleSlideItem('add')}>
+            <React.Fragment>
+                <div className={`section${this.props.brand ? ' has-brand' : ''}`}>
+                    <div className="section__header">
+                        <h4 className="section-title">
                             <i className="material-icons">
-                                chevron_left
+                                stay_current_portrait
                             </i>
-                        </button>
-                        <button className="section-action__button" onClick={this.handleSlideItem('minus')}>
-                            <i className="material-icons">
-                                chevron_right
-                            </i>
-                        </button>
+                            {this.props.title}
+                        </h4>
+                        <div className="section-action">
+                            <button className="section-action__button" onClick={this.handleSlideItem('add')}>
+                                <i className="material-icons">
+                                    chevron_left
+                                </i>
+                            </button>
+                            <button className="section-action__button" onClick={this.handleSlideItem('minus')}>
+                                <i className="material-icons">
+                                    chevron_right
+                                </i>
+                            </button>
+                        </div>
+                        {brandSection}
                     </div>
-                    {brandSection}
-                </div>
-                <div className="header-line"></div>
-                <div className="section__items">
-                    <div className="item-gallery" style={slideStyle} ref={gallery => this.gallery = gallery}>
-                        {itemSection}
+                    <div className="header-line"></div>
+                    <div className="section__items">
+                        <div className="item-gallery" style={slideStyle} ref={gallery => this.gallery = gallery}>
+                            {itemSection}
+                        </div>
                     </div>
                 </div>
-            </div>
+                <PreviewedItem
+                    item={this.state.items[this.state.item]}
+                    open={this.state.previewItem}
+                    handleClose={this.handleTogglePreviewItem(0)}
+                />
+            </React.Fragment>
         );
     }
 }

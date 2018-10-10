@@ -28,7 +28,9 @@ class AboutUs extends Component {
                     </ul>
                 </div>
                 <div className="about__address">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15672.631681852365!2d106.803194966739!3d10.87559079692341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d8a5568c997f%3A0xdeac05f17a166e0c!2sHo+Chi+Minh+City+University+of+Technology!5e0!3m2!1svi!2s!4v1539147709862" allowfullscreen></iframe>
+                    <iframe
+                        title="address map"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15672.631681852365!2d106.803194966739!3d10.87559079692341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d8a5568c997f%3A0xdeac05f17a166e0c!2sHo+Chi+Minh+City+University+of+Technology!5e0!3m2!1svi!2s!4v1539147709862" allowFullScreen></iframe>
                 </div>
             </div>
         );

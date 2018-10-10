@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './PublicSite.css';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Header from '../../common/Header/Header';
 import Footer from './../../common/Footer/Footer';
 import NotFoundPage from './../NotFoundPage/NotFoundPage';
@@ -25,7 +25,7 @@ class PublicSite extends Component {
                     <Route path="/item/:id" exact component={DetailedItem} />
                     <Route path="/login" exact component={LoginPage} />
                     <Route path="/signup" exact component={SignupPage} />
-                    <Route component={NotFoundPage} />
+                    <Redirect to="/sorry" />
                 </Switch>
                 <Footer />
             </div>

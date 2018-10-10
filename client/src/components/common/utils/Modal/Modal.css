@@ -24,6 +24,8 @@
     z-index: 999;
     left: 50%;
     top: 50%;
+    bottom: auto;
+    right: auto;
     transform: translate(-50%, -50%);
     width: 90%;
     border: 1px solid;
@@ -52,7 +54,6 @@
 .modal--cancel:hover, .modal--cancel:active {
     color: red;
 }
-
 @keyframes delay {
     from {
         transform: translate(-50%, -100vh);
@@ -69,5 +70,8 @@
 @media (min-width: 992px) {
     .modal {
         width: 60%;
+    }
+    .modal.big {
+        width: 80%;
     }
 }
