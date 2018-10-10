@@ -67,7 +67,7 @@ nav {
 
 @media (min-width: 375px) {
   i.material-icons.search-big__icon {
-    right: 35px;
+    right: 10%;
   }
   input.search-big__text {
     margin-left: 19px;
@@ -78,10 +78,38 @@ nav {
   input.search-big__text {
     width: 250px;
   }
+  i.material-icons.search-big__icon {
+    right: 8%;
+  }
 }
-@media (min-width: 460px) {
-  .search-big {
-    width: 300px;
+
+@media (min-width: 450px) {
+  i.material-icons.search-big__icon {
+    right: 15%;
+  }
+}
+
+@media (min-width: 538px) {
+  i.material-icons.search-big__icon {
+    right: 20%;
+  }
+}
+
+@media (min-width: 611px) {
+  i.material-icons.search-big__icon {
+    right: 22%;
+  }
+}
+
+@media (min-width: 641px) {
+  i.material-icons.search-big__icon {
+    right: 25%;
+  }
+}
+
+@media (min-width: 742px) {
+  i.material-icons.search-big__icon {
+    right: 28%;
   }
 }
 

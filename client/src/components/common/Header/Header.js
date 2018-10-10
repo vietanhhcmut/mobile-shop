@@ -6,7 +6,33 @@ import Navbar from "./NavBar/NavBar";
 export default class Header extends Component {
   state = {
     toggle: false,
-    showMenu: false
+    showMenu: false,
+    categories: [
+      {
+        id: "1",
+        name: "Sam Sung"
+      },
+      {
+        id: "2",
+        name: "Nokia"
+      },
+      {
+        id: "3",
+        name: "Apple"
+      },
+      {
+        id: "4",
+        name: "LG"
+      },
+      {
+        id: "5",
+        name: "TCL Communication"
+      },
+      {
+        id: "6",
+        name: "Sony Mobile"
+      }
+    ]
   };
   handleToggle = () => {
     this.setState({
@@ -14,11 +40,12 @@ export default class Header extends Component {
     });
   };
   handleShowMenu = () => {
-    this.setState({
-      showMenu: !this.state.showMenu
+    this.setState(prevState => {
+      return {
+        showMenu: !prevState.showMenu
+      };
     });
   };
-
   render() {
     return (
       <header>
@@ -39,7 +66,7 @@ export default class Header extends Component {
         </div>
         <nav>
           <div className="navbar-big">
-            <Navbar />
+            <Navbar categories={this.state.categories} />
           </div>
           <div className="toggle" onClick={this.handleToggle}>
             <span className="toggle__icon">
@@ -59,6 +86,7 @@ export default class Header extends Component {
             <Menu
               showMenu={this.state.showMenu}
               handleShowMenu={this.handleShowMenu}
+              categories={this.state.categories}
             />
           )}
         </nav>
