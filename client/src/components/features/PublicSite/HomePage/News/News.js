@@ -1,49 +1,63 @@
 import React, { Component } from 'react';
 import './News.css';
 import Carousel from './Carousel/Carousel';
+import { newsImages } from '../../../../../constants/constants';
+
 class News extends Component {
     state = {
         topNews: {
-            img: 'https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/appagebuilder/images/banner_nav.png',
+            img: newsImages.newsTop,
             link: '#'
         },
         rightNews1: {
-            img: 'https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/appagebuilder/images/banner_slide.jpg',
+            img: newsImages.newsRightTop,
             link: '#'
         },
         rightNews2: {
-            img: 'https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/appagebuilder/images/banner_slide_1.jpg',
+            img: newsImages.newsRightBottom,
             link: '#'
         },
         bottomNews1: {
             title: 'Iphone S4',
             decription: 'Lorem, ipsum dolor sit amet conse ctetur adipisicing elit ctetur adipisicing elit.',
-            img: 'https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/appagebuilder/images/banner-proto.jpg',
-            link: 'url'
+            img: newsImages.newsBottomLeft,
+            link: '#'
         },
         bottomNews2: {
             title: 'Iphone S4',
             decription: 'Lorem, ipsum dolor sit amet co Lorem, ipsum dolor sit amet co nsectetur adipisicing elit.',
-            img: 'https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/appagebuilder/images/banner-proto-1.jpg',
-            link: 'url'
+            img: newsImages.newsBottomRight,
+            link: '#'
         },
         carousel: [
             {
-                title: 'Iphone S4',
-                decription: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
-                img: 'https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/leoslideshow/slide-2.jpg',
-                link: 'url'
+                img: newsImages.newsBanners[0],
+                link: '#'
             },
             {
-                title: 'Iphone S4',
-                decription: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit consectetur adipisicing elit consectetur adipisicing elit.',
-                img: 'https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/leoslideshow/slide-2.jpg',
-                link: 'url'
+                img: newsImages.newsBanners[1],
+                link: '#'
+            },
+            {
+                img: newsImages.newsBanners[2],
+                link: '#'
+            },
+            {
+                img: newsImages.newsBanners[3],
+                link: '#'
+            },
+            {
+                img: newsImages.newsBanners[4],
+                link: '#'
+            },
+            {
+                img: newsImages.newsBanners[5],
+                link: '#'
             }
         ]
     }
     render() {
-        const { topNews, rightNews1, rightNews2, bottomNews1, bottomNews2 } = this.state;
+        const { topNews, carousel, rightNews1, rightNews2, bottomNews1, bottomNews2 } = this.state;
         return (
             <div className='home__news'>
                 <div className='news__top-news'>
@@ -55,10 +69,11 @@ class News extends Component {
                 <div className='news__center-news'>
                     <div className='center-news__carousel'>
                         <Carousel>
-                            <img src="https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/leoslideshow/slide-1.jpg" alt="image1" />
-                            <img src="https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/modules/leoslideshow/slide-2.jpg" alt="image2" />
-                            <img src="http://thuthuatphanmem.vn/uploads/2018/04/10/hinh-anh-dep-ve-tinh-yeu-54_052634251.jpg" alt="image3" />
-                            <img src="https://dantricdn.com/thumb_w/640/2018/anh-drone-1-1514880827496.jpg" alt="image3" />
+                            {carousel.map((banner, index) =>
+                                <a key={'center-news__carousel' + index} href={banner.link}>
+                                    <img src={banner.img} alt={"banner" + index} />
+                                </a>
+                            )}
                         </Carousel>
                     </div>
 
