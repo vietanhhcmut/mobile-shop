@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Section.css';
-import { shuffleArray } from './../../../../constants/shuffleArrray';
-import ProductItem from '../../../common/ProductItem/ProductItem';
+import ProductItem from './../../../../common/ProductItem/ProductItem';
 
 class Section extends Component {
     state = {
@@ -300,56 +299,70 @@ class Section extends Component {
             }
         ],
         activeBrand: 0,
-        slidedWidth: 0
+        slidedWidth: 0,
+        screenWidth: 0,
+        firstVisibleChild: 0,
+    }
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions = () => {
+        this.setState({ screenWidth: window.innerWidth });
+    }
     handleRandomizeBrand = () => {
         const brands = { ...this.state.brands };
-        const random = Math.random() * 20;
-        for(let i = 0; i< random; i++) {
-            shuffleArray(brands);
-        }
         return [brands[0], brands[1], brands[2]];
     }
-    handleSlideItem = type => () =>  {
-        let { slidedWidth } = this.state;
+    handleSlideItem = type => () => {
+        let { slidedWidth, screenWidth, firstVisibleChild} = this.state;
         switch (type) {
             case 'add':
-            slidedWidth += 210;
-            break;
+                slidedWidth += 10;
+                break;
             default:
-            slidedWidth -= 210;
-            break;
+                slidedWidth -= 10;
+                break;
         }
-        if (slidedWidth <= -2000 || slidedWidth >= 0) {
+        if ((slidedWidth <= -100 && screenWidth < 576) ||
+            (slidedWidth <= -90 && screenWidth < 768 && screenWidth >= 576 )||
+            (slidedWidth <= -80 && screenWidth < 992 && screenWidth >= 768) ||
+            (slidedWidth <= -70 && screenWidth < 1200 && screenWidth >= 992) ||
+            (slidedWidth <= -60 && screenWidth >= 1200) ||
+            slidedWidth >= 0) {
             slidedWidth = 0;
         }
-        console.log(slidedWidth);
+        firstVisibleChild = Math.abs(slidedWidth / 10);
         this.setState({
-            slidedWidth
+            slidedWidth,
+            firstVisibleChild,
         });
     }
     render() {
         const brands = this.handleRandomizeBrand().map((brd, id) => (
-            <button className={`section-action__button brand${this.state.activeBrand === id? ' active' : ''}`} key={brd.id}>
+            <button className={`section-action__button brand${this.state.activeBrand === id ? ' active' : ''}`} key={brd.id}>
                 {brd.name}
             </button>
         ));
-        const brandSection = this.props.brand? 
-                <div className="product-brand">
-                    {brands}
-                </div>
-                :
-                null;
-        const itemSection = this.state.items.map(item => (
-            <ProductItem item={item} key={item.id} />
+        const brandSection = this.props.brand ?
+            <div className="product-brand">
+                {brands}
+            </div>
+            :
+            null;
+        const itemSection = this.state.items.map((item,id) => (
+            <ProductItem item={item} key={item.id} isFirst={id === this.state.firstVisibleChild} />
         ));
         const slideStyle = {
-            transform: `translateX(${this.state.slidedWidth}px)`
+            transform: `translateX(${this.state.slidedWidth}%)`
         };
-        console.log(slideStyle);
         return (
-            <div className={`section${this.props.brand? ' has-brand' : ''}`}>
+            <div className={`section${this.props.brand ? ' has-brand' : ''}`}>
                 <div className="section__header">
                     <h4 className="section-title">
                         <i className="material-icons">
@@ -373,7 +386,7 @@ class Section extends Component {
                 </div>
                 <div className="header-line"></div>
                 <div className="section__items">
-                    <div className="item-gallery" style={slideStyle}>
+                    <div className="item-gallery" style={slideStyle} ref={gallery => this.gallery = gallery}>
                         {itemSection}
                     </div>
                 </div>
