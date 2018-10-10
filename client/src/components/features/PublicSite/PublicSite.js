@@ -11,6 +11,7 @@ import DetailedItem from './Item/DetailedItem';
 import LoginPage from './LoginPage/LoginPage';
 import SignupPage from './SignupPage/SignupPage';
 import HomePage from './HomePage/HomePage';
+import CartModal from '../../common/CartModal/CartModal';
 
 class PublicSite extends Component {
     render() {
@@ -27,6 +28,7 @@ class PublicSite extends Component {
                     <Route path="/signup" exact component={SignupPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
+                <CartModal />
                 <Footer />
             </div>
         );

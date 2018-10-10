@@ -20,7 +20,7 @@
     color: white;
     text-align: center;
     transition: all 0.4s;
-    background: rgba(0, 0, 0, 0.2)
+    background: rgba(0, 0, 0, 0.2);
 }
 .news-carousel__arrow:hover {
     background: #3387f2;
