@@ -27,7 +27,7 @@ class Carousel extends Component {
 
         setTimeout(() => {
             this.setState({ sliding: false });
-        }, 10);
+        }, 50);
     }
     handleClickPrev = () => {
         if (!Array.isArray(this.props.children)) return;

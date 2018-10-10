@@ -11,12 +11,6 @@
 .wrapper__slide {
     flex: 1 0 100%;
 }
-
-.wrapper__slide > img {
-    width: 100%;
-    height: 100%;
-}
-
 .news-carousel__arrow {
     position: absolute;
     top: 50%;
