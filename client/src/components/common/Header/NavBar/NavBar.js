@@ -17,8 +17,10 @@ const Navbar = ({ categories }) => (
       </span>
       <div className="table-categories">
         <div className="table-categories__item1">
-          {categories.map(category => (
-            <div key={category.id}>{category.name}</div>
+          {categories.map(item => (
+            <Link to="/category/{item.name}" className="link">
+              <div key={item.id}>{item.name}</div>
+            </Link>
           ))}
         </div>
         <div className="table-categories__item2">
