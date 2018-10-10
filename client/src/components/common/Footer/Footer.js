@@ -1,7 +1,9 @@
 import React , { Component } from "react";
 import Slider from "react-slick";
 import './Footer.css';
-import { imgs } from '../../../constants/constants';
+import { imgs_logo, imgs_payment } from '../../../constants/constants';
+import { Button } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 
 export default class Footer extends Component{
     render() {
@@ -11,8 +13,8 @@ export default class Footer extends Component{
             speed: 500,
             slidesToShow: 4,
             slidesToScroll: 1,
-            // autoplaySpeed: 3000,
-            // autoplay: true,
+            autoplaySpeed: 3000,
+            autoplay: true,
             pauseOnHover: true,
             responsive: [
                 {
@@ -40,29 +42,29 @@ export default class Footer extends Component{
                 <div className="footer-top">
                     <Slider {...settings}>
                         <div className="footer-top__logo">
-                            <img src={imgs} alt="logo" />
+                            <img src={imgs_logo} alt="logo" />
                         </div>
                         <div className="footer-top__logo">
-                            <img src={imgs} alt="logo" />
+                            <img src={imgs_logo} alt="logo" />
                         </div>
                         <div className="footer-top__logo">
-                            <img src={imgs} alt="logo" />
+                            <img src={imgs_logo} alt="logo" />
                         </div>
                         <div className="footer-top__logo">
-                            <img src={imgs} alt="logo" />
+                            <img src={imgs_logo} alt="logo" />
                         </div>
                         <div className="footer-top__logo">
-                            <img src={imgs} alt="logo" />
+                            <img src={imgs_logo} alt="logo" />
                         </div>
                         <div className="footer-top__logo">
-                            <img src={imgs} alt="logo" />
+                            <img src={imgs_logo} alt="logo" />
                         </div>
                     </Slider>
                 </div>
                 <div className="footer-center">
                     <div className="footer-center__contact">
                         <h4>
-                            About store
+                            Thông tin cửa hàng
                         </h4>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel libero quo sit impedit explicabo, voluptates magnam earum, inventore vero eligendi quod laborum odio nobis consequuntur ex repellendus tempore distinctio ab?
@@ -90,7 +92,7 @@ export default class Footer extends Component{
                     </div>
                     <div className="footer-center__social">
                         <h4>
-                            Connect with us
+                            Thông tin liên hệ
                         </h4>
                         <ul>
                             <li>
@@ -119,8 +121,48 @@ export default class Footer extends Component{
                             </li>
                         </ul>
                     </div>
-                    <div className="footer-center__col3">
-
+                    <div className="footer-center__form">
+                        <TextField
+                            id="outlined-with-placeholder"
+                            label="Name"
+                            placeholder="Name"
+                            margin="normal"
+                            variant="outlined"
+                            required="true"
+                            className="footer-center__form-input"
+                            />
+                        <TextField
+                            id="outlined-with-placeholder"
+                            label="Email"
+                            placeholder="Email"
+                            margin="normal"
+                            variant="outlined"
+                            required="true"
+                            className="footer-center__form-input"
+                            />
+                        <TextField
+                            id="outlined-textarea"
+                            label="Description"
+                            placeholder="Description"
+                            multiline
+                            margin="normal"
+                            variant="outlined"
+                            required="true"
+                            className="footer-center__form-input"
+                            />
+                        <Button variant="contained" className="footer-center__form-btn">
+                            Gửi tin nhắn
+                        </Button>
+                    </div>
+                    <div className="clear"></div>
+                </div>
+                <div className="footer-bottom">
+                    <div className="footer-bottom__copyright">
+                        <p>Copyright &copy; 2018. All Rights Reserved.</p>
+                        <p>Designed By LaD Mobile</p>
+                    </div>
+                    <div className="footer-bottom__payment">
+                        <img src={imgs_payment} alt="logo" />
                     </div>
                     <div className="clear"></div>
                 </div>
