@@ -168,7 +168,7 @@ footer .footer-top__logo:hover {
 
 }
 
-@media only screen and (min-width: 768px) and (max-width: 991px){
+@media only screen and (min-width: 768px) and (max-width: 991px) {
     .footer-center__contact {
         width: 100%;
     }
