@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import SignupPage from './components/features/SignupPage/SignupPage';
 import PublicSite from './components/features/PublicSite/PublicSite';
+import SignupPage from './components/features/PublicSite/SignupPage/SignupPage';
 
 class App extends Component {
   render() {

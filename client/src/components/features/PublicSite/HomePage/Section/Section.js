@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Section.css';
-import ProductItem from '../../../common/ProductItem/ProductItem';
+import ProductItem from './../../../../common/ProductItem/ProductItem';
 
 class Section extends Component {
     state = {
