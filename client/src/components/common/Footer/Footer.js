@@ -128,7 +128,7 @@ export default class Footer extends Component{
                             placeholder="Name"
                             margin="normal"
                             variant="outlined"
-                            required="true"
+                            required={true}
                             className="footer-center__form-input"
                             />
                         <TextField
@@ -137,7 +137,7 @@ export default class Footer extends Component{
                             placeholder="Email"
                             margin="normal"
                             variant="outlined"
-                            required="true"
+                            required={true}
                             className="footer-center__form-input"
                             />
                         <TextField
@@ -147,7 +147,7 @@ export default class Footer extends Component{
                             multiline
                             margin="normal"
                             variant="outlined"
-                            required="true"
+                            required={true}
                             className="footer-center__form-input"
                             />
                         <Button variant="contained" className="footer-center__form-btn">
