@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1px;
+    border: 1px solid transparent;
     position: relative;
 }
 .product-item__main-content img {
@@ -70,9 +70,9 @@
     flex-direction: column;
     align-items: center;
     opacity: 0;
-    transition: 0.3s;
+    transition: 0.8s;
     background: white;
-    padding: 1px;
+    border: 1px solid transparent;
 }
 .product-item__sub-content img {
     height: 70px;
@@ -123,19 +123,17 @@
     
     /* WHEN ITEM IS HOVERED */
     .product-item:hover .product-item__main-content {
-        border-top: 1px solid aqua;
-        border-bottom: 1px solid aqua;
-        border-right: 1px solid aqua;
-        padding: 0;
+        border-top: 1px solid #58b0da;
+        border-bottom: 1px solid #58b0da;
+        border-right: 1px solid #58b0da;
     }
     .product-item:hover .product-item__sub-content {
         z-index: 4;
         left: -50%;
         opacity: 1;
-        border-top: 1px solid aqua;
-        border-bottom: 1px solid aqua;
-        border-left: 1px solid aqua;
-        padding: 0;
+        border-top: 1px solid #58b0da;
+        border-bottom: 1px solid #58b0da;
+        border-left: 1px solid #58b0da;
     }
         /* THE FIRST ONE IS DIFFERENT */
     .active .product-item__sub-content  {
@@ -143,14 +141,14 @@
         left: auto;
     }
     .active.product-item:hover .product-item__main-content {
-        border-left: 1px solid aqua;
-        border-right: none;
+        border-left: 1px solid #58b0da;
+        border-right: 1px solid transparent;
     }
     .active.product-item:hover .product-item__sub-content {
         right: -50%;
         left: auto;
-        border-right: 1px solid aqua;
-        border-left: none;
+        border-right: 1px solid #58b0da;
+        border-left: 1px solid transparent;
     }
 
 }

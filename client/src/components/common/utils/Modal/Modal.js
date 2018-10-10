@@ -12,7 +12,7 @@ const Modal = ({ children, ...props }) => {
         >
             <div className="backdrop" onClick={handleClose}>
             </div>
-            <div className="modal">
+            <div className={`modal ${props.className? props.className : ''}`}>
                 {children}
             </div>
         </div>

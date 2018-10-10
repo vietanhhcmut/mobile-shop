@@ -82,11 +82,12 @@
     justify-content: space-around;
     transition: 0.5s;
 }
-.item-gallery > div {
+/* CSS OF THE ITEM INSIDE */
+.item-gallery > .product-item { 
     margin-left: 10px;
     /* display: inline-block; */
 }
-.item-gallery > div:first-child {
+.item-gallery > .product-item:first-child {
     margin-left: 0;
 }
 @media (min-width: 576px) {
