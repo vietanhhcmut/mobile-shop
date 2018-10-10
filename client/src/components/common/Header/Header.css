@@ -39,6 +39,8 @@ i.material-icons.search-big__icon {
 
 nav {
   background: #2b2b2b;
+  position: relative;
+  user-select: none;
 }
 
 .toggle {
@@ -54,6 +56,11 @@ nav {
   height: 32px;
   width: 35px;
 }
+
+span.toggle__icon {
+  cursor: pointer;
+}
+
 .toggle__icon i.material-icons {
   margin-left: 5px;
   margin-top: 3px;
@@ -65,12 +72,24 @@ nav {
   display: none;
 }
 
+@media (min-width: 340px) {
+  i.material-icons.search-big__icon {
+    right: 9%;
+  }
+}
+
 @media (min-width: 375px) {
   i.material-icons.search-big__icon {
     right: 10%;
   }
   input.search-big__text {
-    margin-left: 19px;
+    margin-left: 12px;
+  }
+}
+
+@media (min-width: 390px) {
+  i.material-icons.search-big__icon {
+    right: 13%;
   }
 }
 
@@ -79,35 +98,41 @@ nav {
     width: 250px;
   }
   i.material-icons.search-big__icon {
-    right: 8%;
+    right: 10%;
+  }
+}
+
+@media (min-width: 440px) {
+  i.material-icons.search-big__icon {
+    right: 12%;
   }
 }
 
 @media (min-width: 450px) {
   i.material-icons.search-big__icon {
-    right: 15%;
+    right: 16%;
+  }
+}
+
+@media (min-width: 515px) {
+  i.material-icons.search-big__icon {
+    right: 19%;
   }
 }
 
 @media (min-width: 538px) {
   i.material-icons.search-big__icon {
-    right: 20%;
-  }
-}
-
-@media (min-width: 611px) {
-  i.material-icons.search-big__icon {
     right: 22%;
   }
 }
 
-@media (min-width: 641px) {
+@media (min-width: 570px) {
   i.material-icons.search-big__icon {
     right: 25%;
   }
 }
 
-@media (min-width: 742px) {
+@media (min-width: 671px) {
   i.material-icons.search-big__icon {
     right: 28%;
   }
@@ -124,8 +149,8 @@ nav {
   .search-big2 {
     display: block;
     position: absolute;
-    top: 91px;
-    right: 111px;
+    top: 10px;
+    right: 10px;
   }
   .toggle__icon {
     top: 6px;
@@ -143,6 +168,27 @@ nav {
     right: 10px;
   }
 }
+
+@media (min-width: 867px) {
+  input.search-big2__text {
+    margin-right: 10px;
+  }
+}
+@media (min-width: 930px) {
+  input.search-big2__text {
+    margin-right: 20px;
+  }
+  i.material-icons.search-big2__icon {
+    right: 20px;
+  }
+}
+
+@media (min-width: 970px) {
+  input.search-big2__text {
+    margin-right: 20px;
+  }
+}
+
 @media (min-width: 992px) {
   .toggle {
     display: none;
@@ -151,8 +197,7 @@ nav {
     display: block;
   }
   .search-big2 {
-    top: 90px;
-    right: 128px;
+    right: 0px;
   }
 }
 @media (min-width: 1024px) {
@@ -161,10 +206,6 @@ nav {
   }
 }
 @media (min-width: 1100px) {
-  .search-big2 {
-    top: 92px;
-    right: 170px;
-  }
   .logo {
     text-align: left;
   }

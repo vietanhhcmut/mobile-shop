@@ -29,6 +29,9 @@ ul.menu-items {
   padding: 0px;
   cursor: pointer;
   user-select: none;
+  position: absolute;
+  z-index: 100;
+  width: 100%;
 }
 
 ul.menu-item,
@@ -130,5 +133,11 @@ li.menu-items3 {
   .menu-item__item2 img {
     width: 200px;
     height: 200px;
+  }
+}
+
+@media (min-width: 992px) {
+  .menu-items {
+    display: none;
   }
 }
