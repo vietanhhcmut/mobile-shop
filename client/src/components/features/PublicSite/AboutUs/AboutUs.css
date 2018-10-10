@@ -1,0 +1,90 @@
+.about {
+    padding: 50px 0;
+}
+
+.about h2 {
+    text-align: center;
+}
+
+.about span {
+    width: 70%;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+.about__header {
+    background-image: url("https://mobirise.com/bootstrap-template/about-us-page-template/assets/images/mitch-rosen-188054-2000x1125.jpg");
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 135px;
+    padding-bottom: 135px;
+}
+
+.about__feature {
+    padding-top: 50px;
+}
+
+.about__feature ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.about__feature ul > li{
+    float: left;
+    width: calc(100% / 3);
+    text-align: center;
+    padding-right: 10px;
+}
+
+.about__feature ul > li:nth-child(3) {
+    padding-right: 0px;
+}
+
+.about__feature ul > li > i {
+    font-size: 40px;
+    color: #4a4a4a;
+}
+
+.about__feature ul > li:hover > i {
+    color: #58b0da;
+}
+
+.about__feature ul > li > p {
+    padding-top: 15px;
+}
+
+.about__address iframe {
+    width: 100%;
+    height: 450px;
+    border: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .about span , .about__feature ul > li {
+        width: 100%;
+    }
+
+    .about__feature ul > li {
+        padding-right: 0;
+    }
+
+    .about__address iframe {
+        height: auto;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .about__feature ul > li {
+        width: 50%;
+    }
+
+    .about__feature ul > li:nth-child(3) {
+        margin-left: 25%;
+    }
+
+    .about__address iframe {
+        height: 300px;
+    }
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Section.css';
-import ProductItem from '../../../common/ProductItem/ProductItem';
+import ProductItem from './../../../../common/ProductItem/ProductItem';
 
 class Section extends Component {
     state = {
@@ -361,7 +361,6 @@ class Section extends Component {
         const slideStyle = {
             transform: `translateX(${this.state.slidedWidth}%)`
         };
-        console.log(slideStyle);
         return (
             <div className={`section${this.props.brand ? ' has-brand' : ''}`}>
                 <div className="section__header">

@@ -4,7 +4,6 @@ import './Footer.css';
 import { imgs_logo, imgs_payment } from '../../../constants/constants';
 import { Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import { Link } from "react-router-dom";
 
 export default class Footer extends Component{
     render() {
@@ -97,25 +96,25 @@ export default class Footer extends Component{
                         </h4>
                         <ul>
                             <li>
-                                <a href="https://www.facebook.com/" target="_blank">
+                                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-facebook-f"></i>
                                     <span>Facebook</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://www.instagram.com/" target="_blank">
+                                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-instagram"></i>
                                     <span>Instagram</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://www.youtube.com/" target="_blank">
+                                <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-youtube"></i>
                                     <span>Youtube</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://twitter.com" target="_blank">
+                                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-twitter"></i>
                                     <span>Twitter</span>
                                 </a>
@@ -129,7 +128,7 @@ export default class Footer extends Component{
                             placeholder="Name"
                             margin="normal"
                             variant="outlined"
-                            required="true"
+                            required={true}
                             className="footer-center__form-input"
                             />
                         <TextField
@@ -138,7 +137,7 @@ export default class Footer extends Component{
                             placeholder="Email"
                             margin="normal"
                             variant="outlined"
-                            required="true"
+                            required={true}
                             className="footer-center__form-input"
                             />
                         <TextField
@@ -148,7 +147,7 @@ export default class Footer extends Component{
                             multiline
                             margin="normal"
                             variant="outlined"
-                            required="true"
+                            required={true}
                             className="footer-center__form-input"
                             />
                         <Button variant="contained" className="footer-center__form-btn">
