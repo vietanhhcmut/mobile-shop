@@ -1,4 +1,4 @@
-import React , { Component } from "react";
+import React, { Component } from "react";
 import Slider from "react-slick";
 import './Footer.css';
 import { imgs_logo, imgs_payment } from '../../../constants/constants';
