@@ -1,0 +1,73 @@
+.carousel {
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+}
+.wrapper {
+    display: flex;
+    height: 100%;
+}
+.slide {
+    flex: 1 0 100%;
+    height: 100%;
+}
+
+.slide > img {
+    width: 100%;
+    height: 100%;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding: 10px 12px;
+    color: white;
+    text-align: center;
+    transition: all 0.4s;
+    background: rgba(0, 0, 0, 0.6)
+}
+.arrow:hover {
+    background: #3387f2;
+}
+.left-arrow {
+    left: -50px;
+}
+.right-arrow {
+    right: -50px;
+}
+.carousel:hover .left-arrow,
+.arrow:hover .left-arrow {
+    left: 10px;
+}
+.carousel:hover .right-arrow,
+.arrow:hover .right-arrow {
+    right: 10px;
+}
+
+.dots {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 15px;
+    background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+}
+.dots > span {
+    display: inline-block;
+    background: #ddd;
+    transition: all 0.5s;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+.dots > span:hover,
+.dots .active {
+    background: white;
+    transform: scale(1.5);
+}
