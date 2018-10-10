@@ -361,7 +361,6 @@ class Section extends Component {
         const slideStyle = {
             transform: `translateX(${this.state.slidedWidth}%)`
         };
-        console.log(slideStyle);
         return (
             <div className={`section${this.props.brand ? ' has-brand' : ''}`}>
                 <div className="section__header">
