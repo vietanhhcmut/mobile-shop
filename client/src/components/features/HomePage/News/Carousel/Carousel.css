@@ -1,24 +1,23 @@
-.carousel {
+.news-carousel {
     width: 100%;
     overflow: hidden;
     height: 100%;
     position: relative;
 }
-.wrapper {
+.news-carousel__wrapper {
     display: flex;
     height: 100%;
 }
-.slide {
+.wrapper__slide {
     flex: 1 0 100%;
-    height: 100%;
 }
 
-.slide > img {
+.wrapper__slide > img {
     width: 100%;
     height: 100%;
 }
 
-.arrow {
+.news-carousel__arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -27,27 +26,26 @@
     color: white;
     text-align: center;
     transition: all 0.4s;
-    background: rgba(0, 0, 0, 0.6)
+    background: rgba(0, 0, 0, 0.2)
 }
-.arrow:hover {
+.news-carousel__arrow:hover {
     background: #3387f2;
 }
-.left-arrow {
+.news-carousel__left-arrow {
     left: -50px;
 }
-.right-arrow {
+.news-carousel__right-arrow {
     right: -50px;
 }
-.carousel:hover .left-arrow,
-.arrow:hover .left-arrow {
+.news-carousel:hover .news-carousel__left-arrow,
+.news-carousel__left-arrow:hover {
     left: 10px;
 }
-.carousel:hover .right-arrow,
-.arrow:hover .right-arrow {
+.news-carousel:hover .news-carousel__right-arrow,
+.news-carousel__right-arrow:hover {
     right: 10px;
 }
-
-.dots {
+.news-carousel__dots {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -56,18 +54,19 @@
     padding: 15px;
     background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
 }
-.dots > span {
+.news-carousel__dots > span {
     display: inline-block;
-    background: #ddd;
+    background: rgba(255, 255, 255, 0.6);
     transition: all 0.5s;
-    cursor: pointer;
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
-    margin: 0 5px;
+    margin: 0 6px;
 }
-.dots > span:hover,
-.dots .active {
-    background: white;
+.news-carousel__dots > span:hover,
+.news-carousel__dots .dots__active {
     transform: scale(1.5);
+}
+.news-carousel:hover .news-carousel__dots > span {
+    background: white;
 }
