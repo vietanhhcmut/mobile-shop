@@ -4,6 +4,7 @@ import './Footer.css';
 import { imgs_logo, imgs_payment } from '../../../constants/constants';
 import { Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import { Link } from "react-router-dom";
 
 export default class Footer extends Component{
     render() {

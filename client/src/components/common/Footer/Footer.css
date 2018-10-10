@@ -157,6 +157,10 @@ footer .footer-top__logo:hover {
         width: 100%;
     }
 
+    .footer-center__social {
+        text-align: left;
+    }
+
     .footer-bottom__copyright {
         text-align: center;
     }
