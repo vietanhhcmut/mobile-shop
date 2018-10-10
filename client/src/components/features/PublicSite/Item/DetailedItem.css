@@ -1,0 +1,18 @@
+.item-detail {
+    height: 50px;
+    width: 50px;
+    padding: 12px;
+    border: 1px solid blue;
+    margin: 10px;
+    animation: animate 1s;
+}
+@keyframes animate {
+    from {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(2);
+    }
+}
