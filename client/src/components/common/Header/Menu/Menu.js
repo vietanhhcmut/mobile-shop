@@ -5,7 +5,7 @@ import "./Menu.css";
 const Menu = ({ showMenu, handleShowMenu, categories }) => (
   <ul className="menu-items">
     <li className="menu-items1">
-      <Link to="/home" className="link">
+      <Link to="/" className="link">
         Home
       </Link>
     </li>
@@ -29,7 +29,7 @@ const Menu = ({ showMenu, handleShowMenu, categories }) => (
       </div>
     )}
     <li className="menu-items3">
-      <Link to="/about-us" className="link">
+      <Link to="/about" className="link">
         About us
       </Link>
     </li>
