@@ -24,7 +24,7 @@
 }
 .info__product-name {
     font-size: 14px;
-    display: block;
+    display: inline-block;
     color: black;
     margin: 5px auto;
 }

@@ -1,0 +1,19 @@
+.cart {
+    margin: 20px auto;
+}
+.cart__order-wrapper {
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 4px;
+}
+.order-wrapper__title {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.order-wrapper__order {
+}
+
+.cart__total-price {
+
+}
