@@ -24,3 +24,6 @@ export const newsImages = {
     newsBottomLeft: img_newsBottomLeft,
     newsBottomRight: img_newsBottomRight
 }
+
+export const calcDiscountPrice = (price, saleoff) => price * (1 - saleoff / 100.0); 
+export const formatPrice = (price) => price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
