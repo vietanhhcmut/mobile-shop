@@ -6,10 +6,6 @@
     display: none;
 }
 
-.previewed-img {
-    min-height: 300px;
-    width: 100%;
-}
 .previewed-img img {
     height: 100%;
     min-height: 300px;
@@ -29,7 +25,7 @@
     background: green;
     justify-content: space-around;
     font-weight: 500;
-    padding: 2px 5px;
+    padding: 5px;
 }
 .previewed-item-detail__price {
     color: #f94b4b;
@@ -94,6 +90,35 @@
     .previewed-item__imgs {
         width: 40%;
         display: block;
+        height: 400px;
+    }
+    .main-item-img {
+        height: 80%;
+        width: 100%;
+    }
+    .main-item-img img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+    }
+    .sub-item-imgs {
+        height: 20%;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    .sub-item-imgs img{
+        height: 100%;
+        width: 30%;
+        object-fit: contain;
+        border: 1px solid grey;
+        transition: 0.2s;
+    }
+    .sub-item-imgs img:hover {
+        border: 1px solid #f50057;
+    }
+    .sub-item-imgs img:active {
+        transform: scale(1.2);
     }
     .previewed-item-detail {
         width: 40%;

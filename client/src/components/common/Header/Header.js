@@ -60,9 +60,9 @@ export default class Header extends Component {
             className="search-big__text"
             type="text"
             placeholder="Search..."
-            autocomplete="off"
+            autoComplete="off"
           />
-          <i class="material-icons search-big__icon">search</i>
+          <i className="material-icons search-big__icon">search</i>
         </div>
         <nav>
           <div className="navbar-big">
@@ -70,7 +70,7 @@ export default class Header extends Component {
           </div>
           <div className="toggle" onClick={this.handleToggle}>
             <span className="toggle__icon">
-              <i class="material-icons">menu</i>
+              <i className="material-icons">menu</i>
             </span>
           </div>
           <div className="search-big2">
@@ -78,9 +78,9 @@ export default class Header extends Component {
               className="search-big2__text"
               type="text"
               placeholder="Search..."
-              autocomplete="off"
+              autoComplete="off"
             />
-            <i class="material-icons search-big2__icon">search</i>
+            <i className="material-icons search-big2__icon">search</i>
           </div>
           {this.state.toggle && (
             <Menu

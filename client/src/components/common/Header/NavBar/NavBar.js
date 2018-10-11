@@ -13,7 +13,7 @@ const Navbar = ({ categories }) => (
     <li className="navbar-item category">
       <span className="navbar-item__categories">
         Categories
-        <i class="material-icons category__icon">arrow_drop_down</i>
+        <i className="material-icons category__icon">arrow_drop_down</i>
       </span>
       <div className="table-categories">
         <div className="table-categories__item1">

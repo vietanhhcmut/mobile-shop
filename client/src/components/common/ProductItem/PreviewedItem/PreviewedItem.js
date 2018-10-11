@@ -1,31 +1,43 @@
 import React, { Component } from 'react';
 import './PreviewedItem.css';
 import Modal from './../../utils/Modal/Modal';
-import Slider from "react-slick";
 
 class PreviewedItem extends Component {
+    state = {
+        mainImg: this.props.item.imgs[0]
+    }
+    handleChangeImg = img => () => {
+        this.setState({
+            mainImg: img
+        });
+    }
+    componentDidUpdate() {
+        const { item } = this.props;
+        const index = item.imgs.findIndex(img => this.state.mainImg === img);
+        if (index === -1) {
+            this.setState({
+                mainImg: item.imgs[0]
+            });
+        }
+    }
     render() {
         const { item } = this.props;
         const price = item.price - item.price * item.saleoff / 100;
-        const settings = {
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1
-        };
+        const subImgs = item.imgs.map((img, index) => (
+            <img src={img} key={index+img} alt="preview item" onClick={this.handleChangeImg(img)}/>
+        ));
         return (
             <Modal open={this.props.open} handleClose={this.props.handleClose} className="big">
                 <div className="previewed-item">
                     <div className="previewed-item__imgs">
-                        <Slider {...settings}>
+                        <div className="main-item-img">
+                            <img src={this.state.mainImg} alt="preview item"/>
+                        </div>
+                        <div className="sub-item-imgs">
                             {
-                                item.imgs.map((img, index) => (
-                                    <div key={index + img} className="previewed-img">
-                                        <img src={img} alt="phone" />
-                                    </div>
-                                ))
+                                subImgs
                             }
-                        </Slider>
+                        </div>
                     </div>
                     <div className="previewed-item-detail">
                         <h5>{item.name}</h5>
@@ -66,7 +78,7 @@ class PreviewedItem extends Component {
                             </div>
                         </div>
                         <div className="item-availability">
-                            <i class="material-icons">
+                            <i className="material-icons">
                                 done_outline
                             </i>
                              Còn hàng

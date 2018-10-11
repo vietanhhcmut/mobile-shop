@@ -11,7 +11,7 @@ const Menu = ({ showMenu, handleShowMenu, categories }) => (
     </li>
     <li className="menu-items2" onClick={handleShowMenu}>
       <span className="menu-items2__text">Categories</span>
-      <i class="material-icons menu-items2__icon">expand_more</i>
+      <i className="material-icons menu-items2__icon">expand_more</i>
     </li>
     {showMenu && (
       <div className="menu-item">

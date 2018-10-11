@@ -83,7 +83,7 @@ export default class Footer extends Component{
                                 0374584321
                             </li>
                             <li>
-                                <i class="material-icons">
+                                <i className="material-icons">
                                     email
                                 </i>    
                                 mobileshop@gmail.com
@@ -97,25 +97,25 @@ export default class Footer extends Component{
                         <ul>
                             <li>
                                 <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-                                    <i class="fab fa-facebook-f"></i>
+                                    <i className="fab fa-facebook-f"></i>
                                     <span>Facebook</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-                                    <i class="fab fa-instagram"></i>
+                                    <i className="fab fa-instagram"></i>
                                     <span>Instagram</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-                                    <i class="fab fa-youtube"></i>
+                                    <i className="fab fa-youtube"></i>
                                     <span>Youtube</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                                    <i class="fab fa-twitter"></i>
+                                    <i className="fab fa-twitter"></i>
                                     <span>Twitter</span>
                                 </a>
                             </li>
