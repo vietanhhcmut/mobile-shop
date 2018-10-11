@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './ProductItem.css';
 import { Button } from '@material-ui/core';
-import PreviewedItem from './PreviewedItem/PreviewedItem';
+import { Link } from 'react-router-dom';
 
 class ProductItem extends Component {
     state = {
@@ -21,9 +21,9 @@ class ProductItem extends Component {
             <div className={`product-item${this.props.isFirst? ' active': ''}`}>
                 <div className="product-item__main-content">
                     <img src={this.state.showingImg} alt="item"/>
-                    <h5 className="item-title">{item.name}</h5>
+                    <Link to={`/item/${item.id}`}><h5 className="item-title">{item.name}</h5></Link>
                     <span className="item-quick-view" onClick={this.props.handleTogglePreviewItem}>
-                        <i class="material-icons">
+                        <i className="material-icons">
                             zoom_out_map
                         </i>
                     </span>
