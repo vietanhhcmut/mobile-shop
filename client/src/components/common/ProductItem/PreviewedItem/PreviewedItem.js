@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './PreviewedItem.css';
 import Modal from './../../utils/Modal/Modal';
+import { formatPrice, calcDiscountPrice } from '../../../../constants/constants';
 
 class PreviewedItem extends Component {
     state = {
@@ -22,16 +23,15 @@ class PreviewedItem extends Component {
     }
     render() {
         const { item } = this.props;
-        const price = item.price - item.price * item.saleoff / 100;
         const subImgs = item.imgs.map((img, index) => (
-            <img src={img} key={index+img} alt="preview item" onClick={this.handleChangeImg(img)}/>
+            <img src={img} key={index + img} alt="preview item" onClick={this.handleChangeImg(img)} />
         ));
         return (
             <Modal open={this.props.open} handleClose={this.props.handleClose} className="big">
                 <div className="previewed-item">
                     <div className="previewed-item__imgs">
                         <div className="main-item-img">
-                            <img src={this.state.mainImg} alt="preview item"/>
+                            <img src={this.state.mainImg} alt="preview item" />
                         </div>
                         <div className="sub-item-imgs">
                             {
@@ -42,17 +42,17 @@ class PreviewedItem extends Component {
                     <div className="previewed-item-detail">
                         <h5>{item.name}</h5>
                         <div className="previewed-item-detail__price">
-                            {price}đ
+                            {formatPrice(calcDiscountPrice(item.price, item.saleoff))}
                             {
-                                item.saleoff?
-                                <span className="previewed-item-detail-saleoff">
-                                    <span>{item.price}đ</span>
-                                    <span>Tiết kiệm {item.saleoff}</span>
-                                </span>
-                                :
-                                null
+                                item.saleoff ?
+                                    <span className="previewed-item-detail-saleoff">
+                                        <span>{formatPrice(item.price)}</span>
+                                        <span>Tiết kiệm {item.saleoff}</span>
+                                    </span>
+                                    :
+                                    null
                             }
-                    </div>
+                        </div>
                         <p>Vận chuyển: Từ 1-5 ngày</p>
                         <p>{item.description}</p>
                         <div className="previewed-item-detail__variant">
@@ -68,20 +68,20 @@ class PreviewedItem extends Component {
                         <div className="previewed-item-detail__variant">
                             <div className="variant-name">Hãng sản xuất</div>
                             <div className="variant-value">
-                               {item.category}
+                                {item.category}
                             </div>
                         </div>
                         <div className="previewed-item-detail__variant">
                             <div className="variant-name">RAM</div>
                             <div className="variant-value">
-                               {item.details.RAM}
+                                {item.details.RAM}
                             </div>
                         </div>
                         <div className="item-availability">
                             <i className="material-icons">
                                 done_outline
                             </i>
-                             Còn hàng
+                            Còn hàng
                         </div>
                     </div>
                 </div>

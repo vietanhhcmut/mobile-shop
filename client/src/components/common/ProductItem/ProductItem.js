@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './ProductItem.css';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { formatPrice, calcDiscountPrice } from '../../../constants/constants';
 
 class ProductItem extends Component {
     state = {
@@ -13,7 +14,6 @@ class ProductItem extends Component {
     }
     render() {
         const { item } = this.props;
-        const price = item.price - item.price * item.saleoff / 100;
         const imgs = this.props.item.imgs.map((img, index) => (
             <img src={img} alt="item" onClick={this.handleChangeImg(img)} key={index+img} />
         ));
@@ -28,11 +28,11 @@ class ProductItem extends Component {
                         </i>
                     </span>
                     <div className="item-price">
-                        {price}đ
+                        {formatPrice(calcDiscountPrice(item.price, item.saleoff))}
                         {
                             item.saleoff?
                             <div className="item-saleoff">
-                                <span>{item.price}</span>
+                                <span>{formatPrice(item.price)}</span>
                                 <span>{item.saleoff}</span>
                             </div>
                             :
