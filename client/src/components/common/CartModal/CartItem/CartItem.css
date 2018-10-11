@@ -5,6 +5,8 @@
     position: relative;
     border-right: 1px solid #ddd;
     padding: 5px;
+    flex-shrink: 0;
+    align-items: center;
 }
 .products__cart-item:last-child {
     border-right: none;
@@ -22,8 +24,9 @@
 }
 .info__product-name {
     font-size: 14px;
-    display: block;
+    display: inline-block;
     color: black;
+    margin: 5px auto;
 }
 .info__discount-price {
     display: block;
