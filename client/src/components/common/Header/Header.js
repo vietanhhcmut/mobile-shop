@@ -35,8 +35,10 @@ export default class Header extends Component {
     ]
   };
   handleToggle = () => {
-    this.setState({
-      toggle: !this.state.toggle
+    this.setState(prevState => {
+      return {
+        toggle: !prevState.toggle
+      };
     });
   };
   handleShowMenu = () => {

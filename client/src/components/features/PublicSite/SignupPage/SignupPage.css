@@ -68,6 +68,19 @@ footer {
 .optional {
   margin-top: 2%;
 }
+.form-control-label {
+  margin-top: 2%;
+}
+.radio-choice {
+  margin-top: 0;
+}
+button.input-group-btn.show {
+  height: 36px;
+  background: #7e7f80;
+  border: none;
+  color: white;
+  width: 50px;
+}
 
 @media (min-width: 768px) {
   .card {

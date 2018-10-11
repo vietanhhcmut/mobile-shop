@@ -2,6 +2,19 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./SignupPage.css";
 class SignupPage extends Component {
+  state = {
+    showPassword: false,
+    nameButton: "",
+    typeField: ""
+  };
+  handleShowPassword = () => {
+    this.setState(prevState => {
+      return {
+        showPassword: !prevState.showPassword
+      };
+    });
+  };
+
   render() {
     return (
       <div>
@@ -20,7 +33,7 @@ class SignupPage extends Component {
               <form>
                 <section>
                   <div className="form-group row ">
-                    <label className="col-md-3 form-control-label">
+                    <label className="col-md-3 form-control-label radio-choice">
                       Social title
                     </label>
                     <div className="col-md-6 form-control-valign">
@@ -91,28 +104,49 @@ class SignupPage extends Component {
                     <label className="col-md-3 form-control-label required">
                       Password
                     </label>
-                    <div className="col-md-6">
-                      <div className="input-group js-parent-focus">
-                        <input
-                          className="form-control js-child-focus js-visible-password"
-                          name="password"
-                          type="password"
-                          pattern=".{5,}"
-                          required
-                        />
-                        <span className="input-group-btn">
-                          <button
-                            className="btn btn-outline"
-                            type="button"
-                            data-action="show-password"
-                            data-text-show="Show"
-                            data-text-hide="Hide"
-                          >
-                            Show
-                          </button>
-                        </span>
+
+                    {this.state.showPassword === false ? (
+                      <div className="col-md-6">
+                        <div className="input-group js-parent-focus">
+                          <input
+                            className="form-control"
+                            name="password"
+                            type="password"
+                            pattern=".{5,}"
+                            required
+                          />
+                          <span className="input-group-btn">
+                            <button
+                              onClick={this.handleShowPassword}
+                              type="button"
+                              className="input-group-btn show"
+                            >
+                              Show
+                            </button>
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="col-md-6">
+                        <div className="input-group js-parent-focus">
+                          <input
+                            className="form-control"
+                            name="password"
+                            type="text"
+                            required
+                          />
+                          <span className="input-group-btn">
+                            <button
+                              onClick={this.handleShowPassword}
+                              type="button"
+                              className="input-group-btn show"
+                            >
+                              Hide
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="col-md-3 form-control-comment" />
                   </div>
