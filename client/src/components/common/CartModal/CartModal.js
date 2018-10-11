@@ -44,7 +44,7 @@ class CartModal extends Component {
         return (
             <div className='cart-modal'>
                 <div className='cart-modal__icon-wrapper' onClick={this.handleClickCartIcon}>
-                    <i class="material-icons icon-wrapper__cart-icon">shopping_cart</i>
+                    <i className="material-icons icon-wrapper__cart-icon">shopping_cart</i>
                     <div className='icon-wrapper__product-quantity'>
                         3
                     </div>

@@ -23,7 +23,7 @@ class CartItem extends Component {
                         <span href="#">+</span>
                     </div>
                 </div>
-                <i class="material-icons cart-item__remove-product">clear</i>
+                <i className="material-icons cart-item__remove-product">clear</i>
             </div>
         );
     }
