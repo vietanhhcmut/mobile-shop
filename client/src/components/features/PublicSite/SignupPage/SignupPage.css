@@ -19,8 +19,8 @@ section#main {
   font-size: 13px;
   color: #4a4949;
 }
-.page-content__register-form a:hover {
-  color: blue;
+.page-content__register-form a {
+  color: #302f2f;
 }
 .login {
   padding-left: 5px;
@@ -99,17 +99,12 @@ button.input-group-btn.show {
   padding: 16px 50px;
   position: fixed;
   background-color: white;
-  border: 1px solid red;
+  border: 1px solid #20da20;
   animation-duration: 1s;
-  color: red;
+  color: #20da20;
   border-radius: 5px;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
   animation: showmodal 1s ease-out;
-}
-
-.required-enter {
-  color: red;
-  padding-left: 3px;
 }
 
 @keyframes showmodal {
@@ -125,7 +120,19 @@ button.input-group-btn.show {
 
 #show-modal {
   display: block;
+  /* animation: offmodal 3s cubic-bezier(0.1, -0.6, 0.2, 0); */
 }
+
+/* @keyframes offmodal {
+  from {
+    opacity: 1;
+    top: 50px;
+  }
+  to {
+    opacity: 0;
+    top: 0;
+  }
+} */
 
 .modal-body p {
   margin-bottom: 0px;
@@ -137,23 +144,6 @@ span.close-modal {
   top: 0;
   right: 5%;
   position: absolute;
-}
-
-.field-hide {
-  display: none;
-}
-
-.field-hidefield-required {
-  color: red;
-}
-.field-hidevalidate-email {
-  color: red;
-}
-.field-required,
-.validate-email {
-  background-color: #fff;
-  outline: 0;
-  box-shadow: 0 0 0 0.08rem red;
 }
 
 @media (min-width: 768px) {
