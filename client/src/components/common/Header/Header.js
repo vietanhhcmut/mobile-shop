@@ -60,7 +60,7 @@ export default class Header extends Component {
           </div>
           <div class="header-card-big">
             <span className="header-card-big__icon">
-              <i class="material-icons add_shopping_cart">add_shopping_cart</i>
+              <i class="material-icons add_shopping_cart">shopping_cart</i>
             </span>
             <div class="hidden-sm-down">Shopping Cart</div>
             <span class="header-card-big__cart-infor">0 Item - $0.00</span>
@@ -87,7 +87,7 @@ export default class Header extends Component {
           </div>
           <div class="header-card">
             <span className="header-card__icon">
-              <i class="material-icons add_shopping_cart">add_shopping_cart</i>
+              <i class="material-icons add_shopping_cart">shopping_cart</i>
             </span>
 
             <span class="header-card__cart-infor">0 Item - $0.00</span>
