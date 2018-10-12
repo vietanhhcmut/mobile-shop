@@ -57,6 +57,7 @@ export default class Header extends Component {
             alt="not found"
           />
         </div>
+
         <div className="search-big">
           <input
             className="search-big__text"
@@ -74,16 +75,31 @@ export default class Header extends Component {
             <span className="toggle__icon">
               <i className="material-icons">menu</i>
             </span>
+            {/* <div class="header">
+              <i class="fa fa-shopping-cart" />
+              <span class="hidden-sm-down">Shopping Cart</span>
+
+              <span class="cart-infor">
+                <span class="cart-products-count">0</span>
+
+                <span class="cart-text">Item</span>
+                <span class="cart-total">- $0.00</span>
+              </span>
+            </div> */}
           </div>
+
           <div className="search-big2">
-            <input
-              className="search-big2__text"
-              type="text"
-              placeholder="Search..."
-              autoComplete="off"
-            />
-            <i className="material-icons search-big2__icon">search</i>
+            <div className="search-big2__input">
+              <input
+                className="search-big2__text"
+                type="text"
+                placeholder="Search..."
+                autoComplete="off"
+              />
+              <i className="material-icons search-big2__icon">search</i>
+            </div>
           </div>
+
           {this.state.toggle && (
             <Menu
               showMenu={this.state.showMenu}
