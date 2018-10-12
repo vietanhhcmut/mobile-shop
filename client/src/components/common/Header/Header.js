@@ -52,10 +52,19 @@ export default class Header extends Component {
     return (
       <header>
         <div className="logo">
-          <img
-            src="https://demo4leotheme.com/prestashop/leo_mobile/img/leo-mobile-logo-1491983441.jpg"
-            alt="not found"
-          />
+          <div className="logo__main-logo">
+            <img
+              src="https://demo4leotheme.com/prestashop/leo_mobile/img/leo-mobile-logo-1491983441.jpg"
+              alt="not found"
+            />
+          </div>
+          <div class="header-card-big">
+            <span className="header-card-big__icon">
+              <i class="material-icons add_shopping_cart">add_shopping_cart</i>
+            </span>
+            <div class="hidden-sm-down">Shopping Cart</div>
+            <span class="header-card-big__cart-infor">0 Item - $0.00</span>
+          </div>
         </div>
 
         <div className="search-big">
@@ -75,17 +84,13 @@ export default class Header extends Component {
             <span className="toggle__icon">
               <i className="material-icons">menu</i>
             </span>
-            {/* <div class="header">
-              <i class="fa fa-shopping-cart" />
-              <span class="hidden-sm-down">Shopping Cart</span>
+          </div>
+          <div class="header-card">
+            <span className="header-card__icon">
+              <i class="material-icons add_shopping_cart">add_shopping_cart</i>
+            </span>
 
-              <span class="cart-infor">
-                <span class="cart-products-count">0</span>
-
-                <span class="cart-text">Item</span>
-                <span class="cart-total">- $0.00</span>
-              </span>
-            </div> */}
+            <span class="header-card__cart-infor">0 Item - $0.00</span>
           </div>
 
           <div className="search-big2">
