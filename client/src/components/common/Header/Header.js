@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./Header.css";
 import Menu from "./Menu/Menu";
 import Navbar from "./NavBar/NavBar";
+import { Link } from "react-router-dom";
 
 export default class Header extends Component {
   state = {
@@ -59,9 +60,13 @@ export default class Header extends Component {
             />
           </div>
           <div className="header-card-big">
-            <span className="header-card-big__icon">
-              <i className="material-icons add_shopping_cart">shopping_cart</i>
-            </span>
+            <Link to="/cart">
+              <span className="header-card-big__icon">
+                <i className="material-icons add_shopping_cart">
+                  shopping_cart
+                </i>
+              </span>
+            </Link>
             <div className="hidden-sm-down">Shopping Cart</div>
             <span className="header-card-big__cart-infor">0 Item - $0.00</span>
           </div>
@@ -86,9 +91,13 @@ export default class Header extends Component {
             </span>
           </div>
           <div className="header-card">
-            <span className="header-card__icon">
-              <i className="material-icons add_shopping_cart">shopping_cart</i>
-            </span>
+            <Link to="/cart">
+              <span className="header-card__icon">
+                <i className="material-icons add_shopping_cart">
+                  shopping_cart
+                </i>
+              </span>
+            </Link>
 
             <span className="header-card__cart-infor">0 Item - $0.00</span>
           </div>

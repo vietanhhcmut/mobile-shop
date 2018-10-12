@@ -20,25 +20,25 @@ class SignupPage extends Component {
 
   handleEnterFirstName = e => {
     this.setState({
-      firstName: e.value
+      firstName: e.target.value
     });
   };
 
   handleEnterLastName = e => {
     this.setState({
-      lastName: e.value
+      lastName: e.target.value
     });
   };
 
   handleEnterEmail = e => {
     this.setState({
-      email: e.value
+      email: e.target.value
     });
   };
 
   handleEnterPass = e => {
     this.setState({
-      pass: e.value
+      pass: e.target.value
     });
   };
 
@@ -62,8 +62,10 @@ class SignupPage extends Component {
   };
 
   render() {
+    const a = "";
     return (
       <div>
+        {this.state.showPassword ? a === "text" : a === "password"}
         <section id="main">
           <div className="modal-body" id={this.state.showModal}>
             <p>Create successfully</p>{" "}
@@ -82,7 +84,7 @@ class SignupPage extends Component {
                   Log in instead!
                 </Link>
               </p>
-              {/* <form> */}
+              <form> 
               <section>
                 <div className="form-group row">
                   <label className="col-md-3 form-control-label radio-choice">
@@ -159,10 +161,9 @@ class SignupPage extends Component {
                   <label className="col-md-3 form-control-label required">
                     Password
                   </label>
-
-                  {this.state.showPassword === false ? (
-                    <div className="col-md-6">
-                      <div className="input-group js-parent-focus">
+                  <div className="col-md-6">
+                    <div className="input-group js-parent-focus">
+                      {this.state.showPassword === false ? (
                         <input
                           className="form-control"
                           value={this.state.pass}
@@ -170,40 +171,27 @@ class SignupPage extends Component {
                           type="password"
                           required
                         />
-                        <span className="input-group-btn">
-                          <button
-                            onClick={this.handleShowPassword}
-                            type="button"
-                            className="input-group-btn show"
-                          >
-                            Show
-                          </button>
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="col-md-6">
-                      <div className="input-group js-parent-focus">
+                      ) : (
                         <input
                           className="form-control"
-                          name="password"
                           value={this.state.pass}
+                          onChange={this.handleEnterPass}
                           type="text"
                           required
-                          onChange={this.handleEnterPass}
                         />
-                        <span className="input-group-btn">
-                          <button
-                            onClick={this.handleShowPassword}
-                            type="button"
-                            className="input-group-btn show"
-                          >
-                            Hide
-                          </button>
-                        </span>
-                      </div>
+                      )}
+
+                      <span className="input-group-btn">
+                        <button
+                          onClick={this.handleShowPassword}
+                          type="button"
+                          className="input-group-btn show"
+                        >
+                          {this.state.showPassword === false ? "Show" : "Hide"}
+                        </button>
+                      </span>
                     </div>
-                  )}
+                  </div>
 
                   <div className="col-md-3 form-control-comment" />
                 </div>
@@ -269,7 +257,7 @@ class SignupPage extends Component {
                   Save
                 </button>
               </footer>
-              {/* </form> */}
+              </form> 
             </section>
           </section>
         </section>
