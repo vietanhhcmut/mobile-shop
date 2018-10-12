@@ -8,7 +8,13 @@ class SignupPage extends Component {
     lastName: "",
     email: "",
     pass: "",
-    showModal: ""
+    showModal: "",
+    idFirstName: "",
+    idLastName: "",
+    idEmail: "",
+    idPass: "",
+    validateEmail: "",
+    status: 400
   };
   handleShowPassword = () => {
     this.setState(prevState => {
@@ -20,38 +26,84 @@ class SignupPage extends Component {
 
   handleEnterFirstName = e => {
     this.setState({
-      firstName: e.target.value
+      firstName: e.target.value,
+      idFirstName: ""
     });
   };
 
   handleEnterLastName = e => {
     this.setState({
-      lastName: e.target.value
+      lastName: e.target.value,
+      idLastName: ""
     });
   };
 
   handleEnterEmail = e => {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
+      idEmail: "",
+      validateEmail: ""
     });
   };
 
   handleEnterPass = e => {
     this.setState({
-      pass: e.target.value
+      pass: e.target.value,
+      idPass: ""
     });
   };
 
   handleCreateSuccess = () => {
+    this.state.firstName === "" &&
+      this.setState({
+        idFirstName: "field-required"
+      });
+
+    this.state.lastName === "" &&
+      this.setState({
+        idLastName: "field-required"
+      });
+
+    this.state.email === "" &&
+      this.setState({
+        idEmail: "field-required"
+      });
+
+    if (this.state.email !== "") {
+      let lastAtPos = this.state.email.lastIndexOf("@");
+      let lastDotPos = this.state.email.lastIndexOf(".");
+
+      if (
+        !(
+          lastAtPos < lastDotPos &&
+          lastAtPos > 0 &&
+          this.state.email.indexOf("@@") === -1 &&
+          lastDotPos > 2 &&
+          this.state.email.length - lastDotPos > 2
+        )
+      ) {
+        this.setState({
+          validateEmail: "validate-email"
+        });
+      }
+    }
+
+    this.state.pass === "" &&
+      this.setState({
+        idPass: "field-required"
+      });
+
     if (
       this.state.firstName !== "" &&
       this.state.lastName !== "" &&
       this.state.email !== "" &&
       this.state.pass !== ""
     ) {
-      this.setState({
-        showModal: "show-modal"
-      });
+      this.state.status === 400
+        ? this.setState({
+            showModal: "show-modal"
+          })
+        : this.props.history.push("/login");
     }
   };
 
@@ -62,46 +114,45 @@ class SignupPage extends Component {
   };
 
   render() {
-    const a = "";
     return (
       <div>
-        {this.state.showPassword ? a === "text" : a === "password"}
         <section id="main">
           <div className="modal-body" id={this.state.showModal}>
-            <p>Create successfully</p>{" "}
+            <p>Email đã được sử dụng.</p>
             <span className="close-modal" onClick={this.handleCloseModal}>
               x
             </span>
           </div>
+
           <header className="page-content">
-            <h1>Create an account</h1>
+            <h1>Tạo tài khoản</h1>
           </header>
           <section className="page-content card card-block">
             <section className="page-content__register-form">
               <p>
-                Already have an account?
+                Bạn đã sẵn sàng tạo tài khoản?
                 <Link to="/login" className="login">
-                  Log in instead!
+                  Hay bạn muốn Login
                 </Link>
               </p>
-              <form> 
+
               <section>
                 <div className="form-group row">
                   <label className="col-md-3 form-control-label radio-choice">
-                    Social title
+                    Giới tính
                   </label>
                   <div className="col-md-6 form-control-valign">
                     <label className="radio-inline">
                       <span className="custom-radio">
                         <input name="id_gender" type="radio" value="1" />
                       </span>
-                      Mr.
+                      Nam
                     </label>
                     <label className="radio-inline">
                       <span className="custom-radio">
                         <input name="id_gender" type="radio" value="2" />
                       </span>
-                      Mrs.
+                      Nữ
                     </label>
                   </div>
 
@@ -110,32 +161,38 @@ class SignupPage extends Component {
 
                 <div className="form-group row ">
                   <label className="col-md-3 form-control-label required">
-                    First name
+                    Họ
+                    <span className="required-enter">*</span>
                   </label>
                   <div className="col-md-6">
                     <input
                       onChange={this.handleEnterFirstName}
-                      className="form-control"
+                      className={"form-control " + this.state.idFirstName}
                       value={this.state.firstName}
                       type="text"
-                      required
                     />
+                    <div className={"field-hide" + this.state.idFirstName}>
+                      Hãy nhập "Họ" của bạn
+                    </div>
                   </div>
                   <div className="col-md-3 form-control-comment" />
                 </div>
 
                 <div className="form-group row ">
                   <label className="col-md-3 form-control-label required">
-                    Last name
+                    Tên
+                    <span className="required-enter">*</span>
                   </label>
                   <div className="col-md-6">
                     <input
-                      className="form-control"
+                      className={"form-control " + this.state.idLastName}
                       onChange={this.handleEnterLastName}
                       value={this.state.lastName}
                       type="text"
-                      required
                     />
+                    <div className={"field-hide" + this.state.idLastName}>
+                      Hãy nhập "Tên" của bạn
+                    </div>
                   </div>
                   <div className="col-md-3 form-control-comment" />
                 </div>
@@ -143,15 +200,25 @@ class SignupPage extends Component {
                 <div className="form-group row ">
                   <label className="col-md-3 form-control-label required">
                     Email
+                    <span className="required-enter">*</span>
                   </label>
                   <div className="col-md-6">
                     <input
-                      className="form-control"
+                      className={
+                        "form-control " +
+                        this.state.idEmail +
+                        this.state.validateEmail
+                      }
                       onChange={this.handleEnterEmail}
                       value={this.state.email}
                       type="email"
-                      required
                     />
+                    <div className={"field-hide" + this.state.idEmail}>
+                      Hãy nhập "Email"" của bạn
+                    </div>
+                    <div className={"field-hide" + this.state.validateEmail}>
+                      Email của bạn chưa đúng
+                    </div>
                   </div>
 
                   <div className="col-md-3 form-control-comment" />
@@ -159,25 +226,24 @@ class SignupPage extends Component {
 
                 <div className="form-group row ">
                   <label className="col-md-3 form-control-label required">
-                    Password
+                    Mật khẩu
+                    <span className="required-enter">*</span>
                   </label>
                   <div className="col-md-6">
                     <div className="input-group js-parent-focus">
                       {this.state.showPassword === false ? (
                         <input
-                          className="form-control"
+                          className={"form-control " + this.state.idPass}
                           value={this.state.pass}
                           onChange={this.handleEnterPass}
                           type="password"
-                          required
                         />
                       ) : (
                         <input
-                          className="form-control"
+                          className={"form-control " + this.state.idPass}
                           value={this.state.pass}
                           onChange={this.handleEnterPass}
                           type="text"
-                          required
                         />
                       )}
 
@@ -191,6 +257,9 @@ class SignupPage extends Component {
                         </button>
                       </span>
                     </div>
+                    <div className={"field-hide" + this.state.idPass}>
+                      Hãy nhập "Mật khẩu" của bạn
+                    </div>
                   </div>
 
                   <div className="col-md-3 form-control-comment" />
@@ -198,7 +267,7 @@ class SignupPage extends Component {
 
                 <div className="form-group row ">
                   <label className="col-md-3 form-control-label">
-                    Birthdate
+                    Ngày sinh
                   </label>
                   <div className="col-md-6">
                     <input
@@ -210,41 +279,6 @@ class SignupPage extends Component {
                       (E.g.: 05/31/1970)
                     </span>
                   </div>
-
-                  <div className="col-md-2 form-control-comment optional">
-                    Optional
-                  </div>
-                </div>
-
-                <div className="form-group row ">
-                  <label className="col-md-3 form-control-label" />
-                  <div className="col-md-6">
-                    <span className="custom-checkbox">
-                      <input name="optin" type="checkbox" value="1" />
-                      <span> Receive offers from our partners</span>
-                    </span>
-                  </div>
-
-                  <div className="col-md-3 form-control-comment" />
-                </div>
-
-                <div className="form-group row ">
-                  <label className="col-md-3 form-control-label" />
-                  <div className="col-md-6">
-                    <span className="custom-checkbox">
-                      <input name="newsletter" type="checkbox" value="1" />
-
-                      <span> Sign up for our newsletter</span>
-
-                      <br />
-                      <em>
-                        You may unsubscribe at any moment. For that purpose,
-                        please find our contact info in the legal notice.
-                      </em>
-                    </span>
-                  </div>
-
-                  <div className="col-md-3 form-control-comment" />
                 </div>
               </section>
               <footer>
@@ -257,7 +291,6 @@ class SignupPage extends Component {
                   Save
                 </button>
               </footer>
-              </form> 
             </section>
           </section>
         </section>
