@@ -58,12 +58,12 @@ export default class Header extends Component {
               alt="not found"
             />
           </div>
-          <div class="header-card-big">
+          <div className="header-card-big">
             <span className="header-card-big__icon">
-              <i class="material-icons add_shopping_cart">shopping_cart</i>
+              <i className="material-icons add_shopping_cart">shopping_cart</i>
             </span>
-            <div class="hidden-sm-down">Shopping Cart</div>
-            <span class="header-card-big__cart-infor">0 Item - $0.00</span>
+            <div className="hidden-sm-down">Shopping Cart</div>
+            <span className="header-card-big__cart-infor">0 Item - $0.00</span>
           </div>
         </div>
 
@@ -85,12 +85,12 @@ export default class Header extends Component {
               <i className="material-icons">menu</i>
             </span>
           </div>
-          <div class="header-card">
+          <div className="header-card">
             <span className="header-card__icon">
-              <i class="material-icons add_shopping_cart">shopping_cart</i>
+              <i className="material-icons add_shopping_cart">shopping_cart</i>
             </span>
 
-            <span class="header-card__cart-infor">0 Item - $0.00</span>
+            <span className="header-card__cart-infor">0 Item - $0.00</span>
           </div>
 
           <div className="search-big2">

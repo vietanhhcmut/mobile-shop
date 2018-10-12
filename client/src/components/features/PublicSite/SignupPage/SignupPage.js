@@ -4,8 +4,11 @@ import "./SignupPage.css";
 class SignupPage extends Component {
   state = {
     showPassword: false,
-    nameButton: "",
-    typeField: ""
+    firstName: "",
+    lastName: "",
+    email: "",
+    pass: "",
+    showModal: ""
   };
   handleShowPassword = () => {
     this.setState(prevState => {
@@ -15,10 +18,59 @@ class SignupPage extends Component {
     });
   };
 
+  handleEnterFirstName = e => {
+    this.setState({
+      firstName: e.value
+    });
+  };
+
+  handleEnterLastName = e => {
+    this.setState({
+      lastName: e.value
+    });
+  };
+
+  handleEnterEmail = e => {
+    this.setState({
+      email: e.value
+    });
+  };
+
+  handleEnterPass = e => {
+    this.setState({
+      pass: e.value
+    });
+  };
+
+  handleCreateSuccess = () => {
+    if (
+      this.state.firstName !== "" &&
+      this.state.lastName !== "" &&
+      this.state.email !== "" &&
+      this.state.pass !== ""
+    ) {
+      this.setState({
+        showModal: "show-modal"
+      });
+    }
+  };
+
+  handleCloseModal = () => {
+    this.setState({
+      showModal: ""
+    });
+  };
+
   render() {
     return (
       <div>
         <section id="main">
+          <div className="modal-body" id={this.state.showModal}>
+            <p>Create successfully</p>{" "}
+            <span className="close-modal" onClick={this.handleCloseModal}>
+              x
+            </span>
+          </div>
           <header className="page-content">
             <h1>Create an account</h1>
           </header>
@@ -30,189 +82,194 @@ class SignupPage extends Component {
                   Log in instead!
                 </Link>
               </p>
-              <form>
-                <section>
-                  <div className="form-group row ">
-                    <label className="col-md-3 form-control-label radio-choice">
-                      Social title
+              {/* <form> */}
+              <section>
+                <div className="form-group row">
+                  <label className="col-md-3 form-control-label radio-choice">
+                    Social title
+                  </label>
+                  <div className="col-md-6 form-control-valign">
+                    <label className="radio-inline">
+                      <span className="custom-radio">
+                        <input name="id_gender" type="radio" value="1" />
+                      </span>
+                      Mr.
                     </label>
-                    <div className="col-md-6 form-control-valign">
-                      <label className="radio-inline">
-                        <span className="custom-radio">
-                          <input name="id_gender" type="radio" value="1" />
+                    <label className="radio-inline">
+                      <span className="custom-radio">
+                        <input name="id_gender" type="radio" value="2" />
+                      </span>
+                      Mrs.
+                    </label>
+                  </div>
+
+                  <div className="col-md-3 form-control-comment" />
+                </div>
+
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label required">
+                    First name
+                  </label>
+                  <div className="col-md-6">
+                    <input
+                      onChange={this.handleEnterFirstName}
+                      className="form-control"
+                      value={this.state.firstName}
+                      type="text"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-3 form-control-comment" />
+                </div>
+
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label required">
+                    Last name
+                  </label>
+                  <div className="col-md-6">
+                    <input
+                      className="form-control"
+                      onChange={this.handleEnterLastName}
+                      value={this.state.lastName}
+                      type="text"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-3 form-control-comment" />
+                </div>
+
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label required">
+                    Email
+                  </label>
+                  <div className="col-md-6">
+                    <input
+                      className="form-control"
+                      onChange={this.handleEnterEmail}
+                      value={this.state.email}
+                      type="email"
+                      required
+                    />
+                  </div>
+
+                  <div className="col-md-3 form-control-comment" />
+                </div>
+
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label required">
+                    Password
+                  </label>
+
+                  {this.state.showPassword === false ? (
+                    <div className="col-md-6">
+                      <div className="input-group js-parent-focus">
+                        <input
+                          className="form-control"
+                          value={this.state.pass}
+                          onChange={this.handleEnterPass}
+                          type="password"
+                          required
+                        />
+                        <span className="input-group-btn">
+                          <button
+                            onClick={this.handleShowPassword}
+                            type="button"
+                            className="input-group-btn show"
+                          >
+                            Show
+                          </button>
                         </span>
-                        Mr.
-                      </label>
-                      <label className="radio-inline">
-                        <span className="custom-radio">
-                          <input name="id_gender" type="radio" value="2" />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="col-md-6">
+                      <div className="input-group js-parent-focus">
+                        <input
+                          className="form-control"
+                          name="password"
+                          value={this.state.pass}
+                          type="text"
+                          required
+                          onChange={this.handleEnterPass}
+                        />
+                        <span className="input-group-btn">
+                          <button
+                            onClick={this.handleShowPassword}
+                            type="button"
+                            className="input-group-btn show"
+                          >
+                            Hide
+                          </button>
                         </span>
-                        Mrs.
-                      </label>
-                    </div>
-
-                    <div className="col-md-3 form-control-comment" />
-                  </div>
-
-                  <div className="form-group row ">
-                    <label className="col-md-3 form-control-label required">
-                      First name
-                    </label>
-                    <div className="col-md-6">
-                      <input
-                        className="form-control"
-                        name="firstname"
-                        type="text"
-                        required
-                      />
-                    </div>
-                    <div className="col-md-3 form-control-comment" />
-                  </div>
-
-                  <div className="form-group row ">
-                    <label className="col-md-3 form-control-label required">
-                      Last name
-                    </label>
-                    <div className="col-md-6">
-                      <input
-                        className="form-control"
-                        name="lastname"
-                        type="text"
-                        required
-                      />
-                    </div>
-                    <div className="col-md-3 form-control-comment" />
-                  </div>
-
-                  <div className="form-group row ">
-                    <label className="col-md-3 form-control-label required">
-                      Email
-                    </label>
-                    <div className="col-md-6">
-                      <input
-                        className="form-control"
-                        name="email"
-                        type="email"
-                        required
-                      />
-                    </div>
-
-                    <div className="col-md-3 form-control-comment" />
-                  </div>
-
-                  <div className="form-group row ">
-                    <label className="col-md-3 form-control-label required">
-                      Password
-                    </label>
-
-                    {this.state.showPassword === false ? (
-                      <div className="col-md-6">
-                        <div className="input-group js-parent-focus">
-                          <input
-                            className="form-control"
-                            name="password"
-                            type="password"
-                            pattern=".{5,}"
-                            required
-                          />
-                          <span className="input-group-btn">
-                            <button
-                              onClick={this.handleShowPassword}
-                              type="button"
-                              className="input-group-btn show"
-                            >
-                              Show
-                            </button>
-                          </span>
-                        </div>
                       </div>
-                    ) : (
-                      <div className="col-md-6">
-                        <div className="input-group js-parent-focus">
-                          <input
-                            className="form-control"
-                            name="password"
-                            type="text"
-                            required
-                          />
-                          <span className="input-group-btn">
-                            <button
-                              onClick={this.handleShowPassword}
-                              type="button"
-                              className="input-group-btn show"
-                            >
-                              Hide
-                            </button>
-                          </span>
-                        </div>
-                      </div>
-                    )}
+                    </div>
+                  )}
 
-                    <div className="col-md-3 form-control-comment" />
+                  <div className="col-md-3 form-control-comment" />
+                </div>
+
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label">
+                    Birthdate
+                  </label>
+                  <div className="col-md-6">
+                    <input
+                      className="form-control"
+                      type="text"
+                      placeholder="MM/DD/YYYY"
+                    />
+                    <span className="form-control-comment">
+                      (E.g.: 05/31/1970)
+                    </span>
                   </div>
 
-                  <div className="form-group row ">
-                    <label className="col-md-3 form-control-label">
-                      Birthdate
-                    </label>
-                    <div className="col-md-6">
-                      <input
-                        className="form-control"
-                        name="birthday"
-                        type="text"
-                        placeholder="MM/DD/YYYY"
-                      />
-                      <span className="form-control-comment">
-                        (E.g.: 05/31/1970)
-                      </span>
-                    </div>
+                  <div className="col-md-2 form-control-comment optional">
+                    Optional
+                  </div>
+                </div>
 
-                    <div className="col-md-2 form-control-comment optional">
-                      Optional
-                    </div>
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label" />
+                  <div className="col-md-6">
+                    <span className="custom-checkbox">
+                      <input name="optin" type="checkbox" value="1" />
+                      <span> Receive offers from our partners</span>
+                    </span>
                   </div>
 
-                  <div className="form-group row ">
-                    <label className="col-md-3 form-control-label" />
-                    <div className="col-md-6">
-                      <span className="custom-checkbox">
-                        <input name="optin" type="checkbox" value="1" />
-                        <span> Receive offers from our partners</span>
-                      </span>
-                    </div>
+                  <div className="col-md-3 form-control-comment" />
+                </div>
 
-                    <div className="col-md-3 form-control-comment" />
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label" />
+                  <div className="col-md-6">
+                    <span className="custom-checkbox">
+                      <input name="newsletter" type="checkbox" value="1" />
+
+                      <span> Sign up for our newsletter</span>
+
+                      <br />
+                      <em>
+                        You may unsubscribe at any moment. For that purpose,
+                        please find our contact info in the legal notice.
+                      </em>
+                    </span>
                   </div>
 
-                  <div className="form-group row ">
-                    <label className="col-md-3 form-control-label" />
-                    <div className="col-md-6">
-                      <span className="custom-checkbox">
-                        <input name="newsletter" type="checkbox" value="1" />
-
-                        <span> Sign up for our newsletter</span>
-
-                        <br />
-                        <em>
-                          You may unsubscribe at any moment. For that purpose,
-                          please find our contact info in the legal notice.
-                        </em>
-                      </span>
-                    </div>
-
-                    <div className="col-md-3 form-control-comment" />
-                  </div>
-                </section>
-                <footer>
-                  <button
-                    className="button-save"
-                    data-link-action="save-customer"
-                    type="submit"
-                  >
-                    Save
-                  </button>
-                </footer>
-              </form>
+                  <div className="col-md-3 form-control-comment" />
+                </div>
+              </section>
+              <footer>
+                <button
+                  onClick={this.handleCreateSuccess}
+                  className="button-save"
+                  data-link-action="save-customer"
+                  type="submit"
+                >
+                  Save
+                </button>
+              </footer>
+              {/* </form> */}
             </section>
           </section>
         </section>

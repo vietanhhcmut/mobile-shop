@@ -1,3 +1,7 @@
+section#main {
+  margin-bottom: 30px;
+}
+
 .page-content h1 {
   font-size: 1.5em;
   margin: 0.67em 0;
@@ -51,6 +55,7 @@ label {
   outline: 0;
   box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
 }
+
 footer {
   text-align: right;
 }
@@ -59,7 +64,12 @@ footer {
   background: blue;
   color: white;
   border: none;
-  padding: 5px 10px;
+  font-size: 1rem;
+  padding: 5px 12px;
+  border-color: transparent;
+}
+.button-save:hover {
+  background-color: #0e6ce4;
 }
 
 .form-control:focus {
@@ -80,6 +90,60 @@ button.input-group-btn.show {
   border: none;
   color: white;
   width: 50px;
+}
+
+.modal-body {
+  display: none;
+  right: 10%;
+  z-index: 100;
+  padding: 16px 50px;
+  position: fixed;
+  background-color: white;
+  border: 1px solid #20da20;
+  animation-duration: 1s;
+  color: #20da20;
+  border-radius: 5px;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  animation: showmodal 1s ease-out;
+}
+
+@keyframes showmodal {
+  from {
+    opacity: 0;
+    top: 0;
+  }
+  to {
+    opacity: 1;
+    top: 150px;
+  }
+}
+
+#show-modal {
+  display: block;
+  /* animation: offmodal 3s cubic-bezier(0.1, -0.6, 0.2, 0); */
+}
+
+/* @keyframes offmodal {
+  from {
+    opacity: 1;
+    top: 50px;
+  }
+  to {
+    opacity: 0;
+    top: 0;
+  }
+} */
+
+.modal-body p {
+  margin-bottom: 0px;
+}
+
+span.close-modal {
+  cursor: pointer;
+  color: black;
+  top: 0;
+  right: 5%;
+  position: absolute;
 }
 
 @media (min-width: 768px) {
