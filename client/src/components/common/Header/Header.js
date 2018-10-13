@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./Header.css";
 import Menu from "./Menu/Menu";
 import Navbar from "./NavBar/NavBar";
+import { Link } from "react-router-dom";
 
 export default class Header extends Component {
   state = {
@@ -35,8 +36,10 @@ export default class Header extends Component {
     ]
   };
   handleToggle = () => {
-    this.setState({
-      toggle: !this.state.toggle
+    this.setState(prevState => {
+      return {
+        toggle: !prevState.toggle
+      };
     });
   };
   handleShowMenu = () => {
@@ -50,11 +53,25 @@ export default class Header extends Component {
     return (
       <header>
         <div className="logo">
-          <img
-            src="https://demo4leotheme.com/prestashop/leo_mobile/img/leo-mobile-logo-1491983441.jpg"
-            alt="not found"
-          />
+          <div className="logo__main-logo">
+            <img
+              src="https://demo4leotheme.com/prestashop/leo_mobile/img/leo-mobile-logo-1491983441.jpg"
+              alt="not found"
+            />
+          </div>
+          <div className="header-card-big">
+            <Link to="/cart">
+              <span className="header-card-big__icon">
+                <i className="material-icons add_shopping_cart">
+                  shopping_cart
+                </i>
+              </span>
+            </Link>
+            <div className="hidden-sm-down">Shopping Cart</div>
+            <span className="header-card-big__cart-infor">0 Item - $0.00</span>
+          </div>
         </div>
+
         <div className="search-big">
           <input
             className="search-big__text"
@@ -73,15 +90,30 @@ export default class Header extends Component {
               <i className="material-icons">menu</i>
             </span>
           </div>
-          <div className="search-big2">
-            <input
-              className="search-big2__text"
-              type="text"
-              placeholder="Search..."
-              autoComplete="off"
-            />
-            <i className="material-icons search-big2__icon">search</i>
+          <div className="header-card">
+            <Link to="/cart">
+              <span className="header-card__icon">
+                <i className="material-icons add_shopping_cart">
+                  shopping_cart
+                </i>
+              </span>
+            </Link>
+
+            <span className="header-card__cart-infor">0 Item - $0.00</span>
           </div>
+
+          <div className="search-big2">
+            <div className="search-big2__input">
+              <input
+                className="search-big2__text"
+                type="text"
+                placeholder="Search..."
+                autoComplete="off"
+              />
+              <i className="material-icons search-big2__icon">search</i>
+            </div>
+          </div>
+
           {this.state.toggle && (
             <Menu
               showMenu={this.state.showMenu}

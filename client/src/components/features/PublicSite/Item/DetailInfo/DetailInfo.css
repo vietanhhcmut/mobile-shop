@@ -1,0 +1,27 @@
+.detail-info {
+    width: 100%;
+    background: white;
+    padding: 10px;
+}
+.detail-info-field {
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.detail-info-field__key {
+    text-transform: uppercase;
+    background: gray;
+}
+/* .detail-info-field__value {
+} */
+@media (min-width: 576px) {
+    .detail-info-field {
+        flex-direction: row;
+    }
+    .detail-info-field__key, .detail-info-field__value {
+        width: 50%;
+    }
+}
