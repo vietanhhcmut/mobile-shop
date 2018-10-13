@@ -36,6 +36,25 @@ class Cart extends Component {
             }
         ]
     }
+    changeQuantity = (index) => (e) => {
+        const quantity = e.target.value;
+        if (quantity === '0') return;
+        if (!/^[0-9]*$/.test(quantity)) return;
+        const cart = [...this.state.cart];
+        const cartItem = {...cart[index]};
+        cartItem.quantity = quantity;
+        cart[index] = cartItem;
+        this.setState({ cart });
+    }
+    blurQuantity = (index) => (value) => (e) => {
+        let quantity = value;
+        if (value === '') quantity = 1;
+        const cart = [...this.state.cart];
+        const cartItem = {...cart[index]};
+        cartItem.quantity = parseInt(quantity);
+        cart[index] = cartItem;
+        this.setState({ cart });
+    }
     render() {
         const { cart } = this.state;
         return (
@@ -52,7 +71,9 @@ class Cart extends Component {
                                     price={product.price}
                                     saleoff={product.saleoff}
                                     quantity={product.quantity}
-                                    color={product.color} />
+                                    color={product.color}
+                                    handleChangeQuantity={this.changeQuantity(index)}
+                                    handleBlurQuantity={this.blurQuantity(index)} />
                             )}
                         </div>
                     </div>
@@ -66,11 +87,11 @@ class Cart extends Component {
                         <div className='order-summary__total-checkout'>
                             <div className='total-checkout__row'>
                                 <span>
-                                    <b>{cart.reduce((sum, product) => sum + product.quantity, 0)}</b> Sản phẩm
+                                    <b>{cart.reduce((sum, product) => sum + Number(product.quantity), 0)}</b> Sản phẩm
                                 </span>
                                 <b>
                                     {formatPrice(cart.reduce((sum, product) =>
-                                        sum + calcDiscountPrice(product.price, product.saleoff) * product.quantity, 0))}
+                                        sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
                                 </b>
                             </div>
                             <div className='total-checkout__row'>
@@ -83,12 +104,12 @@ class Cart extends Component {
                                 <span>Total</span>
                                 <b className='row__total-price'>
                                     {formatPrice(cart.reduce((sum, product) =>
-                                        sum + calcDiscountPrice(product.price, product.saleoff) * product.quantity, 0))}
+                                        sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
                                 </b>
                             </div>
                         </div>
                         <div className='order-summary__total-checkout'>
-                            <Link to='/checkout' className='total-checkout__checkout-button'>Thanh toán</Link>
+                            <Link to='/checkout' className='total-checkout__checkout-button'>THANH TOÁN</Link>
                         </div>
 
                     </div>

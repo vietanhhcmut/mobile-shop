@@ -52,6 +52,7 @@
     font-size: 1.2rem;
     font-weight: 500;
     margin-right: 10px;
+    box-shadow: 4px 5px 10px 0 rgba(0,0,0,.15);
 }
 .quantity-action {
     position: absolute;

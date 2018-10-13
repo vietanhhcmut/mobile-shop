@@ -341,17 +341,16 @@ export const api = {
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
                 colors: ['Black', 'White', 'Gold'],
                 details: {
-                    size: '',
-                    screen: '',
-                    SIM: '',
-                    memory: '',
+                    screen: '6.4 inches',
+                    SIM: '1 sim micro',
+                    memory: '128GB',
                     RAM: '3GB',
-                    Bluetooth: '',
-                    WLAN: '',
-                    GPS: '',
-                    Pin: '',
-                    frontCam: '',
-                    behindCam: ''
+                    Bluetooth: '5.0',
+                    WLAN: '802.11 a/b/g/n/ac',
+                    GPU: 'Mali-G72 MP18',
+                    Pin: '3100mA',
+                    camera: '13 MP',
+                    OS: 'Android 8.1'
                 }
             }
         ), 100); 
