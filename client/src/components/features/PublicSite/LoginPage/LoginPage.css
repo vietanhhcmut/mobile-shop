@@ -95,6 +95,7 @@
 
 .login_form-forgot:hover , .no-account:hover {
     color: #58b0da;
+    text-decoration: none;
 }
 
 .login__form:nth-child(4) , .login__form:nth-child(3) {

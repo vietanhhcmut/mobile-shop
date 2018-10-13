@@ -11,15 +11,15 @@ class AboutUs extends Component {
                 <div className="about__feature">
                     <ul>
                         <li>
-                            <i class="fas fa-users"></i>
+                            <i className="fas fa-users"></i>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat tempora iure repudiandae saepe reprehenderit, ipsa minus, at ad explicabo consequatur quia inventore pariatur soluta! Aut atque cumque iure repellendus rerum.</p>
                         </li>
                         <li>
-                            <i class="far fa-gem"></i>
+                            <i className="far fa-gem"></i>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo fuga mollitia eum cumque minima, repellat ut aperiam autem animi, natus facere dolor omnis ea dicta consectetur! Expedita consectetur voluptatum ea!</p>
                         </li>
                         <li>
-                            <i class="fas fa-dollar-sign"></i>
+                            <i className="fas fa-dollar-sign"></i>
                             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa tenetur deleniti minus obcaecati architecto sequi atque delectus dolores, laudantium quaerat, nihil eos nam. Rem omnis illo, nihil reiciendis culpa recusandae!</p>
                         </li>
                         <div className="clear">
