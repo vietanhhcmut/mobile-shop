@@ -1,0 +1,169 @@
+section#main {
+  margin-bottom: 30px;
+}
+
+.page-content h1 {
+  font-size: 1.5em;
+  margin: 0.67em 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+.card {
+  padding: 16px;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  box-shadow: 2px 2px 11px 0 rgba(0, 0, 0, 0.1);
+}
+.page-content__register-form {
+  font-size: 13px;
+  color: #4a4949;
+}
+.page-content__register-form a:hover {
+  color: blue;
+}
+.login {
+  padding-left: 5px;
+}
+.custom-radio {
+  padding-right: 2px;
+  padding-top: 2px;
+}
+label {
+  margin-right: 15px;
+}
+
+.form-control {
+  font-size: 14px;
+  background: #ebebeb;
+  color: #acaaa6;
+  border: none;
+  padding: 8px 16px;
+  display: block;
+  width: 100%;
+  border-radius: 0.25rem;
+}
+
+[data-action="show-password"] {
+  background: #878787;
+  color: white;
+  border-radius: 0;
+  border: none;
+}
+
+.btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+}
+
+footer {
+  text-align: right;
+}
+.button-save {
+  border-radius: 5px;
+  background: blue;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  padding: 5px 12px;
+  border-color: transparent;
+}
+.button-save:hover {
+  background-color: #0e6ce4;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
+.optional {
+  margin-top: 2%;
+}
+.form-control-label {
+  margin-top: 2%;
+}
+.radio-choice {
+  margin-top: 0;
+}
+button.input-group-btn.show {
+  height: 36px;
+  background: #7e7f80;
+  border: none;
+  color: white;
+  width: 50px;
+}
+
+.modal-body {
+  display: none;
+  right: 10%;
+  z-index: 100;
+  padding: 16px 50px;
+  position: fixed;
+  background-color: white;
+  border: 1px solid red;
+  animation-duration: 1s;
+  color: red;
+  border-radius: 5px;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  animation: showmodal 1s ease-out;
+}
+
+.required-enter {
+  color: red;
+  padding-left: 3px;
+}
+
+@keyframes showmodal {
+  from {
+    opacity: 0;
+    top: 0;
+  }
+  to {
+    opacity: 1;
+    top: 150px;
+  }
+}
+
+#show-modal {
+  display: block;
+}
+
+.modal-body p {
+  margin-bottom: 0px;
+}
+
+span.close-modal {
+  cursor: pointer;
+  color: black;
+  top: 0;
+  right: 5%;
+  position: absolute;
+}
+
+.field-hide {
+  display: none;
+}
+
+.field-hidefield-required {
+  color: red;
+}
+.field-hidevalidate-email {
+  color: red;
+}
+.field-required,
+.validate-email {
+  background-color: #fff;
+  outline: 0;
+  box-shadow: 0 0 0 0.08rem red;
+}
+
+@media (min-width: 768px) {
+  .card {
+    margin: 0 10% auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    margin: 0 20% auto;
+  }
+}

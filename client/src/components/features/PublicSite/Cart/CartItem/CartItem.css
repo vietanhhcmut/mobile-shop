@@ -59,8 +59,7 @@
     position: absolute;
     top: 50%;
     right: 10px;
-    font-weight: bold;
-    font-size: 22px;
+    font-size: 24px;
     color: #999;
     cursor: pointer;
     transform: translateY(-50%);
@@ -76,9 +75,13 @@
     box-shadow: 2px 2px 3px 0 rgba(0,0,0,.15);
 }
 .product-quantity__quantity {
+    outline: none;
     width: 50px;
     height: 100%;
     border: 1px solid #ccc;
+    text-align: right;
+    padding-right: 20px;
+    font-weight: bold;
 }
 .product-quantity__arrows {
     height: 100%;
