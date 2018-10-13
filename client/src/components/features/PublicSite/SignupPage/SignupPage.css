@@ -22,17 +22,16 @@ section#main {
 .page-content__register-form a:hover {
   color: blue;
 }
-.login {
+.page-content__register-form__login {
   padding-left: 5px;
 }
 .custom-radio {
   padding-right: 2px;
   padding-top: 2px;
 }
-label {
-  margin-right: 15px;
+span.custom-radio.second-radio {
+  margin-left: 15px;
 }
-
 .form-control {
   font-size: 14px;
   background: #ebebeb;
@@ -56,9 +55,10 @@ label {
   box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
 }
 
-footer {
+.page-content__footer {
   text-align: right;
 }
+
 .button-save {
   border-radius: 5px;
   background: blue;
@@ -75,9 +75,7 @@ footer {
 .form-control:focus {
   box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
 }
-.optional {
-  margin-top: 2%;
-}
+
 .form-control-label {
   margin-top: 2%;
 }
