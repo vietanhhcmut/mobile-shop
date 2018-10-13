@@ -4,11 +4,9 @@ import { calcDiscountPrice, formatPrice } from '../../../../../constants/constan
 import { Link } from 'react-router-dom';
 
 class CartItem extends Component {
-    handleChangeQuantity = () => {
-        
-    }
     render() {
-        const { img, name, price, saleoff, quantity, color } = this.props;
+        const { img, name, price, saleoff, quantity, color, 
+            handleChangeQuantity, handleClickIncrease, handleClickDecrease, handleBlurQuantity } = this.props;
         const discountPrice = calcDiscountPrice(price, saleoff);
         return (
             <div className='order__item'>
@@ -30,11 +28,15 @@ class CartItem extends Component {
                     </div>
                     <div className='info-wrapper__quantity-total'>
                         <div className='quantity-total__product-quantity'>
-                            <input className='product-quantity__quantity' value={quantity} type="text" 
-                                onChange={this.handleChangeQuantity}/>
+                            <input className='product-quantity__quantity' 
+                                value={quantity} type="text" 
+                                onChange={handleChangeQuantity}
+                                onBlur={handleBlurQuantity(quantity)}  />
                             <div className='product-quantity__arrows'>
-                                <div className="material-icons arrows__arrow-up">keyboard_arrow_up</div>
-                                <div className="material-icons arrows__arrow-down">keyboard_arrow_down</div>
+                                <div className="material-icons arrows__arrow-up"
+                                    onClick={handleClickIncrease}>keyboard_arrow_up</div>
+                                <div className="material-icons arrows__arrow-down" 
+                                    onClick={handleClickDecrease}>keyboard_arrow_down</div>
                             </div>
                         </div>
                         <div className='quantity-total__total-price'>
