@@ -91,18 +91,25 @@ span.toggle__icon {
   color: white;
 }
 
+i.material-icons.add_shopping_cart {
+  box-sizing: border-box;
+  width: 35px;
+  height: 35px;
+  padding-left: 1px;
+  text-align: center;
+  line-height: 35px;
+  background: #58b0da;
+  border-color: #58b0da;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
 .header-card-big {
   display: none;
 }
 
 span.header-card__icon {
   margin-right: 5px;
-  padding: 8px 4px;
-  border: 0.5px solid;
-  border-radius: 50%;
-  background: #58b0da;
-  border-color: #58b0da;
-  cursor: pointer;
 }
 
 .logo {
@@ -122,6 +129,15 @@ span.header-card__icon {
 }
 
 @media (min-width: 768px) {
+  i.material-icons.add_shopping_cart {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 1.6rem;
+    box-sizing: border-box;
+  }
+
   .header-card {
     display: none;
   }
@@ -137,14 +153,9 @@ span.header-card__icon {
     right: 0;
   }
   span.header-card-big__icon {
-    padding: 11px 11px;
-    background: #58b0da;
-    border-color: white;
-    border-radius: 50%;
     margin-right: 8px;
     position: absolute;
     right: 100%;
-    cursor: pointer;
   }
   .hidden-sm-down {
     color: #58b0da;

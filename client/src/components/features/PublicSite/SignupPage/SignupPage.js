@@ -53,7 +53,7 @@ class SignupPage extends Component {
     });
   };
 
-  handleCreateSuccess = () => {
+  handleValidateForm = () => {
     this.state.firstName === "" &&
       this.setState({
         idFirstName: "field-required"
@@ -92,18 +92,31 @@ class SignupPage extends Component {
       this.setState({
         idPass: "field-required"
       });
+  };
 
+  handleCreateSuccess = () => {
+    this.handleValidateForm();
     if (
       this.state.firstName !== "" &&
       this.state.lastName !== "" &&
       this.state.email !== "" &&
       this.state.pass !== ""
     ) {
-      this.state.status === 400
-        ? this.setState({
-            showModal: "show-modal"
-          })
-        : this.props.history.push("/login");
+      let lastAtPos = this.state.email.lastIndexOf("@");
+      let lastDotPos = this.state.email.lastIndexOf(".");
+      if (
+        lastAtPos < lastDotPos &&
+        lastAtPos > 0 &&
+        this.state.email.indexOf("@@") === -1 &&
+        lastDotPos > 2 &&
+        this.state.email.length - lastDotPos > 2
+      ) {
+        this.state.status === 400
+          ? this.setState({
+              showModal: "show-modal"
+            })
+          : this.props.history.push("/login");
+      }
     }
   };
 
@@ -114,6 +127,12 @@ class SignupPage extends Component {
   };
 
   render() {
+    let typePass = "password";
+    let showPass = "Show";
+    if (this.state.showPassword === true) {
+      typePass = "text";
+      showPass = "Hide";
+    }
     return (
       <div>
         <section id="main">
@@ -214,7 +233,7 @@ class SignupPage extends Component {
                       type="email"
                     />
                     <div className={"field-hide" + this.state.idEmail}>
-                      Hãy nhập "Email"" của bạn
+                      Hãy nhập "Email" của bạn
                     </div>
                     <div className={"field-hide" + this.state.validateEmail}>
                       Email của bạn chưa đúng
@@ -231,29 +250,20 @@ class SignupPage extends Component {
                   </label>
                   <div className="col-md-6">
                     <div className="input-group js-parent-focus">
-                      {this.state.showPassword === false ? (
-                        <input
-                          className={"form-control " + this.state.idPass}
-                          value={this.state.pass}
-                          onChange={this.handleEnterPass}
-                          type="password"
-                        />
-                      ) : (
-                        <input
-                          className={"form-control " + this.state.idPass}
-                          value={this.state.pass}
-                          onChange={this.handleEnterPass}
-                          type="text"
-                        />
-                      )}
-
+                      {/* {this.state.showPassword === false ? ( */}
+                      <input
+                        className={"form-control " + this.state.idPass}
+                        value={this.state.pass}
+                        onChange={this.handleEnterPass}
+                        type={typePass}
+                      />
                       <span className="input-group-btn">
                         <button
                           onClick={this.handleShowPassword}
                           type="button"
                           className="input-group-btn show"
                         >
-                          {this.state.showPassword === false ? "Show" : "Hide"}
+                          {showPass}
                         </button>
                       </span>
                     </div>
