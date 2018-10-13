@@ -11,6 +11,7 @@ import LoginPage from './LoginPage/LoginPage';
 import SignupPage from './SignupPage/SignupPage';
 import HomePage from './HomePage/HomePage';
 import CartModal from '../../common/CartModal/CartModal';
+import PasswordRecoveryPage from './PasswordRecoveryPage/PasswordRecoveryPage';
 
 class PublicSite extends Component {
     render() {
@@ -25,6 +26,7 @@ class PublicSite extends Component {
                     <Route path="/item/:id" exact component={DetailedItem} />
                     <Route path="/login" exact component={LoginPage} />
                     <Route path="/signup" exact component={SignupPage} />
+                    <Route path="/password-recovery" exact component={PasswordRecoveryPage} />
                     <Redirect to="/sorry" />
                 </Switch>
                 <CartModal />
