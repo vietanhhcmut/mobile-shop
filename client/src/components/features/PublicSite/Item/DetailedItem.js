@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import DetailInfo from './DetailInfo/DetailInfo';
+import Review from './Review/Review';
 
 
 class DetailedItem extends Component {
@@ -143,7 +144,7 @@ class DetailedItem extends Component {
                             <Tab value={2} label="Đánh giá" />
                         </Tabs>
                         { tab === 1 && item && <DetailInfo detail={item.details}/> }
-                        { tab === 2 && <p>Hi 2</p> }
+                        { tab === 2 && <Review /> }
                     </AppBar>
                 </div>
             </div >

@@ -4,24 +4,31 @@
     padding: 10px;
 }
 .detail-info-field {
-    height: 50px;
+    height: auto;
     display: flex;
     flex-direction: column;
-    border-top: 1px solid;
     text-align: center;
     margin-bottom: 20px;
 }
 .detail-info-field__key {
     text-transform: uppercase;
-    background: gray;
+    background: #d8d1d1;
+    font-weight: bold;
 }
 /* .detail-info-field__value {
 } */
 @media (min-width: 576px) {
     .detail-info-field {
         flex-direction: row;
+        height: 30px;
+        border-bottom: 1px solid #d0cdcd;
+    }
+    .detail-info-field__key {
+        background: none;
+        padding-left: 20px;
     }
     .detail-info-field__key, .detail-info-field__value {
-        width: 50%;
+        width: 40%;
+        text-align: left;
     }
 }

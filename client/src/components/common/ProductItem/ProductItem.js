@@ -33,7 +33,7 @@ class ProductItem extends Component {
                             item.saleoff?
                             <div className="item-saleoff">
                                 <span>{formatPrice(item.price)}</span>
-                                <span>{item.saleoff}</span>
+                                <span>-{item.saleoff}</span>
                             </div>
                             :
                             null
