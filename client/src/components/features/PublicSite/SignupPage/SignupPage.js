@@ -143,7 +143,10 @@ class SignupPage extends Component {
             <section className="page-content__register-form">
               <p>
                 Bạn đã sẵn sàng tạo tài khoản chưa?
-                <Link to="/login" className="login">
+                <Link
+                  to="/login"
+                  className="page-content__register-form__login"
+                >
                   Hay bạn muốn Login
                 </Link>
               </p>
@@ -161,7 +164,7 @@ class SignupPage extends Component {
                       Nam
                     </label>
                     <label className="radio-inline">
-                      <span className="custom-radio">
+                      <span className="custom-radio second-radio">
                         <input name="id_gender" type="radio" value="2" />
                       </span>
                       Nữ
@@ -283,7 +286,7 @@ class SignupPage extends Component {
                   </div>
                 </div>
               </section>
-              <footer>
+              <footer className="page-content__footer">
                 <button
                   onClick={this.handleCreateSuccess(
                     firstName,

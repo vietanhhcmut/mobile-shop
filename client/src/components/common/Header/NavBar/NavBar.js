@@ -5,7 +5,7 @@ import "./NavBar.css";
 const Navbar = ({ categories }) => (
   <ul className="navbar-items">
     <li className="navbar-item">
-      <Link to="/" className="link">
+      <Link to="/" className="navbar-item__link">
         Home
       </Link>
     </li>
@@ -30,17 +30,17 @@ const Navbar = ({ categories }) => (
       </div>
     </li>
     <li className="navbar-item">
-      <Link to="/about" className="link">
+      <Link to="/about" className="navbar-item__link">
         About us
       </Link>
     </li>
     <li className="navbar-item">
-      <Link to="/login" className="link">
+      <Link to="/login" className="navbar-item__link">
         Login
       </Link>
     </li>
     <li className="navbar-item">
-      <Link to="/signup" className="link">
+      <Link to="/signup" className="navbar-item__link">
         Sign up
       </Link>
     </li>
