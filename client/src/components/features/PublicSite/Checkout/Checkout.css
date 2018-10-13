@@ -1,0 +1,126 @@
+.checkout {
+    margin: 1em 0;
+    box-shadow: 2px 2px 11px 0 rgba(0,0,0,.1);
+}
+.checkout__info {
+    margin-top: 1em;
+}
+.info__block {
+    padding: 1em;
+    border: 1px solid #eaeaea;
+    cursor: pointer;
+}
+.block__title {
+    font-size: 18px;
+    font-weight: bold;
+}
+.block__title > span {
+    margin-right: 10px;
+}
+.block__content {
+    font-size: 14px;
+}
+.content__guest-or-signin {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 1em;
+}
+.guest-or-signin {
+    width: 100%;
+    text-align: center;
+    color: #aaa;
+}
+.guest-or-signin__active {
+    color: black;
+}
+
+.content__personal-info {
+    font-size: 14px;
+}
+.personal-info__row {
+    margin: 1em auto;
+}
+.personal-info__signup-row {
+    margin-top: 3em;
+    margin-bottom: 2em;
+}
+.personal-info__row > input {
+    margin-top: 5px;
+    background: #ebebeb;
+    color: #acaaa6;
+    border: none;
+    padding: 8px 16px;
+    width: 100%;
+    border-radius: .25em;
+    line-height: 1.25em;
+}
+.personal-info__row > input:focus {
+    background-color: white;
+    outline: 1px solid #eaeaea;
+}
+
+.row__gender {
+    margin: 1em 0;
+}
+.row__gender > span {
+    margin: 0 20px;
+}
+
+.content__continue-button {
+    color: white;
+    background: #3387f2;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 2px;
+    font-size: 14px;
+    transition: all .3s;   
+    cursor: pointer;
+    margin: 1em auto;
+    margin-left: 100%;
+    transform: translateX(-100%); 
+}
+.content__continue-button:hover {
+    background: #0e6ce4;
+    margin-right: 0;
+}
+
+.content__pay-method {
+    display: flex;
+    align-items: center;  
+    margin: 1em;  
+}
+.content__pay-method > input {
+    margin-right: 10px;
+}
+
+.content__banks {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1em;
+}
+.banks__bank {
+    cursor: pointer;
+    max-width: 130px;
+    height: auto;
+    padding: 2px;
+    border: 1px dashed #ccc;
+}
+.banks__bank > img {
+    width: 100%;
+    height: 100%;
+}
+.banks__bank:hover {
+    border-color: #0e6ce4;
+}
+
+@media (min-width: 768px) {
+    .personal-info__row {
+        display: flex;
+        align-items: center;
+    }
+    .personal-info__row > span {
+        width: 100px;
+    }
+}

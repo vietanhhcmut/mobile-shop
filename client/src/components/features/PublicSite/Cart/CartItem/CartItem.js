@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 class CartItem extends Component {
     render() {
         const { img, name, price, saleoff, quantity, color, 
-            handleChangeQuantity, handleClickIncrease, handleClickDecrease, handleBlurQuantity } = this.props;
+            handleChangeQuantity, handleClickIncreaseQuantity, handleClickDecreaseQuantity, handleBlurQuantity } = this.props;
         const discountPrice = calcDiscountPrice(price, saleoff);
         return (
             <div className='order__item'>
@@ -34,9 +34,9 @@ class CartItem extends Component {
                                 onBlur={handleBlurQuantity(quantity)}  />
                             <div className='product-quantity__arrows'>
                                 <div className="material-icons arrows__arrow-up"
-                                    onClick={handleClickIncrease}>keyboard_arrow_up</div>
+                                    onClick={handleClickIncreaseQuantity}>keyboard_arrow_up</div>
                                 <div className="material-icons arrows__arrow-down" 
-                                    onClick={handleClickDecrease}>keyboard_arrow_down</div>
+                                    onClick={handleClickDecreaseQuantity}>keyboard_arrow_down</div>
                             </div>
                         </div>
                         <div className='quantity-total__total-price'>
