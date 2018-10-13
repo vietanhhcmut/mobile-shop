@@ -14,9 +14,11 @@ li.navbar-item:hover {
 .navbar-item {
   color: white;
 }
-a {
+
+a.navbar-item__link {
   padding: 0;
 }
+
 .category {
   position: relative;
 }
@@ -28,7 +30,7 @@ li.navbar-item.category {
   width: 160px;
 }
 
-a:hover {
+a.navbar-item__link:hover {
   color: white;
   text-decoration: none;
 }

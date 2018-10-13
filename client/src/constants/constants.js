@@ -13,6 +13,29 @@ import img_newsRightBottom from '../assets/imgs/news/news-right-bottom.jpg';
 import img_newsBottomLeft from '../assets/imgs/news/news-bottom-left.jpg';
 import img_newsBottomRight from '../assets/imgs/news/news-bottom-right.jpg';
 
+import img_Vietinbank from '../assets/imgs/banks/Vietinbank.jpg';
+import img_DongA from '../assets/imgs/banks/DongA.jpg';
+import img_Vietcombank from '../assets/imgs/banks/Vietcombank.jpg';
+import img_BIDV from '../assets/imgs/banks/BIDV.jpg';
+import img_Techcombank from '../assets/imgs/banks/Techcombank.jpg';
+import img_Sacombank from '../assets/imgs/banks/Sacombank.jpg';
+import img_VIB from '../assets/imgs/banks/VIB.jpg';
+import img_ACB from '../assets/imgs/banks/ACB.jpg';
+import img_TPBank from '../assets/imgs/banks/TPBank.jpg';
+import img_VPBank from '../assets/imgs/banks/VPBank.jpg';
+import img_MaritimeBank from '../assets/imgs/banks/MaritimeBank.jpg';
+import img_Agribank from '../assets/imgs/banks/Agribank.jpg';
+import img_MB from '../assets/imgs/banks/MB.jpg';
+import img_SHB from '../assets/imgs/banks/SHB.jpg';
+import img_SeABank from '../assets/imgs/banks/SeABank.jpg';
+import img_HDBank from '../assets/imgs/banks/HDBank.jpg';
+import img_VietABank from '../assets/imgs/banks/VietABank.jpg';
+import img_OceanBank from '../assets/imgs/banks/OceanBank.jpg';
+import img_BAC from '../assets/imgs/banks/BAC.jpg';
+import img_ABBank from '../assets/imgs/banks/ABBank.jpg';
+import img_NamABank from '../assets/imgs/banks/NamABank.jpg';
+
+
 export const imgs_logo = img_logo;
 export const imgs_payment = img_payment;
 
@@ -25,6 +48,13 @@ export const newsImages = {
     newsBottomRight: img_newsBottomRight
 }
 
+export const bankImages = [
+    img_Vietinbank, img_DongA, img_Vietcombank, img_BIDV,
+    img_Techcombank, img_Sacombank, img_VIB, img_ACB,
+    img_TPBank, img_VPBank, img_MaritimeBank, img_Agribank,
+    img_MB, img_SHB, img_SeABank, img_HDBank, img_VietABank,
+    img_OceanBank, img_BAC, img_ABBank, img_NamABank
+];
 
 export const api = {
     getProducts: () => new Promise((resolve, reject) => {
@@ -323,7 +353,7 @@ export const api = {
                 id: 5,
                 name: 'Apple'
             }
-        ]), 100); 
+        ]), 100);
     }),
     getItem: (id) => new Promise((resolve, reject) => {
         setTimeout(() => resolve(
@@ -353,8 +383,8 @@ export const api = {
                     OS: 'Android 8.1'
                 }
             }
-        ), 100); 
+        ), 100);
     })
 }
-export const calcDiscountPrice = (price, saleoff) => price * (1 - saleoff / 100.0); 
-export const formatPrice = (price) => price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+export const calcDiscountPrice = (price, saleoff) => price * (1 - saleoff / 100.0);
+export const formatPrice = (price) => price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });

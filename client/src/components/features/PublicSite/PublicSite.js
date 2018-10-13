@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Header from '../../common/Header/Header';
 import Footer from './../../common/Footer/Footer';
 import Cart from './Cart/Cart';
+import Checkout from './Checkout/Checkout'
 import AboutUs from './AboutUs/AboutUs';
 import Category from './Category/Category';
 import DetailedItem from './Item/DetailedItem';
@@ -21,6 +22,7 @@ class PublicSite extends Component {
                 <Switch>
                     <Route path="/" exact component={HomePage} />
                     <Route path="/cart" exact component={Cart} />
+                    <Route path="/checkout" exact component={Checkout} />
                     <Route path="/about" exact component={AboutUs} />
                     <Route path="/category/:id" exact component={Category} />
                     <Route path="/item/:id" exact component={DetailedItem} />

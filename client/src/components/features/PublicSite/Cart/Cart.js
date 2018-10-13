@@ -36,24 +36,31 @@ class Cart extends Component {
             }
         ]
     }
+    updateQuantity = (index, newQuantity) => {
+        const cart = [...this.state.cart];
+        const cartItem = {...cart[index]};
+        cartItem.quantity = newQuantity;
+        cart[index] = cartItem;
+        this.setState({ cart });
+    }
     changeQuantity = (index) => (e) => {
         const quantity = e.target.value;
         if (quantity === '0') return;
         if (!/^[0-9]*$/.test(quantity)) return;
-        const cart = [...this.state.cart];
-        const cartItem = {...cart[index]};
-        cartItem.quantity = quantity;
-        cart[index] = cartItem;
-        this.setState({ cart });
+        this.updateQuantity(index, quantity);
     }
     blurQuantity = (index) => (value) => (e) => {
         let quantity = value;
         if (value === '') quantity = 1;
-        const cart = [...this.state.cart];
-        const cartItem = {...cart[index]};
-        cartItem.quantity = parseInt(quantity);
-        cart[index] = cartItem;
-        this.setState({ cart });
+        this.updateQuantity(index, quantity);
+    }
+    clickIncreaseQuantity = (index) => () => {
+        this.updateQuantity(index, Number(this.state.cart[index].quantity) + 1);
+    }
+    clickDecreaseQuantity = (index) => () => {
+        const quantity = Number(this.state.cart[index].quantity);
+        if (quantity < 2) return;
+        this.updateQuantity(index, quantity - 1);
     }
     render() {
         const { cart } = this.state;
@@ -62,6 +69,9 @@ class Cart extends Component {
                 <div className='cart__left-side'>
                     <div className='left-side__order-wrapper'>
                         <div className='order-wrapper__title'>GIỎ HÀNG</div>
+                        {(!cart || cart.length === 0) && 
+                        <div className='order__item'>Chưa có sản phẩm nào trong giỏ hàng. Quay lại mua nào!</div> 
+                        }
                         <div>
                             {cart.map((product, index) =>
                                 <CartItem
@@ -73,7 +83,9 @@ class Cart extends Component {
                                     quantity={product.quantity}
                                     color={product.color}
                                     handleChangeQuantity={this.changeQuantity(index)}
-                                    handleBlurQuantity={this.blurQuantity(index)} />
+                                    handleBlurQuantity={this.blurQuantity(index)}
+                                    handleClickIncreaseQuantity = {this.clickIncreaseQuantity(index)}
+                                    handleClickDecreaseQuantity = {this.clickDecreaseQuantity(index)} />
                             )}
                         </div>
                     </div>
@@ -109,7 +121,8 @@ class Cart extends Component {
                             </div>
                         </div>
                         <div className='order-summary__total-checkout'>
-                            <Link to='/checkout' className='total-checkout__checkout-button'>THANH TOÁN</Link>
+                            <Link to='/checkout' 
+                                className='total-checkout__checkout-button'>THANH TOÁN</Link>
                         </div>
 
                     </div>
