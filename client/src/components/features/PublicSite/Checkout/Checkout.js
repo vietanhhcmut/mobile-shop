@@ -1,42 +1,14 @@
 import React, { Component } from 'react';
 import './Checkout.css';
 import { bankImages } from '../../../../constants/constants';
+import Cart from './Cart/Cart';
 
 class Checkout extends Component {
     state = {
         currentBlock: 0,
         payMethod: 'cash',
         signIn: true,
-        isGuest: true,
-        cart: [
-            {
-                id: '123',
-                img: 'https://demo4leotheme.com/prestashop/leo_mobile/33-small_default/printed-dress.jpg',
-                name: 'Samsung Galaxy Tab',
-                price: 16998000,
-                saleoff: 5,
-                quantity: 1,
-                color: 'Black'
-            },
-            {
-                id: '456',
-                img: 'https://demo4leotheme.com/prestashop/leo_mobile/24-small_default/printed-chiffon-dress.jpg',
-                name: 'Sony Xperia XZs',
-                price: 7569000,
-                saleoff: 3,
-                quantity: 3,
-                color: 'White'
-            },
-            {
-                id: '789',
-                img: 'https://demo4leotheme.com/prestashop/leo_mobile/43-small_default/printed-dress.jpg',
-                name: 'OPPO F3 Plus',
-                price: 9890000,
-                saleoff: 10,
-                quantity: 2,
-                color: 'Gold'
-            }
-        ]
+        isGuest: true
     }
     handleClickBlock = (block) => () => {
         this.setState({ currentBlock: block });
@@ -136,7 +108,7 @@ class Checkout extends Component {
 
                     <div className='info__block'>
                         <div className='block__title' onClick={this.handleClickBlock(2)}>
-                            <span>2</span>
+                            <span>3</span>
                             <span>THANH TOÁN</span>
                         </div>
                         {currentBlock === 2 &&
@@ -165,13 +137,7 @@ class Checkout extends Component {
                     </div>
 
                 </div>
-                <div className='checkout__cart-checkout'>
-                    {/* <p>Giỏ hàng của bạn</p>
-                    <p>9 Sản phẩm</p>
-                    <div className='cart-checkout__'>
-                        
-                    </div> */}
-                </div>
+                <Cart />
             </div>
         );
     }

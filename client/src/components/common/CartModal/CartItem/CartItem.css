@@ -49,6 +49,7 @@
 }
 .info__product-name:hover {
     color: #58b0da;
+    text-decoration: none;
 }
 
 .info__quantity-adjusting {

@@ -32,7 +32,7 @@
 }
 .total-checkout__checkout-button {
     background: #2c2c2c;
-    padding: 10px 30px;
+    padding: 8px 30px;
     display: block;
     color: white;
     font-weight: bold;
@@ -45,6 +45,8 @@
 }
 .total-checkout__checkout-button:hover {
     background: #58b0da;
+    text-decoration: none;
+    color: white;
 }
 .row__total-price {
     color: red;

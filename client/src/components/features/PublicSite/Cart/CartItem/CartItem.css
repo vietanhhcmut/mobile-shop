@@ -29,6 +29,7 @@
 }
 .product-info__name:hover {
     color: #58b0da;
+    text-decoration: none;
 }
 .product-info__discount-price {
     display: block;

@@ -113,7 +113,7 @@ class Cart extends Component {
                         </div>
                         <div className='order-summary__total-checkout'>
                             <div className='total-checkout__row'>
-                                <span>Total</span>
+                                <span>Tổng cộng</span>
                                 <b className='row__total-price'>
                                     {formatPrice(cart.reduce((sum, product) =>
                                         sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
