@@ -74,6 +74,7 @@
 
 .checkout-cart__policy {
     padding: 1em;
+    font-size: 14px;
 }
 @media (min-width: 992px) {
     .checkout__checkout-cart { 

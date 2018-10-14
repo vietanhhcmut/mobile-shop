@@ -9,9 +9,9 @@
 .info__block {
     padding: 1em;
     border: 1px solid #eaeaea;
-    cursor: pointer;
 }
 .block__title {
+    cursor: pointer;
     font-size: 18px;
     font-weight: bold;
 }
@@ -29,9 +29,9 @@
     margin-top: 1em;
 }
 .guest-or-signin {
-    width: 100%;
     text-align: center;
     color: #aaa;
+    cursor: pointer;
 }
 .guest-or-signin__active {
     color: black;
@@ -39,6 +39,9 @@
 
 .content__personal-info {
     font-size: 14px;
+    max-width: 400px;
+    margin: 1em auto;
+    margin-top: 2em;
 }
 .personal-info__row {
     margin: 1em auto;
@@ -47,8 +50,8 @@
     margin-top: 3em;
     margin-bottom: 2em;
 }
-.personal-info__row > input {
-    margin-top: 5px;
+.personal-info__row > input,
+.row__password > input {
     background: #ebebeb;
     color: #acaaa6;
     border: none;
@@ -57,16 +60,38 @@
     border-radius: .25em;
     line-height: 1.25em;
 }
-.personal-info__row > input:focus {
+.personal-info__row > input:focus,
+.row_-password > input:focus {
     background-color: white;
-    outline: 1px solid #eaeaea;
 }
-
+.personal-info__forget-password {
+    text-align: right;
+}
+.personal-info__forget-password > span {
+    cursor: pointer;
+}
+.personal-info__forget-password > span:hover {
+    color: #0e6ce4;
+}
 .row__gender {
     margin: 1em 0;
+    width: 100%;
 }
 .row__gender > span {
-    margin: 0 20px;
+    margin-right: 2em;
+}
+.row__password {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.row__password > button {
+    background: #aaa;
+    border: none;
+    color: white;
+    height: 33px;
+    width: 60px;
+    border-radius: 0 3px 3px 0;
 }
 
 .content__continue-button {
@@ -116,13 +141,13 @@
     border-color: #0e6ce4;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
     .personal-info__row {
         display: flex;
         align-items: center;
     }
     .personal-info__row > span {
-        width: 100px;
+        width: 150px;
     }
 }
 
