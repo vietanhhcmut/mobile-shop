@@ -76,6 +76,11 @@
     width: 100%;
     display: flex;
     overflow: auto;
+    align-items: center;
+}
+.cart-content__products > i {
+    margin: 0 auto;
+    display: block;
 }
 .cart-content__total-price {
     width: 100%;

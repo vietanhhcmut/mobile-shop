@@ -62,6 +62,11 @@ class Cart extends Component {
         if (quantity < 2) return;
         this.updateQuantity(index, quantity - 1);
     }
+    clickDeletProduct = (index) => () => {
+        const cart = [...this.state.cart];
+        cart.splice(index, 1);
+        this.setState({ cart });
+    }
     render() {
         const { cart } = this.state;
         return (
@@ -70,7 +75,7 @@ class Cart extends Component {
                     <div className='left-side__order-wrapper'>
                         <div className='order-wrapper__title'>GIỎ HÀNG</div>
                         {(!cart || cart.length === 0) && 
-                        <div className='order__item'>Chưa có sản phẩm nào trong giỏ hàng. Quay lại mua nào!</div> 
+                        <div className='order__item'>Không có sản phẩm nào trong giỏ hàng của bạn. Quay lại mua nào!</div> 
                         }
                         <div>
                             {cart.map((product, index) =>
@@ -85,7 +90,8 @@ class Cart extends Component {
                                     handleChangeQuantity={this.changeQuantity(index)}
                                     handleBlurQuantity={this.blurQuantity(index)}
                                     handleClickIncreaseQuantity = {this.clickIncreaseQuantity(index)}
-                                    handleClickDecreaseQuantity = {this.clickDecreaseQuantity(index)} />
+                                    handleClickDecreaseQuantity = {this.clickDecreaseQuantity(index)}
+                                    handleClickDeleteProduct = {this.clickDeletProduct(index)} />
                             )}
                         </div>
                     </div>

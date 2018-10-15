@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 class CartItem extends Component {
     render() {
-        const { img, name, price, saleoff, quantity } = this.props;
+        const { img, name, price, saleoff, quantity, 
+            handleClickIncreaseQuantity, handleClickDecreaseQuantity, handleClickDeleteProduct } = this.props;
         return (
             <div className='products__cart-item'>
                 <Link to='/' className='cart-item__product-img'>
@@ -19,12 +20,13 @@ class CartItem extends Component {
                         <i className='info__saleoff'>-{saleoff}%</i>
                     </div>
                     <div className='info__quantity-adjusting'>
-                        <span href="#">-</span>
+                        <span onClick={handleClickDecreaseQuantity}>-</span>
                         <b className='quantity-adjusting__product-quantity'>{quantity}</b>
-                        <span href="#">+</span>
+                        <span onClick={handleClickIncreaseQuantity}>+</span>
                     </div>
                 </div>
-                <i className="material-icons cart-item__remove-product">clear</i>
+                <i className="material-icons cart-item__remove-product"
+                    onClick={handleClickDeleteProduct}>clear</i>
             </div>
         );
     }

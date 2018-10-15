@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 class CartItem extends Component {
     render() {
         const { img, name, price, saleoff, quantity, color, 
-            handleChangeQuantity, handleClickIncreaseQuantity, handleClickDecreaseQuantity, handleBlurQuantity } = this.props;
+            handleChangeQuantity, handleClickIncreaseQuantity, handleClickDecreaseQuantity, 
+            handleBlurQuantity, handleClickDeleteProduct } = this.props;
         const discountPrice = calcDiscountPrice(price, saleoff);
         return (
             <div className='order__item'>
@@ -43,7 +44,8 @@ class CartItem extends Component {
                             {formatPrice(discountPrice * quantity)}
                         </div>
                     </div>
-                    <i className="material-icons item__remove-product">delete</i>
+                    <i className="material-icons item__remove-product"
+                        onClick={handleClickDeleteProduct}>delete</i>
                 </div>
             </div>
         );

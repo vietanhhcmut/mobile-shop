@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './CartModal.css';
 import CartItem from './CartItem/CartItem';
-import { formatPrice } from './../../../constants/constants';
+import { formatPrice, calcDiscountPrice } from './../../../constants/constants';
 import { Link } from 'react-router-dom';
 
 class CartModal extends Component {
@@ -40,6 +40,26 @@ class CartModal extends Component {
     handleClickBackdrop = () => {
         this.setState({ showCart: false });
     }
+    updateQuantity = (index, newQuantity) => {
+        const cart = [...this.state.cart];
+        const cartItem = {...cart[index]};
+        cartItem.quantity = newQuantity;
+        cart[index] = cartItem;
+        this.setState({ cart });
+    }
+    clickIncreaseQuantity = (index) => () => {
+        this.updateQuantity(index, Number(this.state.cart[index].quantity) + 1);
+    }
+    clickDecreaseQuantity = (index) => () => {
+        const quantity = Number(this.state.cart[index].quantity);
+        if (quantity < 2) return;
+        this.updateQuantity(index, quantity - 1);
+    }
+    clickDeletProduct = (index) => () => {
+        const cart = [...this.state.cart];
+        cart.splice(index, 1);
+        this.setState({ cart });
+    }
     render() {
         const { showCart, cart } = this.state;
         const styleCartContent = {
@@ -57,6 +77,9 @@ class CartModal extends Component {
                 </div>
                 <div className='cart-modal__cart-content' style={styleCartContent}>
                     <div className='cart-content__products'>
+                        {(!cart || cart.length === 0) &&
+                            <i>Không có sản phẩm nào trong giỏ hàng của bạn. Quay lại mua nào!</i>
+                        }
                         {cart.map((product, index) =>
                             <CartItem
                                 key={product.id}
@@ -64,13 +87,19 @@ class CartModal extends Component {
                                 name={product.name}
                                 price={product.price}
                                 saleoff={product.saleoff}
-                                quantity={product.quantity} />
+                                quantity={product.quantity}
+                                handleClickIncreaseQuantity={this.clickIncreaseQuantity(index)}
+                                handleClickDecreaseQuantity={this.clickDecreaseQuantity(index)}
+                                handleClickDeleteProduct = {this.clickDeletProduct(index)} />
                         )}
                     </div>
                     <div className='cart-content__total-price'>
                         <div className='total-price__row'>
                             <span>Tổng giá</span>
-                            <b>{formatPrice(121456000)}</b>
+                            <b>
+                                {formatPrice(cart.reduce((sum, product) =>
+                                    sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
+                            </b>
                         </div>
                         <div className='total-price__row'>
                             <span>Shipping</span>
@@ -78,7 +107,11 @@ class CartModal extends Component {
                         </div>
                         <div className='total-price__row total-price__total'>
                             <span>Tổng tiền</span>
-                            <b>{formatPrice(121456000)}</b>
+                            <b>
+                                {formatPrice(cart.reduce((sum, product) =>
+                                    sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
+                              
+                            </b>
                         </div>
                         <div className='total-price__view-cart'>
                             <Link className='view-cart__button' to='/cart'>GIỎ HÀNG</Link>
