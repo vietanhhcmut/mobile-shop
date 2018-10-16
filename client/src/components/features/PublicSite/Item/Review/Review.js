@@ -33,7 +33,7 @@ class Review extends Component {
     }
     render() {
         const reviews = this.state.reviews.map((review, index) => (
-            <div className="review">
+            <div className="review" key={index}>
                 <div className="review__img" key={index}>
                     <img src={review.user.img} alt="user"/>
                 </div>

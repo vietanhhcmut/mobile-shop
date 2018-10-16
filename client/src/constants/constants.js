@@ -384,7 +384,14 @@ export const api = {
                 }
             }
         ), 100);
-    })
+    }),
+    getBrand: () => new Promise((resolve, reject) => {
+        setTimeout(() => resolve({
+            id: 12,
+            name: 'Xiaomi',
+            background: "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BXqCX6b/videoblocks-xiaomi-flag-waving-slow-motion-3d-rendering-blue-sky-background-editorial-animation-seamless-loop-4k_h55hi5vy_thumbnail-full01.png",
+        }), 100);
+    }),
 }
 export const calcDiscountPrice = (price, saleoff) => price * (1 - saleoff / 100.0);
 export const formatPrice = (price) => price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
