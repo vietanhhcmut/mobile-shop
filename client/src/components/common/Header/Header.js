@@ -115,6 +115,7 @@ export default class Header extends Component {
 
           {this.state.toggle && (
             <Menu
+              handleToggle={this.handleToggle}
               showMenu={this.state.showMenu}
               handleShowMenu={this.handleShowMenu}
               categories={this.state.categories}
