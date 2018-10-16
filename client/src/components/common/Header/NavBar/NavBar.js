@@ -18,7 +18,7 @@ export default class Menu extends Component {
         <Link to="/" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "trang-chu" && "active-page"}
+            id={this.state.active === "trang-chu" ? "active-page" : ""}
             onClick={this.handleActivePage("trang-chu")}
           >
             Trang chủ
@@ -27,7 +27,7 @@ export default class Menu extends Component {
 
         <li
           className="navbar-item category"
-          id={this.state.active === "danh-muc" && "active-page"}
+          id={this.state.active === "danh-muc" ? "active-page" : ""}
         >
           <span className="navbar-item__categories">
             Danh mục
@@ -57,7 +57,7 @@ export default class Menu extends Component {
         <Link to="/about" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "gioi-thieu" && "active-page"}
+            id={this.state.active === "gioi-thieu" ? "active-page" : ""}
             onClick={this.handleActivePage("gioi-thieu")}
           >
             Giới thiệu
@@ -66,7 +66,7 @@ export default class Menu extends Component {
         <Link to="/login" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "dang-ki" && "active-page"}
+            id={this.state.active === "dang-ki" ? "active-page" : ""}
             onClick={this.handleActivePage("dang-ki")}
           >
             Đăng kí
@@ -75,7 +75,7 @@ export default class Menu extends Component {
         <Link to="/signup" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "dang-nhap" && "active-page"}
+            id={this.state.active === "dang-nhap" ? "active-page" : ""}
             onClick={this.handleActivePage("dang-nhap")}
           >
             Đăng nhập

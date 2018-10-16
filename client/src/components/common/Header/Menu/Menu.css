@@ -93,6 +93,12 @@ li.menu-items5:hover {
   text-decoration: none;
 }
 
+#menu-items__active {
+  color: #58b0da;
+  font-style: italic;
+  text-decoration: none;
+}
+
 li.menu-items3 {
   border-top: 1px solid rgb(228, 226, 226);
   margin-top: 5px;

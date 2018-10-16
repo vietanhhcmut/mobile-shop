@@ -7,6 +7,7 @@ import { logoSite } from "../../../constants/constants";
 
 export default class Header extends Component {
   state = {
+    active: "trang-chu",
     toggle: false,
     showMenu: false,
     categories: [
@@ -43,6 +44,13 @@ export default class Header extends Component {
       };
     });
   };
+
+  handleActivePage = page => {
+    this.setState({
+      active: page
+    });
+  };
+
   handleShowMenu = () => {
     this.setState(prevState => {
       return {
@@ -51,6 +59,7 @@ export default class Header extends Component {
     });
   };
   render() {
+    const { active, toggle, showMenu, categories } = this.state;
     return (
       <header>
         <div className="logo">
@@ -113,12 +122,14 @@ export default class Header extends Component {
             </div>
           </div>
 
-          {this.state.toggle && (
+          {toggle && (
             <Menu
+              active={active}
+              handleActivePage={this.handleActivePage}
               handleToggle={this.handleToggle}
-              showMenu={this.state.showMenu}
+              showMenu={showMenu}
               handleShowMenu={this.handleShowMenu}
-              categories={this.state.categories}
+              categories={categories}
             />
           )}
         </nav>
