@@ -3,10 +3,11 @@ import "./Header.css";
 import Menu from "./Menu/Menu";
 import Navbar from "./NavBar/NavBar";
 import { Link } from "react-router-dom";
-import { logoSite } from '../../../constants/constants';
+import { logoSite } from "../../../constants/constants";
 
 export default class Header extends Component {
   state = {
+    active: "trang-chu",
     toggle: false,
     showMenu: false,
     categories: [
@@ -43,6 +44,13 @@ export default class Header extends Component {
       };
     });
   };
+
+  handleActivePage = page => {
+    this.setState({
+      active: page
+    });
+  };
+
   handleShowMenu = () => {
     this.setState(prevState => {
       return {
@@ -51,14 +59,12 @@ export default class Header extends Component {
     });
   };
   render() {
+    const { active, toggle, showMenu, categories } = this.state;
     return (
       <header>
         <div className="logo">
           <div className="logo__main-logo">
-            <img
-              src={logoSite}
-              alt="not found"
-            />
+            <img src={logoSite} alt="not found" />
           </div>
           <Link to="/cart">
             <div className="header-card-big">
@@ -69,7 +75,7 @@ export default class Header extends Component {
               </span>
 
               <div className="hidden-sm-down">Giỏ hàng</div>
-              <span className="header-card-big__cart-infor">3 items</span>
+              <span className="header-card-big__cart-infor">6 sản phẩm</span>
             </div>
           </Link>
         </div>
@@ -100,7 +106,7 @@ export default class Header extends Component {
                 </i>
               </span>
 
-              <span className="header-card__cart-infor">3 items</span>
+              <span className="header-card__cart-infor">6 sản phẩm</span>
             </div>
           </Link>
 
@@ -116,11 +122,14 @@ export default class Header extends Component {
             </div>
           </div>
 
-          {this.state.toggle && (
+          {toggle && (
             <Menu
-              showMenu={this.state.showMenu}
+              active={active}
+              handleActivePage={this.handleActivePage}
+              handleToggle={this.handleToggle}
+              showMenu={showMenu}
               handleShowMenu={this.handleShowMenu}
-              categories={this.state.categories}
+              categories={categories}
             />
           )}
         </nav>

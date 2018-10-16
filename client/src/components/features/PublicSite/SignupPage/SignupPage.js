@@ -275,9 +275,7 @@ class SignupPage extends Component {
                       type="date"
                       placeholder="MM/DD/YYYY"
                     />
-                    <span className="form-control-comment">
-                      (E.g.: 05/31/1970)
-                    </span>
+                    <span className="form-control-comment" />
                   </div>
                 </div>
               </section>
