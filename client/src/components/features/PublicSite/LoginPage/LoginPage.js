@@ -49,7 +49,7 @@ class LoginPage extends Component {
     }
     return (
       <div className="login-page">
-        <h2>Login</h2>
+        <h2>Đăng nhập</h2>
         <div className="login-page__content">
           <form
             name="form"
@@ -62,66 +62,70 @@ class LoginPage extends Component {
               }
             >
               <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                className="login__form-inputemail"
-                name="email"
-                value={email}
-                onChange={this.handleChange}
-              />
+              <div className="login__form-inputemail">
+                <input
+                  type="text"
+                  name="email"
+                  value={email}
+                  onChange={this.handleChange}
+                />
+                {submitted &&
+                  !email && (
+                    <div className="login__form-help">Yêu cầu nhập email</div>
+                  )}
+              </div>
+              
               <div className="clear" />
-              {submitted &&
-                !email && (
-                  <div className="login__form-help">Email is required</div>
-                )}
+              
             </div>
             <div
               className={
                 "login__form" + (submitted && !password ? " has-error" : "")
               }
             >
-              <label htmlFor="password">Password</label>
-              <input
-                type={typePass}
-                className="login__form-inputpassword"
-                name="password"
-                value={password}
-                onChange={this.handleChange}
-              />
-              <button
-                onClick={this.handleShowPassword}
-                type="button"
-                className="login__form-input__show"
-                disabled={!this.handleValidateForm()}
-              >
-                {showPass}
-              </button>
-              <div className="clear" />
-              {submitted &&
+              <label htmlFor="password">Mật khẩu</label>
+              <div className="login__form-inputpassword">
+                <input
+                  type={typePass} 
+                  name="password"
+                  value={password}
+                  onChange={this.handleChange}
+                />
+                <button
+                  onClick={this.handleShowPassword}
+                  type="button"
+                  className="login__form-input__show"
+                  disabled={!this.handleValidateForm()}
+                >
+                  {showPass}
+                </button>
+                {submitted &&
                 !password && (
-                  <div className="login__form-help">Password is required</div>
+                  <div className="login__form-help">Yêu cầu nhập mật khẩu</div>
                 )}
+              </div>
+              <div className="clear" /> 
             </div>
             <div className="login__form">
               <Link to="/password-recovery" className="login_form-forgot">
-                Forgot your password?
+                Bạn quên mật khẩu?
               </Link>
             </div>
             <div className="login__form">
               <button className="login__form-input__submit" type="submit">
-                SIGN IN
+                ĐĂNG NHẬP
               </button>
             </div>
             {submitted &&
-              !loginError && (
+              !loginError && password && email &&(
                 <div className="login__form-help">
-                  Email và password không hợp lệ!
+                  Email và mật khẩu không hợp lệ!
                 </div>
               )}
           </form>
           <div className="login-page__no-account">
             <Link to="/signup" className="no-account">
-              No account? Create one here
+              Bạn chưa có mật khẩu? Hãy tạo tài khoản mới nào!!!
             </Link>
           </div>
         </div>

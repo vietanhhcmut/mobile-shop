@@ -1,5 +1,11 @@
 import img_logoSite from '../assets/imgs/logo.jpg';
-import img_logo from '../assets/imgs/1-brands_default.jpg';
+
+import img_logo1 from '../assets/imgs/logo/apple.png';
+import img_logo2 from '../assets/imgs/logo/lg.png';
+import img_logo3 from '../assets/imgs/logo/nokia.jpg';
+import img_logo4 from '../assets/imgs/logo/samsung.png';
+import img_logo5 from '../assets/imgs/logo/Sony1.jpg';
+
 import img_payment from '../assets/imgs/payment.png';
 
 import img_newsTop from '../assets/imgs/news/news-top.png';
@@ -37,7 +43,8 @@ import img_ABBank from '../assets/imgs/banks/ABBank.jpg';
 import img_NamABank from '../assets/imgs/banks/NamABank.jpg';
 
 
-export const imgs_logo = img_logo;
+export const logo_brand = [img_logo1, img_logo2, img_logo3, img_logo4, img_logo5];
+
 export const imgs_payment = img_payment;
 
 export const logoSite = img_logoSite;

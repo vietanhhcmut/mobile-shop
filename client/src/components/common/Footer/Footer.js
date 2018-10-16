@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import './Footer.css';
-import { imgs_logo, imgs_payment } from '../../../constants/constants';
+import { logo_brand, imgs_payment } from '../../../constants/constants';
 import { Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 
@@ -42,22 +42,19 @@ export default class Footer extends Component{
                 <div className="footer-top">
                     <Slider {...settings}>
                         <div className="footer-top__logo">
-                            <img src={imgs_logo} alt="logo" />
+                            <img src={logo_brand[0]} alt="logo" />
                         </div>
                         <div className="footer-top__logo">
-                            <img src={imgs_logo} alt="logo" />
+                            <img src={logo_brand[1]} alt="logo" />
                         </div>
                         <div className="footer-top__logo">
-                            <img src={imgs_logo} alt="logo" />
+                            <img src={logo_brand[2]} alt="logo" />
                         </div>
                         <div className="footer-top__logo">
-                            <img src={imgs_logo} alt="logo" />
+                            <img src={logo_brand[3]} alt="logo" />
                         </div>
                         <div className="footer-top__logo">
-                            <img src={imgs_logo} alt="logo" />
-                        </div>
-                        <div className="footer-top__logo">
-                            <img src={imgs_logo} alt="logo" />
+                            <img src={logo_brand[4]} alt="logo" />
                         </div>
                     </Slider>
                 </div>
@@ -124,8 +121,8 @@ export default class Footer extends Component{
                     <div className="footer-center__form">
                         <TextField
                             id="outlined-with-placeholder"
-                            label="Name"
-                            placeholder="Name"
+                            label="Tên"
+                            placeholder="Tên"
                             margin="normal"
                             variant="outlined"
                             required={true}
@@ -142,8 +139,8 @@ export default class Footer extends Component{
                             />
                         <TextField
                             id="outlined-textarea"
-                            label="Description"
-                            placeholder="Description"
+                            label="Mô tả"
+                            placeholder="Mô tả"
                             multiline
                             margin="normal"
                             variant="outlined"
