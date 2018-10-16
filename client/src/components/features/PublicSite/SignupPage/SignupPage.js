@@ -108,13 +108,8 @@ class SignupPage extends Component {
   };
 
   render() {
-    let typePass = "password";
-    let showPass = "Show";
-    if (this.state.showPassword === true) {
-      typePass = "text";
-      showPass = "Hide";
-    }
     const {
+      showPassword,
       firstName,
       lastName,
       email,
@@ -147,7 +142,7 @@ class SignupPage extends Component {
                   to="/login"
                   className="page-content__register-form__login"
                 >
-                  Hay bạn muốn Login
+                  Đã có tài khoản xin hãy đăng nhập.
                 </Link>
               </p>
 
@@ -231,7 +226,7 @@ class SignupPage extends Component {
                       Hãy nhập "Email" của bạn
                     </div>
                     <div className={"field-hide" + validateEmail}>
-                      Email của bạn chưa đúng
+                      Email của bạn không hợp lệ
                     </div>
                   </div>
 
@@ -250,7 +245,7 @@ class SignupPage extends Component {
                         className={"form-control " + idPass}
                         value={pass}
                         onChange={this.handleUserInput("idPass")}
-                        type={typePass}
+                        type={showPassword ? "text" : "password"}
                       />
                       <span className="input-group-btn">
                         <button
@@ -258,7 +253,7 @@ class SignupPage extends Component {
                           type="button"
                           className="input-group-btn show"
                         >
-                          {showPass}
+                          {showPassword ? "Ẩn" : "Hiện"}
                         </button>
                       </span>
                     </div>
@@ -277,7 +272,7 @@ class SignupPage extends Component {
                   <div className="col-md-6">
                     <input
                       className="form-control"
-                      type="text"
+                      type="date"
                       placeholder="MM/DD/YYYY"
                     />
                     <span className="form-control-comment">
@@ -298,7 +293,7 @@ class SignupPage extends Component {
                   data-link-action="save-customer"
                   type="submit"
                 >
-                  Save
+                  Đăng kí
                 </button>
               </footer>
             </section>

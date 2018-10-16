@@ -111,11 +111,11 @@ button.input-group-btn.show {
 }
 
 @keyframes showmodal {
-  from {
+  0% {
     opacity: 0;
     top: 0;
   }
-  to {
+  100% {
     opacity: 1;
     top: 150px;
   }

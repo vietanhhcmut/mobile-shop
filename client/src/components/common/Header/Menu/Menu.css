@@ -1,5 +1,5 @@
 .menu-items {
-  animation: mymenu 0.6s linear;
+  animation: mymenu 0.5s ease-out;
 }
 
 @keyframes mymenu {
@@ -11,7 +11,7 @@
   }
 }
 .menu-item {
-  animation: mysubmenu 0.6s ease-in-out;
+  animation: mysubmenu 0.5s ease-out;
 }
 
 @keyframes mysubmenu {
@@ -71,11 +71,28 @@ li.menu-items5 {
   border-bottom: 1px solid rgb(228, 226, 226);
   padding: 5px;
   text-transform: uppercase;
+  outline: none;
+  color: black;
+}
+
+.menu-items a:hover {
+  text-decoration: none;
 }
 
 li.menu-items2 {
   text-transform: uppercase;
+  outline: none;
 }
+
+li.menu-items1:hover,
+li.menu-items3:hover,
+li.menu-items4:hover,
+li.menu-items5:hover {
+  color: #58b0da;
+  font-style: italic;
+  text-decoration: none;
+}
+
 li.menu-items3 {
   border-top: 1px solid rgb(228, 226, 226);
   margin-top: 5px;
@@ -90,6 +107,16 @@ li.menu-items3 {
   color: black;
 }
 
+.menu-items li a:hover {
+  color: #58b0da;
+  font-style: italic;
+  text-decoration: none;
+}
+
+.menu-item__item1 a {
+  color: black;
+}
+
 .menu-item {
   padding: 5px 0 0 20px;
 }
@@ -100,6 +127,18 @@ li.menu-items3 {
 .menu-item__item2 img {
   width: 175px;
   height: 175px;
+}
+
+span.menu-items2__text:hover {
+  color: #58b0da;
+  font-style: italic;
+  text-decoration: none;
+}
+
+.menu-items__list-categories .menu-items2__text {
+  color: #58b0da;
+  font-style: italic;
+  text-decoration: none;
 }
 
 @media (min-width: 375px) {
