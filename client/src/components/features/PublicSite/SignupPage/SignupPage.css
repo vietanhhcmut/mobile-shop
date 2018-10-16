@@ -88,6 +88,8 @@ button.input-group-btn.show {
   border: none;
   color: white;
   width: 50px;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
 }
 
 .modal-body {

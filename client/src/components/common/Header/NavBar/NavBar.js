@@ -4,7 +4,7 @@ import "./NavBar.css";
 
 const Navbar = ({ categories }) => (
   <ul className="navbar-items">
-    <Link to="/" className="navbar-item__link">
+    <Link to="/" className="navbar-item__link page-active">
       <li className="navbar-item">Trang chủ</li>
     </Link>
 
