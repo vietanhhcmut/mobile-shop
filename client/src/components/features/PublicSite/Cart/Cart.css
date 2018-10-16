@@ -21,6 +21,7 @@
 }
 .left-side__continue-shopping:hover {
     color: #58b0da;
+    text-decoration: none;
 }
 .order-summary__total-checkout {
     padding: 20px;
