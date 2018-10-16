@@ -114,7 +114,7 @@ class Cart extends Component {
                             </div>
                             <div className='total-checkout__row'>
                                 <span>Phí giao hàng</span>
-                                <b>Free</b>
+                                <b>Miễn phí</b>
                             </div>
                         </div>
                         <div className='order-summary__total-checkout'>
@@ -135,15 +135,15 @@ class Cart extends Component {
                     <div className='order-summary__policy'>
                         <p className='policy__row'>
                             <i className="material-icons">security</i>
-                            <span>Security pocicy</span>
+                            <span>Chính sách an toàn</span>
                         </p>
                         <p className='policy__row'>
                             <i className="material-icons">local_shipping</i>
-                            <span>Delivery pocicy</span>
+                            <span>Chính sách giao hàng</span>
                         </p>
                         <p className='policy__row'>
                             <i className="material-icons">compare_arrows</i>
-                            <span>Return pocicy</span>
+                            <span>Chính sách đổi trả</span>
                         </p>
                         <p>The order will only be confirmed when you click on the button 'Order with an obligation to pay' at the end of the checkout!</p>
                     </div>

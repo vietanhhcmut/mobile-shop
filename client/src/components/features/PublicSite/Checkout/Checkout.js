@@ -88,7 +88,7 @@ class Checkout extends Component {
                                             <input type="date" />
                                         </div>
                                         <button className='content__continue-button'
-                                            onClick={this.handleClickBlock(1)}>CONTINUE</button>
+                                            onClick={this.handleClickBlock(1)}>TIẾP TỤC</button>
                                     </div>
                                 }
                                 {!isGuest &&
@@ -108,7 +108,7 @@ class Checkout extends Component {
                                         </div>
                                         <p className='personal-info__forget-password'><span>Quên mật khẩu?</span></p>
                                         <button className='content__continue-button'
-                                            onClick={this.handleClickBlock(1)}>CONTINUE</button>
+                                            onClick={this.handleClickBlock(1)}>TIẾP TỤC</button>
                                     </div>
                                 }
                             </div>
@@ -144,7 +144,7 @@ class Checkout extends Component {
                                         <input type="text" />
                                     </div>
                                     <button className='content__continue-button'
-                                        onClick={this.handleClickBlock(2)}>CONTINUE</button>
+                                        onClick={this.handleClickBlock(2)}>TIẾP TỤC</button>
                                 </div>
                             </div>
                         }

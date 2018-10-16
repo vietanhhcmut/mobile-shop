@@ -100,15 +100,15 @@ class Cart extends Component {
                 <div className='checkout-cart__policy'>
                     <p className='policy__row'>
                         <i className="material-icons">security</i>
-                        <span>Security pocicy</span>
+                        <span>Chính sách an toàn</span>
                     </p>
                     <p className='policy__row'>
                         <i className="material-icons">local_shipping</i>
-                        <span>Delivery pocicy</span>
+                        <span>Chính sách giao hàng</span>
                     </p>
                     <p className='policy__row'>
                         <i className="material-icons">compare_arrows</i>
-                        <span>Return pocicy</span>
+                        <span>Chính sách đổi trả</span>
                     </p>
                     <p>The order will only be confirmed when you click on the button 'Order with an obligation to pay' at the end of the checkout!</p>
                 </div>
