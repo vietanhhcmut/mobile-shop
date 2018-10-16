@@ -15,7 +15,8 @@ class DetailedItem extends Component {
         item: null,
         showingImg: null,
         number: 1,
-        tab: 1
+        tab: 1,
+        selectedColor: 0
     }
     componentDidMount() {
         const { id } = this.props.match.params;
@@ -41,13 +42,13 @@ class DetailedItem extends Component {
     }
     hanleSwitchTab = (e, tab) => this.setState({ tab });
     render() {
-        const { item } = this.state;
+        const { item, selectedColor } = this.state;
         let generalItemInfo;
         if (item) {
             // CSS IN PREVIEWD ITEM
             generalItemInfo = (
                 <React.Fragment>
-                    <h5>{item.name}</h5>
+                    <h4>{item.name}</h4>
                     <div className="previewed-item-detail__price">
                         {formatPrice(calcDiscountPrice(item.price, item.saleoff))}
                         {
@@ -67,7 +68,8 @@ class DetailedItem extends Component {
                         <div className="variant-value">
                             {
                                 item.colors.map((backgroundColor, index) => (
-                                    <span style={{ backgroundColor }} key={index + backgroundColor} />
+                                    <span style={{ backgroundColor }} key={index + backgroundColor}
+                                        className={selectedColor === index ? 'active' : ''} />
                                 ))
                             }
                         </div>
