@@ -1,4 +1,15 @@
+#root {
+    background: url('https://demo4leotheme.com/prestashop/leo_mobile/themes/leo_mobile/assets/img/bg_body.png');
+}
 .public-site {
-    width: 80%;
+    width: 100%;
     margin: auto;
+    background: white;
+    padding: 0 25px;
+}
+
+@media (min-width: 992px) {
+    .public-site {
+        width: 88%;
+    }
 }

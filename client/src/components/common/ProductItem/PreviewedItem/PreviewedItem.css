@@ -21,11 +21,15 @@
     color: white;
     display: flex;
     align-items: center;
-    width: 120px;
+    width: 100px;
     background: green;
     justify-content: space-around;
     font-weight: 500;
     padding: 5px;
+    margin: 1rem 0;
+}
+.item-availability > i {
+    font-size: 18px;
 }
 .previewed-item-detail__price {
     color: #f94b4b;
@@ -35,17 +39,18 @@
 .previewed-item-detail-saleoff {
     display: flex;
     align-items: center;
-    font-size: 11px;
+    font-size: 12px;
+    margin: 5px 0;
 }
 .previewed-item-detail-saleoff > span:first-child {
     text-decoration: line-through;
     color: #999;
 }
 .previewed-item-detail-saleoff > span:last-child {
-    padding: 2px;
+    padding: 4px;
     background: #f94b4b;
     color: white;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 .previewed-item-detail-saleoff > span:last-child::after {
     display: inline;
@@ -73,14 +78,17 @@
     border: 3px solid whitesmoke;
     margin-right: 10px;
     box-shadow:
-        1px 0 2px grey,
-        -1px 0 2px grey,
-        0 -1px 2px grey,
-        0 1px 2px grey;
+        1px 0 2px #ccc,
+        -1px 0 2px #ccc,
+        0 -1px 2px #ccc,
+        0 1px 2px #ccc;
     cursor: pointer;
 }
 .variant-value span:active {
     transform: scale(1.2);
+}
+.variant-value .active {
+    outline: 1px solid black;
 }
 @media (min-width: 768px) {
     .previewed-item {

@@ -3,6 +3,7 @@ import "./Header.css";
 import Menu from "./Menu/Menu";
 import Navbar from "./NavBar/NavBar";
 import { Link } from "react-router-dom";
+import { logoSite } from '../../../constants/constants';
 
 export default class Header extends Component {
   state = {
@@ -55,7 +56,7 @@ export default class Header extends Component {
         <div className="logo">
           <div className="logo__main-logo">
             <img
-              src="https://demo4leotheme.com/prestashop/leo_mobile/img/leo-mobile-logo-1491983441.jpg"
+              src={logoSite}
               alt="not found"
             />
           </div>

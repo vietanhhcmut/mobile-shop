@@ -1,3 +1,4 @@
+import img_logoSite from '../assets/imgs/logo.jpg';
 import img_logo from '../assets/imgs/1-brands_default.jpg';
 import img_payment from '../assets/imgs/payment.png';
 
@@ -39,6 +40,8 @@ import img_NamABank from '../assets/imgs/banks/NamABank.jpg';
 export const imgs_logo = img_logo;
 export const imgs_payment = img_payment;
 
+export const logoSite = img_logoSite;
+
 export const newsImages = {
     newsBanners: [img_banner1, img_banner2, img_banner3, img_banner4, img_banner5, img_banner6],
     newsTop: img_newsTop,
@@ -62,12 +65,12 @@ export const api = {
             {
                 id: 1,
                 name: 'Iphone XSMax',
-                price: 1200000,
+                price: 10200000,
                 saleoff: 0,
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/27-large_default/printed-chiffon-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/24-large_default/printed-chiffon-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/25-home_default/printed-chiffon-dress.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -89,12 +92,12 @@ export const api = {
             {
                 id: 2,
                 name: 'Samsung Galaxy S3',
-                price: 1200000,
+                price: 14899000,
                 saleoff: 10, //10%
                 imgs: [
-                    'https://images-na.ssl-images-amazon.com/images/I/51odjdfuPTL.jpg',
-                    'http://media.4rgos.it/i/Argos/5399785_R_Z001A?$Web$&$DefaultPDP570$',
-                    'https://cdn.shopify.com/s/files/1/1847/2275/products/black_collage_87c37d78-7ac0-44d5-8b6c-5dbc1cb052e5_1000x1000.png?v=1519328585'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/42-large_default/blouse.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/41-large_default/blouse.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/40-large_default/blouse.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -115,13 +118,13 @@ export const api = {
             },
             {
                 id: 3,
-                name: 'Samsung Galaxy S3',
-                price: 1200000,
-                saleoff: 10, //10%
+                name: 'Xiaomi Redmi Note 4',
+                price: 8687000,
+                saleoff: 5, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/44-large_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/43-large_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/34-cart_default/printed-dress.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -142,13 +145,13 @@ export const api = {
             },
             {
                 id: 4,
-                name: 'Samsung Galaxy S3',
-                price: 1200000,
-                saleoff: 10, //10%
+                name: 'OPPO F1s',
+                price: 6764000,
+                saleoff: 15, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/37-cart_default/faded-short-sleeves-tshirt.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/28-cart_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/25-cart_default/printed-dress.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -169,13 +172,13 @@ export const api = {
             },
             {
                 id: 5,
-                name: 'Samsung Galaxy S3',
-                price: 1200000,
-                saleoff: 10, //10%
+                name: 'Xiaomi Redmi 3 Pro',
+                price: 3230000,
+                saleoff: 8, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/31-cart_default/printed-summer-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/34-cart_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/29-cart_default/printed-summer-dress.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -196,13 +199,13 @@ export const api = {
             },
             {
                 id: 6,
-                name: 'Samsung Galaxy S3',
-                price: 1200000,
-                saleoff: 10, //10%
+                name: 'Samsung Galaxy S8',
+                price: 12999000,
+                saleoff: 6, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/27-cart_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/36-cart_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/42-cart_default/printed-dress.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -223,13 +226,13 @@ export const api = {
             },
             {
                 id: 7,
-                name: 'Samsung Galaxy S3',
-                price: 1200000,
-                saleoff: 10, //10%
+                name: 'Asus Zenfone 2',
+                price: 8910000,
+                saleoff: 3, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/41-cart_default/blouse.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/24-cart_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/26-cart_default/printed-dress.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -250,13 +253,13 @@ export const api = {
             },
             {
                 id: 8,
-                name: 'Samsung Galaxy S3',
-                price: 1200000,
-                saleoff: 10, //10%
+                name: 'Samsung Galaxy S8',
+                price: 4100000,
+                saleoff: 2, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/24-large_default/printed-chiffon-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/27-large_default/printed-chiffon-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/25-home_default/printed-chiffon-dress.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -277,13 +280,13 @@ export const api = {
             },
             {
                 id: 9,
-                name: 'Samsung Galaxy S3',
-                price: 1200000,
-                saleoff: 10, //10%
+                name: 'Sony Xperia XA',
+                price: 5430000,
+                saleoff: 0, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/37-cart_default/faded-short-sleeves-tshirt.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/28-cart_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/25-cart_default/printed-dress.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -304,13 +307,13 @@ export const api = {
             },
             {
                 id: 10,
-                name: 'Samsung Galaxy S3',
-                price: 1200000,
-                saleoff: 10, //10%
+                name: 'Iphone 7 Plus',
+                price: 13509000,
+                saleoff: 12, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/42-large_default/blouse.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/41-large_default/blouse.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/40-large_default/blouse.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
@@ -360,12 +363,12 @@ export const api = {
             {
                 id: 10,
                 name: 'Samsung Galaxy S3',
-                price: 1200000,
+                price: 9599000,
                 saleoff: 10, //10%
                 imgs: [
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/desk-PreOrder-Huawei-Y9_062LV5T-640.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-1XJ3UW-800.png',
-                    'https://cdn.tgdd.vn/UserUpload/CampaignManager/20181007/Untitled-670VXH-800.png'
+                    'https://demo4leotheme.com/prestashop/leo_mobile/44-large_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/27-large_default/printed-dress.jpg',
+                    'https://demo4leotheme.com/prestashop/leo_mobile/37-large_default/faded-short-sleeves-tshirt.jpg'
                 ],
                 category: 'Samsung',
                 description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus totam a necessitatibus reprehenderit quas nobis! Quisquam inventore ratione, porro error magni ullam ipsam distinctio.',
