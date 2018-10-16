@@ -3,7 +3,7 @@ import "./Header.css";
 import Menu from "./Menu/Menu";
 import Navbar from "./NavBar/NavBar";
 import { Link } from "react-router-dom";
-import { logoSite } from '../../../constants/constants';
+import { logoSite } from "../../../constants/constants";
 
 export default class Header extends Component {
   state = {
@@ -55,10 +55,7 @@ export default class Header extends Component {
       <header>
         <div className="logo">
           <div className="logo__main-logo">
-            <img
-              src={logoSite}
-              alt="not found"
-            />
+            <img src={logoSite} alt="not found" />
           </div>
           <Link to="/cart">
             <div className="header-card-big">
@@ -69,7 +66,7 @@ export default class Header extends Component {
               </span>
 
               <div className="hidden-sm-down">Giỏ hàng</div>
-              <span className="header-card-big__cart-infor">3 items</span>
+              <span className="header-card-big__cart-infor">6 sản phẩm</span>
             </div>
           </Link>
         </div>
@@ -100,7 +97,7 @@ export default class Header extends Component {
                 </i>
               </span>
 
-              <span className="header-card__cart-infor">3 items</span>
+              <span className="header-card__cart-infor">6 sản phẩm</span>
             </div>
           </Link>
 

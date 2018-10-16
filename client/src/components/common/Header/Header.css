@@ -119,6 +119,10 @@ span.header-card__icon {
   position: relative;
 }
 
+.header-card-big__cart-infor {
+  color: #888;
+}
+
 @media (min-width: 375px) {
   input.search-big__text {
     margin-left: 12px;

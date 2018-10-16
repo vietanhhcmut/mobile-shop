@@ -99,6 +99,10 @@ li.navbar-item.category {
   background: black;
 }
 
+#active-page {
+  background: #58b0da;
+}
+
 @keyframes mymove {
   from {
     opacity: 0;
