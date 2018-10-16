@@ -95,18 +95,18 @@ class CartModal extends Component {
                     </div>
                     <div className='cart-content__total-price'>
                         <div className='total-price__row'>
-                            <span>Tổng giá</span>
-                            <b>
+                            <span><b>{cart.reduce((sum, product) => sum + Number(product.quantity), 0)}</b> Sản phẩm</span>
+                            <span>
                                 {formatPrice(cart.reduce((sum, product) =>
                                     sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
-                            </b>
+                            </span>
                         </div>
                         <div className='total-price__row'>
-                            <span>Shipping</span>
-                            <b>Free</b>
+                            <span>Phí giao hàng</span>
+                            <span>Miễn phí</span>
                         </div>
                         <div className='total-price__row total-price__total'>
-                            <span>Tổng tiền</span>
+                            <span>Tổng cộng</span>
                             <b>
                                 {formatPrice(cart.reduce((sum, product) =>
                                     sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
