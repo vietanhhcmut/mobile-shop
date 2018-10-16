@@ -10,27 +10,27 @@ export default class Header extends Component {
     showMenu: false,
     categories: [
       {
-        id: "1",
+        id: 1,
         name: "Sam Sung"
       },
       {
-        id: "2",
+        id: 2,
         name: "Nokia"
       },
       {
-        id: "3",
+        id: 3,
         name: "Apple"
       },
       {
-        id: "4",
+        id: 4,
         name: "LG"
       },
       {
-        id: "5",
+        id: 5,
         name: "TCL Communication"
       },
       {
-        id: "6",
+        id: 6,
         name: "Sony Mobile"
       }
     ]
