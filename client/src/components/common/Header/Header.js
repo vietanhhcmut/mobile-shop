@@ -60,24 +60,25 @@ export default class Header extends Component {
               alt="not found"
             />
           </div>
-          <div className="header-card-big">
-            <Link to="/cart">
+          <Link to="/cart">
+            <div className="header-card-big">
               <span className="header-card-big__icon">
                 <i className="material-icons add_shopping_cart">
                   shopping_cart
                 </i>
               </span>
-            </Link>
-            <div className="hidden-sm-down">Shopping Cart</div>
-            <span className="header-card-big__cart-infor">0 Item - $0.00</span>
-          </div>
+
+              <div className="hidden-sm-down">Giỏ hàng</div>
+              <span className="header-card-big__cart-infor">3 items</span>
+            </div>
+          </Link>
         </div>
 
         <div className="search-big">
           <input
             className="search-big__text"
             type="text"
-            placeholder="Search..."
+            placeholder="Tìm kiếm..."
             autoComplete="off"
           />
           <i className="material-icons search-big__icon">search</i>
@@ -91,24 +92,24 @@ export default class Header extends Component {
               <i className="material-icons">menu</i>
             </span>
           </div>
-          <div className="header-card">
-            <Link to="/cart">
+          <Link to="/cart">
+            <div className="header-card">
               <span className="header-card__icon">
                 <i className="material-icons add_shopping_cart">
                   shopping_cart
                 </i>
               </span>
-            </Link>
 
-            <span className="header-card__cart-infor">0 Item - $0.00</span>
-          </div>
+              <span className="header-card__cart-infor">3 items</span>
+            </div>
+          </Link>
 
           <div className="search-big2">
             <div className="search-big2__input">
               <input
                 className="search-big2__text"
                 type="text"
-                placeholder="Search..."
+                placeholder="Tìm kiếm..."
                 autoComplete="off"
               />
               <i className="material-icons search-big2__icon">search</i>
