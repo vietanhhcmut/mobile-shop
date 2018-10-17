@@ -129,7 +129,7 @@
     }
 
     .login__form-inputpassword {
-        width: calc(100% - 50px);
+        width: 100%;
     }
 }
 
