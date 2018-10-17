@@ -8,8 +8,12 @@ footer {
 }
 
 footer .slick-slider.slick-initialized {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
+}
+
+footer .footer-top {
+    margin: 2rem 0;
 }
 
 footer .footer-top__logo {
@@ -24,6 +28,7 @@ footer .footer-top__logo:hover {
 footer .footer-top__logo img {
     width: 175px;
     height: 80px;
+    margin: 0 auto;
 }
 
 .footer-center {

@@ -63,7 +63,7 @@ class CartModal extends Component {
     render() {
         const { showCart, cart } = this.state;
         const styleCartContent = {
-            transform: showCart ? 'translateY(0)' : 'translateY(calc(100% + 10px))'
+            transform: showCart ? 'translateY(0)' : 'translateY(300px)'
         }
         return (
             <div className='cart-modal'>

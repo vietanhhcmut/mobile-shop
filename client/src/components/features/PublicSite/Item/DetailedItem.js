@@ -34,13 +34,16 @@ class DetailedItem extends Component {
             }));
         }
         else {
-            if (this.state.number < 2) return; 
+            if (this.state.number < 2) return;
             this.setState(prevState => ({
                 number: prevState.number - 1
             }));
         }
     }
     hanleSwitchTab = (e, tab) => this.setState({ tab });
+    handleClickColor = (index) => () => {
+        this.setState({ selectedColor: index });
+    }
     render() {
         const { item, selectedColor } = this.state;
         let generalItemInfo;
@@ -69,7 +72,8 @@ class DetailedItem extends Component {
                             {
                                 item.colors.map((backgroundColor, index) => (
                                     <span style={{ backgroundColor }} key={index + backgroundColor}
-                                        className={selectedColor === index ? 'active' : ''} />
+                                        className={selectedColor === index ? 'active' : ''}
+                                        onClick={this.handleClickColor(index)} />
                                 ))
                             }
                         </div>
@@ -145,8 +149,8 @@ class DetailedItem extends Component {
                             <Tab value={1} label="Chi tiết sản phẩm" />
                             <Tab value={2} label="Đánh giá" />
                         </Tabs>
-                        { tab === 1 && item && <DetailInfo detail={item.details}/> }
-                        { tab === 2 && <Review /> }
+                        {tab === 1 && item && <DetailInfo detail={item.details} />}
+                        {tab === 2 && <Review />}
                     </AppBar>
                 </div>
             </div >

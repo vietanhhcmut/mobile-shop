@@ -14,6 +14,8 @@ class Category extends Component {
         },
         items: [],
         previewingItem: null,
+        currentPage: 0,
+        totalPage: 3
     }
     componentDidMount() {
         api.getBrand()
@@ -25,6 +27,7 @@ class Category extends Component {
             this.setState({ previewingItem });
     }
     render() {
+        const { currentPage, totalPage } = this.state;
         const items = this.state.items.map(item => (
             <div className="category-product" key={item.id} >
                 <ProductItem
@@ -42,8 +45,8 @@ class Category extends Component {
                 <div className="category__products">
                     <div className="category-products-filter">
                         <select name="" id="">
-                            <option value="name">Tên A-Z</option>
-                            <option value="name">Tên Z-A</option>
+                            <option value="name">Tên A - Z</option>
+                            <option value="name">Tên Z - A</option>
                             <option value="name">Giá từ cao đến thấp</option>
                             <option value="name">Giá từ thấp đến cao</option>
                         </select>
@@ -57,6 +60,18 @@ class Category extends Component {
                     this.state.previewingItem !== null &&
                     <PreviewedItem open={this.state.previewingItem} handleClose={this.handlePreviewItem(null)} item={this.state.previewingItem} />
                 }
+                <div className="category__pagination">
+                    <i className="material-icons">first_page</i>
+                    <i className="material-icons">chevron_left</i>
+                    {[...Array(totalPage)].map((el, index) => 
+                        <span key={'page' + index} 
+                            className={ currentPage === index ? 'pagination__active' : ''}>
+                            {index + 1}
+                        </span>
+                    )}
+                    <i className="material-icons">chevron_right</i>                    
+                    <i className="material-icons">last_page</i>
+                </div>
             </div>
         );
     }

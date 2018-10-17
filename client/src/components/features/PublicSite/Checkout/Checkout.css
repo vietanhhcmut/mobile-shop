@@ -23,6 +23,7 @@
 }
 .content__guest-or-signin {
     display: flex;
+    justify-content: space-around;
     justify-content: space-evenly;
     font-size: 14px;
     font-weight: bold;
@@ -65,7 +66,7 @@
     background-color: white;
 }
 .personal-info__forget-password {
-    text-align: right;
+    text-align: center;
 }
 .personal-info__forget-password > span {
     cursor: pointer;
@@ -103,14 +104,34 @@
     font-size: 14px;
     transition: all .3s;   
     cursor: pointer;
-    margin: 1em auto;
-    margin-left: 100%;
-    transform: translateX(-100%); 
     width: 100px;
+    display: block;
+    margin: 1rem 0 1rem auto;
 }
 .content__continue-button:hover {
     background: #0e6ce4;
     margin-right: 0;
+}
+.content__order-button {
+    background: #2c2c2c;
+    padding: 8px 30px;
+    display: block;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 3px;
+    margin: 1.5rem auto 0;
+}
+.content__order-button:hover {
+    background: #58b0da;
+    color: white;
+}
+.block__content > button {
+    outline: none;
 }
 
 .content__pay-method {
@@ -139,6 +160,9 @@
     height: 100%;
 }
 .banks__bank:hover {
+    border-color: #0e6ce4;
+}
+.banks__active {
     border-color: #0e6ce4;
 }
 

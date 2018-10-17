@@ -10,7 +10,8 @@ class Checkout extends Component {
         signIn: true,
         isGuest: true,
         showPasswordSignUp: false,
-        showPasswordSignIn: false
+        showPasswordSignIn: false,
+        selectedBank: 0
     }
     handleClickBlock = (block) => () => {
         this.setState({ currentBlock: block });
@@ -34,8 +35,14 @@ class Checkout extends Component {
             return { showPasswordSignIn: !prevState.showPasswordSignIn };
         });
     }
+    handleClickOrder = () => {
+        alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!')
+    }
+    handleClickBank = (index) => () => {
+        this.setState({ selectedBank: index });
+    }
     render() {
-        const { currentBlock, payMethod, isGuest, showPasswordSignIn, showPasswordSignUp } = this.state;
+        const { currentBlock, payMethod, isGuest, showPasswordSignIn, showPasswordSignUp, selectedBank } = this.state;
         return (
             <div className='checkout'>
                 <div className='checkout__info'>
@@ -53,7 +60,7 @@ class Checkout extends Component {
                                     <span className={'guest-or-signin ' + (isGuest ? '' : 'guest-or-signin__active')}
                                         onClick={this.handleClickSignIn}>Đăng nhập</span>
                                 </div>
-                                {isGuest &&
+                                {isGuest ?
                                     <div className='content__personal-info'>
                                         <div className='personal-info__row'>
                                             <span>Họ và tên</span>
@@ -90,8 +97,7 @@ class Checkout extends Component {
                                         <button className='content__continue-button'
                                             onClick={this.handleClickBlock(1)}>TIẾP TỤC</button>
                                     </div>
-                                }
-                                {!isGuest &&
+                                    :
                                     <div className='content__personal-info'>
                                         <div className='personal-info__row'>
                                             <span>Email</span>
@@ -170,12 +176,16 @@ class Checkout extends Component {
                                 {payMethod === 'atm' &&
                                     <div className='content__banks'>
                                         {bankImages.map((bankImage, index) =>
-                                            <div key={'bank' + index} className='banks__bank' href="#">
+                                            <div key={'bank' + index}
+                                                className={'banks__bank ' + (selectedBank === index ? 'banks__active' : '')}
+                                                onClick={this.handleClickBank(index)} >
                                                 <img src={bankImage} alt='Bank' />
                                             </div>
                                         )}
                                     </div>
                                 }
+                                <button className='content__order-button'
+                                    onClick={this.handleClickOrder}>ĐẶT HÀNG</button>
                             </div>
                         }
                     </div>

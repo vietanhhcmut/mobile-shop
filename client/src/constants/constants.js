@@ -399,7 +399,7 @@ export const api = {
         setTimeout(() => resolve({
             id: 12,
             name: 'Xiaomi',
-            background: "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BXqCX6b/videoblocks-xiaomi-flag-waving-slow-motion-3d-rendering-blue-sky-background-editorial-animation-seamless-loop-4k_h55hi5vy_thumbnail-full01.png",
+            background: "https://i1.wp.com/kliknklik.com/blogs/wp-content/uploads/2018/04/Smartphones-Xiaomi.jpg?resize=720%2C377&ssl=1",
         }), 100);
     }),
 }
