@@ -120,7 +120,6 @@ export default class Footer extends Component{
                     </div>
                     <div className="footer-center__form">
                         <TextField
-                            id="outlined-with-placeholder"
                             label="Tên"
                             placeholder="Tên"
                             margin="normal"
@@ -129,7 +128,6 @@ export default class Footer extends Component{
                             className="footer-center__form-input"
                             />
                         <TextField
-                            id="outlined-with-placeholder"
                             label="Email"
                             placeholder="Email"
                             margin="normal"
