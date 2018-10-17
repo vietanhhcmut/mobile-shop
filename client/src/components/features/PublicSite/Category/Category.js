@@ -50,7 +50,7 @@ class Category extends Component {
                             <option value="name">Giá từ cao đến thấp</option>
                             <option value="name">Giá từ thấp đến cao</option>
                         </select>
-                        <Button variant="contained" color="dark">Lọc</Button>
+                        <Button variant="contained">Lọc</Button>
                     </div>
                     <div className="category-products-grid">
                         {items}
