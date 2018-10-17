@@ -124,11 +124,7 @@
     box-shadow: 0 0 0 0.08rem red;
 }
 @media only screen and (max-width: 767px) {
-    .login__form label ,.login__form-inputemail {
-        width: 100%;
-    }
-
-    .login__form-inputpassword {
+    .login__form label ,.login__form-inputemail, .login__form-inputpassword {
         width: 100%;
     }
 }

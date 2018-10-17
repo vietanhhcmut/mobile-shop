@@ -38,14 +38,14 @@ class LoginPage extends Component {
   render() {
     const { email, password, submitted, showPassword } = this.state;
     let typePass = "password";
-    let showPass = "Show";
+    let showPass = "Hiện";
     let loginError = false;
     if (email === "duyen@gmail.com" && password === "123") {
       loginError = true;
     }
     if (showPassword === true) {
       typePass = "text";
-      showPass = "Hide";
+      showPass = "Ẩn";
     }
     return (
       <div className="login-page">

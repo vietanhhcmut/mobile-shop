@@ -63,7 +63,7 @@ export default class Menu extends Component {
             Giới thiệu
           </li>
         </Link>
-        <Link to="/login" className="navbar-item__link">
+        <Link to="/signup" className="navbar-item__link">
           <li
             className="navbar-item"
             id={this.state.active === "dang-ki" ? "active-page" : ""}
@@ -72,7 +72,7 @@ export default class Menu extends Component {
             Đăng kí
           </li>
         </Link>
-        <Link to="/signup" className="navbar-item__link">
+        <Link to="/login" className="navbar-item__link">
           <li
             className="navbar-item"
             id={this.state.active === "dang-nhap" ? "active-page" : ""}
