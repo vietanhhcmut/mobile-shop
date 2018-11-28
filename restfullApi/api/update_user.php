@@ -5,8 +5,6 @@
   header("Access-Control-Allow-Methods: POST");
   header("Access-Control-Max-Age: 3600");
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-  
-  // files for decoding jwt will be here
 
   // required to encode json web token
   include_once 'config/core.php';
@@ -15,8 +13,6 @@
   include_once 'libs/php-jwt-master/src/SignatureInvalidException.php';
   include_once 'libs/php-jwt-master/src/JWT.php';
   use \Firebase\JWT\JWT;
-  
-  // database connection will be here
 
   // files needed to connect to database
   include_once 'config/database.php';
@@ -28,16 +24,12 @@
   
   // instantiate user object
   $user = new User($db);
-  
-  // retrieve given jwt here
 
   // get posted data
   $data = json_decode(file_get_contents("php://input"));
   
   // get jwt
   $jwt=isset($data->jwt) ? $data->jwt : "";
-  
-  // decode jwt here
 
   // if jwt is not empty
   if($jwt){
@@ -51,6 +43,8 @@
       $user->lastname = $data->lastname;
       $user->email = $data->email;
       $user->password = $data->password;
+      $user->gender = $data->gender;
+      $user->birthday = $data->birthday;
       $user->id = $decoded->data->id;
       
       // create the product
@@ -65,7 +59,9 @@
               "id" => $user->id,
               "firstname" => $user->firstname,
               "lastname" => $user->lastname,
-              "email" => $user->email
+              "email" => $user->email,
+              "gender" => $user->gender,
+              "birthday" => $user->birthday
           )
         );
         $jwt = JWT::encode($token, $key);

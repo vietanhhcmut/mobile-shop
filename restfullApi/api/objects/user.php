@@ -12,6 +12,8 @@ class User{
   public $lastname;
   public $email;
   public $password;
+  public $gender;
+  public $birthday;
 
   // constructor
   public function __construct($db){
@@ -27,6 +29,8 @@ class User{
                 firstname = :firstname,
                 lastname = :lastname,
                 email = :email,
+                gender = :gender,
+                birthday = :birthday,
                 password = :password";
 
     // prepare the query
@@ -37,11 +41,15 @@ class User{
     $this->lastname=htmlspecialchars(strip_tags($this->lastname));
     $this->email=htmlspecialchars(strip_tags($this->email));
     $this->password=htmlspecialchars(strip_tags($this->password));
+    $this->gender=htmlspecialchars(strip_tags($this->gender));
+    $this->birthday=htmlspecialchars(strip_tags($this->birthday));
 
     // bind the values
     $stmt->bindParam(':firstname', $this->firstname);
     $stmt->bindParam(':lastname', $this->lastname);
     $stmt->bindParam(':email', $this->email);
+    $stmt->bindParam(':gender', $this->gender);
+    $stmt->bindParam(':birthday', $this->birthday);
 
     // hash the password before saving to database
     $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
@@ -110,6 +118,8 @@ class User{
             SET
                 firstname = :firstname,
                 lastname = :lastname,
+                gender = :gender,
+                birthday = :birthday,
                 email = :email
                 {$password_set}
             WHERE id = :id";
@@ -121,11 +131,15 @@ class User{
     $this->firstname=htmlspecialchars(strip_tags($this->firstname));
     $this->lastname=htmlspecialchars(strip_tags($this->lastname));
     $this->email=htmlspecialchars(strip_tags($this->email));
+    $this->gender=htmlspecialchars(strip_tags($this->gender));
+    $this->birthday=htmlspecialchars(strip_tags($this->birthday));
 
     // bind the values from the form
     $stmt->bindParam(':firstname', $this->firstname);
     $stmt->bindParam(':lastname', $this->lastname);
     $stmt->bindParam(':email', $this->email);
+    $stmt->bindParam(':gender', $this->gender);
+    $stmt->bindParam(':birthday', $this->birthday);
 
     // hash the password before saving to database
     if(!empty($this->password)){

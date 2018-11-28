@@ -5,8 +5,6 @@
   header("Access-Control-Allow-Methods: POST");
   header("Access-Control-Max-Age: 3600");
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-  
-  // database connection will be here
 
   // files needed to connect to database
   include_once 'config/database.php';
@@ -26,8 +24,7 @@
   // set product property values
   $user->email = $data->email;
   $email_exists = $user->emailExists();
-  
-  // files for jwt will be here
+
 
   // generate json web token
   include_once 'config/core.php';
