@@ -1,24 +1,24 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./SignupPage.css";
+import axios from "axios";
+
 class SignupPage extends Component {
   state = {
-    showPassword: false,
-
     firstName: "",
     lastName: "",
     email: "",
     pass: "",
+    gender: "nam",
+    birthday: "",
 
     showModal: "",
-
+    showPassword: false,
     idFirstName: "",
     idLastName: "",
     idEmail: "",
     idPass: "",
-    validateEmail: "",
-
-    status: 400
+    validateEmail: ""
   };
   handleShowPassword = () => {
     this.setState(prevState => {
@@ -36,6 +36,24 @@ class SignupPage extends Component {
       [name]: value,
       [idField]: "",
       validateEmail: ""
+    });
+  };
+
+  handleChangeGenderMale = () => {
+    this.setState({
+      gender: "nam"
+    });
+  };
+
+  handleChangeGenderFemale = () => {
+    this.setState({
+      gender: "nu"
+    });
+  };
+
+  getBirthday = e => {
+    this.setState({
+      birthday: e.target.value
     });
   };
 
@@ -92,11 +110,29 @@ class SignupPage extends Component {
         lastDotPos > 2 &&
         email.length - lastDotPos > 2
       ) {
-        this.state.status === 400
-          ? this.setState({
+        console.log(this.state.email);
+        axios
+          .post(
+            "http://localhost/BTL_Web/mobile-shop/restfullApi/api/create_user.php",
+            {
+              firstname: firstName,
+              lastname: lastName,
+              email: email,
+              pass: pass,
+              gender: this.state.gender,
+              birthday: this.state.birthday
+            }
+          )
+          .then(res => {
+            if (res.status === 200) {
+              this.props.history.push("/login");
+            }
+          })
+          .catch(err => {
+            this.setState({
               showModal: "show-modal"
-            })
-          : this.props.history.push("/login");
+            });
+          });
       }
     }
   };
@@ -119,7 +155,9 @@ class SignupPage extends Component {
       idLastName,
       idEmail,
       idPass,
-      validateEmail
+      validateEmail,
+      gender,
+      birthday
     } = this.state;
     return (
       <div>
@@ -154,13 +192,23 @@ class SignupPage extends Component {
                   <div className="col-md-6 form-control-valign">
                     <label className="radio-inline">
                       <span className="custom-radio">
-                        <input name="id_gender" type="radio" value="1" />
+                        <input
+                          name="id_gender"
+                          type="radio"
+                          checked={gender === "nam" ? true : false}
+                          onChange={this.handleChangeGenderMale}
+                        />
                       </span>
                       Nam
                     </label>
                     <label className="radio-inline">
                       <span className="custom-radio second-radio">
-                        <input name="id_gender" type="radio" value="2" />
+                        <input
+                          name="id_gender"
+                          type="radio"
+                          checked={gender === "nu" ? true : false}
+                          onChange={this.handleChangeGenderFemale}
+                        />
                       </span>
                       Nữ
                     </label>
@@ -274,6 +322,8 @@ class SignupPage extends Component {
                       className="form-control"
                       type="date"
                       placeholder="MM/DD/YYYY"
+                      value={birthday}
+                      onChange={this.getBirthday}
                     />
                     <span className="form-control-comment" />
                   </div>
