@@ -1,10 +1,10 @@
 <?php
   // required headers
-  header("Access-Control-Allow-Origin: http://localhost/rest-api-authentication-example/");
-  header("Content-Type: application/json; charset=UTF-8");
-  header("Access-Control-Allow-Methods: POST");
+  header('Access-Control-Allow-Origin: *');
+  header('Content-Type: application/json');
+  header('Access-Control-Allow-Methods: POST');
   header("Access-Control-Max-Age: 3600");
-  header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+  header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
   include_once 'config/database.php';
   include_once 'objects/user.php';
@@ -25,6 +25,7 @@
   $user->gender = $data->gender;
   $user->birthday = $data->birthday;
 
+  var_dump($user);
   if (!($user->emailExists())){
       // create the user
     if($user->create()){
@@ -46,8 +47,9 @@
       echo json_encode(array("message" => "Unable to create user."));
     }
   }
-  else {
-    echo json_encode(array("message" => "Email exists"));
+  else if ($user->emailExists()) {
+    http_response_code(409); //Conflict
+    echo json_encode(array("message" => "This email already registered"));
   }
   
   
