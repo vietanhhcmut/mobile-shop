@@ -2,34 +2,29 @@
   // Headers
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
-  header('Access-Control-Allow-Methods: PUT');
+  header('Access-Control-Allow-Methods: DELETE');
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-  include_once 'config/database.php';
-  include_once 'objects/cartItem.php';
- 
+  include_once '../../config/database.php';
+  include_once '../../models/order.php';
+
   $database = new Database();
   $db = $database->getConnection();
-  
-  $cartItem = new CartItem($db);
+
+  $order = new Order($db);
 
   $data = json_decode(file_get_contents("php://input"));
 
-  $cartItem->id = $data->id;
-  $cartItem->userId = $data->userId;
-  $cartItem->productId = $data->productId;
-  $cartItem->color = $data->color;
-  $cartItem->quantity = $data->quantity;
+  $order->id = $data->id;
 
-  // Update post
-  if($cartItem->edit()) {
+  if($order->delete()) {
     http_response_code(200);
     echo json_encode(
-      array('message' => 'Item was edited')
+      array('message' => 'Order was deleted')
     );
   } else {
     http_response_code(401);
     echo json_encode(
-      array('message' => 'Unable to edit item')
+      array('message' => 'Unable to delete order')
     );
   }
