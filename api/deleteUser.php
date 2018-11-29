@@ -45,9 +45,8 @@
 
       $user->id = $decoded->data->id;
 
-      var_dump($user->delete());
-      
-      // delete the product
+      // var_dump($user->delete());
+
       if($user->delete()){
         // set response code
         http_response_code(200);
