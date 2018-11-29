@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Context from '../../../Context';
 
 class CartModal extends Component {
+    static contextType = Context;
     state = {
         showCart: false,
         cart: [
@@ -71,21 +72,14 @@ class CartModal extends Component {
                 <div className='cart-modal__icon-wrapper' onClick={this.handleClickCartIcon}>
                     <i className="material-icons icon-wrapper__cart-icon">shopping_cart</i>
                     <div className='icon-wrapper__product-quantity'>
-                        <Context.Consumer>
-                            {context => calcTotalQuantity(context.cart)}
-                        </Context.Consumer>
+                        {calcTotalQuantity(this.context.cart)}
                     </div>
-                    <div className='icon-wrapper__animation'>
-                    </div>
-                    <Context.Consumer>
-                        {context => context.addToCart ?
-                            <div className='icon-wrapper__animation'>
-                            </div>
-                            :
-                            null
-                        }
-                    </Context.Consumer>
-
+                    <div className='icon-wrapper__animation'></div>
+                    {this.context.addToCart ?
+                        <div className='icon-wrapper__animation'></div>
+                        :
+                        null
+                    }
                 </div>
                 <div className='cart-modal__cart-content' style={styleCartContent}>
                     <div className='cart-content__products'>

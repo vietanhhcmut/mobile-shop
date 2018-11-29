@@ -10,10 +10,9 @@ class ProductItem extends Component {
     state = {
         showingImg: this.props.item.imgs[0],
         preview: false,
-        imgStyle: {
+        imgAddToCartStyle: {
             display: 'none'
-        },
-        imgSrc: ''
+        }
     }
     handleChangeImg = img => () => {
         this.setState({ showingImg: img });
@@ -21,7 +20,7 @@ class ProductItem extends Component {
     handleAddToCart = (id, quantity, color) => {
         const boundingImg = this.productImg.getBoundingClientRect();
         this.setState({
-            imgStyle: {
+            imgAddToCartStyle: {
                 bottom: (window.innerHeight - boundingImg.bottom) + 'px',
                 left: boundingImg.left + 'px',
                 width: boundingImg.width + 'px',
@@ -30,9 +29,9 @@ class ProductItem extends Component {
         });
         setTimeout(() => {
             this.setState({
-                imgStyle: {
-                    bottom: '10px',
-                    left: '10px',
+                imgAddToCartStyle: {
+                    bottom: '30px',
+                    left: '30px',
                     width: '0',
                     height: '0',
                 }
@@ -76,8 +75,8 @@ class ProductItem extends Component {
                     {imgs}
                 </div>
 
-                <img src={this.state.showingImg} alt='Add product to cart' id='product-item__img-add-to-cart' 
-                    style={this.state.imgStyle}/>
+                <img src={this.state.showingImg} alt='Add product to cart' className='img-add-to-cart' 
+                    style={this.state.imgAddToCartStyle}/>
             </div>
         );
     }

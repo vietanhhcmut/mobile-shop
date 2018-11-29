@@ -11,12 +11,16 @@ import Review from './Review/Review';
 import Context from '../../../../Context';
 
 class DetailedItem extends Component {
+    static contextType = Context;
     state = {
         item: null,
         showingImg: null,
         number: 1,
         tab: 1,
-        selectedColor: 0
+        selectedColor: 0,
+        imgAddToCartStyle: {
+            display: 'none'
+        }
     }
     componentDidMount() {
         const { id } = this.props.match.params;
@@ -43,6 +47,28 @@ class DetailedItem extends Component {
     hanleSwitchTab = (e, tab) => this.setState({ tab });
     handleClickColor = (index) => () => {
         this.setState({ selectedColor: index });
+    }
+    handleAddToCart = (id, quantity, color) => {
+        const boundingImg = this.productImg.getBoundingClientRect();
+        this.setState({
+            imgAddToCartStyle: {
+                bottom: (window.innerHeight - boundingImg.bottom) + 'px',
+                left: boundingImg.left + 'px',
+                width: boundingImg.width + 'px',
+                height: boundingImg.height + 'px',
+            }
+        });
+        setTimeout(() => {
+            this.setState({
+                imgAddToCartStyle: {
+                    bottom: '30px',
+                    left: '30px',
+                    width: '0',
+                    height: '0',
+                }
+            });
+        }, 1);
+        this.context.handleAddToCart(id, quantity, color);
     }
     render() {
         const { item, selectedColor, number } = this.state;
@@ -104,7 +130,7 @@ class DetailedItem extends Component {
             <div className="item-detail">
                 <div className="item-detail__imgs">
                     <div className="main-img">
-                        <img src={this.state.showingImg} alt="phone" />
+                        <img src={this.state.showingImg} alt="phone" ref={img => this.productImg = img}/>
                     </div>
                     <div className="sub-imgs">
                         {
@@ -138,14 +164,10 @@ class DetailedItem extends Component {
                                 </i>
                             </div>
                         </div>
-                        <Context.Consumer>
-                            {context =>
-                                <Button variant="outlined" color="secondary" className="add-cart-button"
-                                    onClick={() => context.handleAddToCart(item.id, number, selectedColor)}>
-                                    ADD TO CART
-                                </Button>
-                            }
-                        </Context.Consumer>
+                        <Button variant="outlined" color="secondary" className="add-cart-button"
+                            onClick={() => this.handleAddToCart(item.id, number, selectedColor)}>
+                            ADD TO CART
+                        </Button>
                     </div>
                 </div>
                 <div className="item-detail__detail-info">
@@ -158,6 +180,9 @@ class DetailedItem extends Component {
                         {tab === 2 && <Review />}
                     </AppBar>
                 </div>
+
+                <img src={this.state.showingImg} alt='Add product to cart' className='img-add-to-cart' 
+                    style={this.state.imgAddToCartStyle}/>
             </div >
         );
     }
