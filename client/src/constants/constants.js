@@ -404,4 +404,6 @@ export const api = {
     }),
 }
 export const calcDiscountPrice = (price, saleoff) => price * (1 - saleoff / 100.0);
-export const formatPrice = (price) => price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+export const formatPrice = price => price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+export const calcTotalQuantity = cart => 
+    cart.reduce((sum, product) => sum + Number(product.quantity), 0);

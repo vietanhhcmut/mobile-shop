@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './CartModal.css';
 import CartItem from './CartItem/CartItem';
-import { formatPrice, calcDiscountPrice } from './../../../constants/constants';
+import { formatPrice, calcDiscountPrice, calcTotalQuantity } from './../../../constants/constants';
 import { Link } from 'react-router-dom';
+import Context from '../../../Context';
 
 class CartModal extends Component {
     state = {
@@ -42,7 +43,7 @@ class CartModal extends Component {
     }
     updateQuantity = (index, newQuantity) => {
         const cart = [...this.state.cart];
-        const cartItem = {...cart[index]};
+        const cartItem = { ...cart[index] };
         cartItem.quantity = newQuantity;
         cart[index] = cartItem;
         this.setState({ cart });
@@ -70,10 +71,21 @@ class CartModal extends Component {
                 <div className='cart-modal__icon-wrapper' onClick={this.handleClickCartIcon}>
                     <i className="material-icons icon-wrapper__cart-icon">shopping_cart</i>
                     <div className='icon-wrapper__product-quantity'>
-                        3
+                        <Context.Consumer>
+                            {context => calcTotalQuantity(context.cart)}
+                        </Context.Consumer>
                     </div>
                     <div className='icon-wrapper__animation'>
                     </div>
+                    <Context.Consumer>
+                        {context => context.addToCart ?
+                            <div className='icon-wrapper__animation'>
+                            </div>
+                            :
+                            null
+                        }
+                    </Context.Consumer>
+
                 </div>
                 <div className='cart-modal__cart-content' style={styleCartContent}>
                     <div className='cart-content__products'>
@@ -90,7 +102,7 @@ class CartModal extends Component {
                                 quantity={product.quantity}
                                 handleClickIncreaseQuantity={this.clickIncreaseQuantity(index)}
                                 handleClickDecreaseQuantity={this.clickDecreaseQuantity(index)}
-                                handleClickDeleteProduct = {this.clickDeletProduct(index)} />
+                                handleClickDeleteProduct={this.clickDeletProduct(index)} />
                         )}
                     </div>
                     <div className='cart-content__total-price'>
@@ -110,7 +122,7 @@ class CartModal extends Component {
                             <b>
                                 {formatPrice(cart.reduce((sum, product) =>
                                     sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
-                              
+
                             </b>
                         </div>
                         <div className='total-price__view-cart'>

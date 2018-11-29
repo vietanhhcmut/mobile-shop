@@ -3,14 +3,42 @@ import './ProductItem.css';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { formatPrice, calcDiscountPrice } from '../../../constants/constants';
+import Context from '../../../Context';
 
 class ProductItem extends Component {
+    static contextType = Context;
     state = {
         showingImg: this.props.item.imgs[0],
         preview: false,
+        imgStyle: {
+            display: 'none'
+        },
+        imgSrc: ''
     }
     handleChangeImg = img => () => {
         this.setState({ showingImg: img });
+    }
+    handleAddToCart = (id, quantity, color) => {
+        const boundingImg = this.productImg.getBoundingClientRect();
+        this.setState({
+            imgStyle: {
+                bottom: (window.innerHeight - boundingImg.bottom) + 'px',
+                left: boundingImg.left + 'px',
+                width: boundingImg.width + 'px',
+                height: boundingImg.height + 'px',
+            }
+        });
+        setTimeout(() => {
+            this.setState({
+                imgStyle: {
+                    bottom: '10px',
+                    left: '10px',
+                    width: '0',
+                    height: '0',
+                }
+            });
+        }, 1);
+        this.context.handleAddToCart(id, quantity, color);
     }
     render() {
         const { item } = this.props;
@@ -20,7 +48,7 @@ class ProductItem extends Component {
         return (
             <div className={`product-item${this.props.isFirst? ' active': ''}`}>
                 <div className="product-item__main-content">
-                    <img src={this.state.showingImg} alt="item"/>
+                    <img src={this.state.showingImg} alt="item" ref={img => this.productImg = img} />
                     <Link to={`/item/${item.id}`}><h5 className="item-title">{item.name}</h5></Link>
                     <span className="item-quick-view" onClick={this.props.handleTogglePreviewItem}>
                         <i className="material-icons">
@@ -39,13 +67,17 @@ class ProductItem extends Component {
                             null
                         }
                     </div>
-                    <Button variant="outlined" color="secondary" className="item-adding-cart">
+                    <Button variant="outlined" color="secondary" className="item-adding-cart"
+                        onClick={() => this.handleAddToCart(item.id, 1, item.colors[0])}>
                         ADD TO CART
                     </Button>
                 </div>
                 <div className="product-item__sub-content">
                     {imgs}
                 </div>
+
+                <img src={this.state.showingImg} alt='Add product to cart' id='product-item__img-add-to-cart' 
+                    style={this.state.imgStyle}/>
             </div>
         );
     }

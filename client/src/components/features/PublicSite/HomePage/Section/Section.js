@@ -88,7 +88,7 @@ class Section extends Component {
             />
         ));
         let slideStyle = {
-            transform: `translateX(${this.state.slidedWidth}%)`
+            transform: this.state.slidedWidth === 0 ? 'none' : `translateX(${this.state.slidedWidth}%)`
         };
         return (
             <React.Fragment>

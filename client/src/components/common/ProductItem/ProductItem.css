@@ -151,3 +151,11 @@
     }
 
 }
+
+
+#product-item__img-add-to-cart {
+    position: fixed;
+    transition: all 1.2s ease-in-out;
+    z-index: 2000;
+    opacity: 0.7;
+}

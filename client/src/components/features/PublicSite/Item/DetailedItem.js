@@ -8,7 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import DetailInfo from './DetailInfo/DetailInfo';
 import Review from './Review/Review';
-
+import Context from '../../../../Context';
 
 class DetailedItem extends Component {
     state = {
@@ -45,7 +45,7 @@ class DetailedItem extends Component {
         this.setState({ selectedColor: index });
     }
     render() {
-        const { item, selectedColor } = this.state;
+        const { item, selectedColor, number } = this.state;
         let generalItemInfo;
         if (item) {
             // CSS IN PREVIEWD ITEM
@@ -138,9 +138,14 @@ class DetailedItem extends Component {
                                 </i>
                             </div>
                         </div>
-                        <Button variant="outlined" color="secondary" className="add-cart-button">
-                            ADD TO CART
-                        </Button>
+                        <Context.Consumer>
+                            {context =>
+                                <Button variant="outlined" color="secondary" className="add-cart-button"
+                                    onClick={() => context.handleAddToCart(item.id, number, selectedColor)}>
+                                    ADD TO CART
+                                </Button>
+                            }
+                        </Context.Consumer>
                     </div>
                 </div>
                 <div className="item-detail__detail-info">
