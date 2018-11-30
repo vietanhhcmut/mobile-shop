@@ -17,7 +17,7 @@ class App extends Component {
           <Route path="/admin/product" exact component={SignupPage} />
           <Route path="/admin/bill" exact component={SignupPage} /> */}
           
-          <Route path="/admin" exact component={AdminSite} />
+          <Route path="/admin" component={AdminSite} />
           <Route path="/sorry" component={NotFoundPage} />
           <Route path="/" component={PublicSite} />
         </Switch>
