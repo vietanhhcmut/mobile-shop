@@ -1,160 +1,285 @@
-<?php
-// 'user' object
-class Product{
- 
-  // database connection and table name
-  private $conn;
-  private $table_name = "products";
+<?php 
+  class Product {
+    // DB stuff
+    private $conn;
+    private $table = 'products';
 
-  // object properties
-  public $id;
-  public $firstname;
-  public $lastname;
-  public $email;
-  public $password;
-  public $gender;
-  public $birthday;
+    // Post Properties
+    public $id;
+    // public $catalog_name;
+    public $categoryId;
+    public $name;
+    public $price;
+    public $specialPrice;
+    public $discount;
+    public $description;
+    public $manufacturer;
+    public $status;
+    public $screen;
+    public $sim;
+    public $memmory;
+    public $ram;
+    public $bluetooth;
+    public $wlan;
+    public $gpu;
+    public $pin;
+    public $camera;
+    public $os;
 
-  // constructor
-  public function __construct($db){
+    public function __construct($db) {
       $this->conn = $db;
-  }
-
-  // create new user record
-  function create(){
-  
-    // insert query
-    $query = "INSERT INTO " . $this->table_name . "
-            SET
-                firstname = :firstname,
-                lastname = :lastname,
-                email = :email,
-                gender = :gender,
-                birthday = :birthday,
-                password = :password";
-
-    // prepare the query
-    $stmt = $this->conn->prepare($query);
-
-    // sanitize
-    $this->firstname=htmlspecialchars(strip_tags($this->firstname));
-    $this->lastname=htmlspecialchars(strip_tags($this->lastname));
-    $this->email=htmlspecialchars(strip_tags($this->email));
-    $this->password=htmlspecialchars(strip_tags($this->password));
-    $this->gender=htmlspecialchars(strip_tags($this->gender));
-    $this->birthday=htmlspecialchars(strip_tags($this->birthday));
-
-    // bind the values
-    $stmt->bindParam(':firstname', $this->firstname);
-    $stmt->bindParam(':lastname', $this->lastname);
-    $stmt->bindParam(':email', $this->email);
-    $stmt->bindParam(':gender', $this->gender);
-    $stmt->bindParam(':birthday', $this->birthday);
-
-    // hash the password before saving to database
-    $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-    $stmt->bindParam(':password', $password_hash);
-
-    // execute the query, also check if query was successful
-    if($stmt->execute()){
-        return true;
     }
 
-    return false;
-  }
+    // Get product
+    public function read() {
+      $query = 'SELECT 
+            -- c.name as categoryName,
+            p.categoryId,
+            p.name,
+            p.price,
+            p.specialPrice,
+            p.discount,
+            p.description,
+            p.manufacturer,
+            p.status,
+            p.screen,
+            p.sim,
+            p.bluetooth,
+            p.memmory,
+            p.ram,
+            p.wlan,
+            p.gpu,
+            p.pin,
+            p.camera,
+            p.os
+          FROM
+            ' . $this->table . ' p';
+          // LEFT JOIN
+          //   category c ON p.categoryId = c.id';
+         
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute();
 
-  // check if given email exist in the database
-  function get(){
-  
-    $query = 'SELECT * FROM ' . $this->table . '
-                                LEFT JOIN
-                                  categories c ON p.category_id = c.id
-                                ORDER BY
-                                  p.created_at DESC';
+      return $stmt;
+    }
+
+    // Add product
+    public function add() {
+      // Create query
+      $query = 'INSERT INTO ' . 
+          $this->table . '
+        SET
+          name = :name,
+          categoryId = :categoryId,
+          price = :price,
+          specialPrice = :specialPrice,
+          discount = :discount,
+          description = :description,
+          manufacturer = :manufacturer,
+          status = :status,
+          screen = :screen,
+          sim = :sim,
+          memmory = :memmory,
+          ram = :ram,
+          bluetooth = :bluetooth,
+          wlan = :wlan,
+          gpu = :gpu,
+          pin = :pin,
+          camera = :camera,
+          os = :os';
+
+      // Prepare statement
+      $stmt = $this->conn->prepare($query);
+
+      $this->name = htmlspecialchars(strip_tags($this->name));
+      $this->categoryId = htmlspecialchars(strip_tags($this->categoryId));
+      $this->price = htmlspecialchars(strip_tags($this->price));
+      $this->specialPrice = htmlspecialchars(strip_tags($this->specialPrice));
+      $this->discount = htmlspecialchars(strip_tags($this->discount));
+      $this->description = htmlspecialchars(strip_tags($this->description));
+      $this->manufacturer = htmlspecialchars(strip_tags($this->manufacturer));
+      $this->status = htmlspecialchars(strip_tags($this->status));
+      $this->screen = htmlspecialchars(strip_tags($this->screen));
+      $this->sim = htmlspecialchars(strip_tags($this->sim));
+      $this->memmory = htmlspecialchars(strip_tags($this->memmory));
+      $this->ram = htmlspecialchars(strip_tags($this->ram));
+      $this->bluetooth = htmlspecialchars(strip_tags($this->bluetooth));
+      $this->wlan = htmlspecialchars(strip_tags($this->wlan));
+      $this->gpu = htmlspecialchars(strip_tags($this->gpu));
+      $this->pin = htmlspecialchars(strip_tags($this->pin));
+      $this->camera = htmlspecialchars(strip_tags($this->camera));
+      $this->os = htmlspecialchars(strip_tags($this->os));
       
-    // Prepare statement
-    $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(':name', $this->name);
+      $stmt->bindParam(':categoryId', $this->categoryId);
+      $stmt->bindParam(':price', $this->price);
+      $stmt->bindParam(':specialPrice', $this->specialPrice);
+      $stmt->bindParam(':discount', $this->discount);
+      $stmt->bindParam(':description', $this->description);
+      $stmt->bindParam(':manufacturer', $this->manufacturer);
+      $stmt->bindParam(':status', $this->status);
+      $stmt->bindParam(':screen', $this->screen);
+      $stmt->bindParam(':sim', $this->sim);
+      $stmt->bindParam(':memmory', $this->memmory);
+      $stmt->bindParam(':ram', $this->ram);
+      $stmt->bindParam(':bluetooth', $this->bluetooth);
+      $stmt->bindParam(':wlan', $this->wlan);
+      $stmt->bindParam(':gpu', $this->gpu);
+      $stmt->bindParam(':pin', $this->pin);
+      $stmt->bindParam(':camera', $this->camera);
+      $stmt->bindParam(':os', $this->os);
 
-    // Execute query
-    $stmt->execute();
-
-    return $stmt;
-
-
-  }
-
-  // update a user record
-  public function update(){
-  
-    // if password needs to be updated
-    $password_set=!empty($this->password) ? ", password = :password" : "";
-
-    // if no posted password, do not update the password
-    $query = "UPDATE " . $this->table_name . "
-            SET
-                firstname = :firstname,
-                lastname = :lastname,
-                gender = :gender,
-                birthday = :birthday,
-                email = :email
-                {$password_set}
-            WHERE id = :id";
-
-    // prepare the query
-    $stmt = $this->conn->prepare($query);
-
-    // sanitize
-    $this->firstname=htmlspecialchars(strip_tags($this->firstname));
-    $this->lastname=htmlspecialchars(strip_tags($this->lastname));
-    $this->email=htmlspecialchars(strip_tags($this->email));
-    $this->gender=htmlspecialchars(strip_tags($this->gender));
-    $this->birthday=htmlspecialchars(strip_tags($this->birthday));
-
-    // bind the values from the form
-    $stmt->bindParam(':firstname', $this->firstname);
-    $stmt->bindParam(':lastname', $this->lastname);
-    $stmt->bindParam(':email', $this->email);
-    $stmt->bindParam(':gender', $this->gender);
-    $stmt->bindParam(':birthday', $this->birthday);
-
-    // hash the password before saving to database
-    if(!empty($this->password)){
-      $this->password=htmlspecialchars(strip_tags($this->password));
-      $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-      $stmt->bindParam(':password', $password_hash);
-    }
-
-    // unique ID of record to be edited
-    $stmt->bindParam(':id', $this->id);
-
-    // execute the query
-    if($stmt->execute()){
+      // Execute query
+      if($stmt->execute()) {
         return true;
+      }
+
+      // Print error if something goes wrong
+      printf("Error: %s.\n", $stmt->error);
+
+      return false;
     }
 
-    return false;
-  }
+    // Edit Product
 
-  // Delete 
-  public function delete(){
-    // Create query
-    $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+    public function update() {
+      // Create query
+      $query = 'UPDATE ' . 
+          $this->table . '
+        SET
+          name = :name,
+          categoryId = :categoryId,
+          price = :price,
+          specialPrice = :specialPrice,
+          discount = :discount,
+          description = :description,
+          manufacturer = :manufacturer,
+          status = :status,
+          screen = :screen,
+          sim = :sim,
+          memmory = :memmory,
+          ram = :ram,
+          bluetooth = :bluetooth,
+          wlan = :wlan,
+          gpu = :gpu,
+          pin = :pin,
+          camera = :camera,
+          os = :os
 
-    // Prepare statement
-    $stmt = $this->conn->prepare($query);
+        WHERE
+          id = :id';
 
-    // Clean data
-    $this->id = htmlspecialchars(strip_tags($this->id));
+      // Prepare statement
+      $stmt = $this->conn->prepare($query);
 
-    // Bind data
-    $stmt->bindParam(':id', $this->id);
+      $this->name = htmlspecialchars(strip_tags($this->name));
+      $this->categoryId = htmlspecialchars(strip_tags($this->categoryId));
+      $this->price = htmlspecialchars(strip_tags($this->price));
+      $this->specialPrice = htmlspecialchars(strip_tags($this->specialPrice));
+      $this->discount = htmlspecialchars(strip_tags($this->discount));
+      $this->description = htmlspecialchars(strip_tags($this->description));
+      $this->manufacturer = htmlspecialchars(strip_tags($this->manufacturer));
+      $this->status = htmlspecialchars(strip_tags($this->status));
+      $this->screen = htmlspecialchars(strip_tags($this->screen));
+      $this->sim = htmlspecialchars(strip_tags($this->sim));
+      $this->memmory = htmlspecialchars(strip_tags($this->memmory));
+      $this->ram = htmlspecialchars(strip_tags($this->ram));
+      $this->bluetooth = htmlspecialchars(strip_tags($this->bluetooth));
+      $this->wlan = htmlspecialchars(strip_tags($this->wlan));
+      $this->gpu = htmlspecialchars(strip_tags($this->gpu));
+      $this->pin = htmlspecialchars(strip_tags($this->pin));
+      $this->camera = htmlspecialchars(strip_tags($this->camera));
+      $this->os = htmlspecialchars(strip_tags($this->os));
 
-    // execute the query
-    if($stmt->execute()){
+
+      $stmt->bindParam(':name', $this->name);
+      $stmt->bindParam(':categoryId', $this->categoryId);
+      $stmt->bindParam(':price', $this->price);
+      $stmt->bindParam(':specialPrice', $this->specialPrice);
+      $stmt->bindParam(':discount', $this->discount);
+      $stmt->bindParam(':description', $this->description);
+      $stmt->bindParam(':manufacturer', $this->manufacturer);
+      $stmt->bindParam(':status', $this->status);
+      $stmt->bindParam(':screen', $this->screen);
+      $stmt->bindParam(':sim', $this->sim);
+      $stmt->bindParam(':memmory', $this->memmory);
+      $stmt->bindParam(':ram', $this->ram);
+      $stmt->bindParam(':bluetooth', $this->bluetooth);
+      $stmt->bindParam(':wlan', $this->wlan);
+      $stmt->bindParam(':gpu', $this->gpu);
+      $stmt->bindParam(':pin', $this->pin);
+      $stmt->bindParam(':camera', $this->camera);
+      $stmt->bindParam(':os', $this->os);
+      $stmt->bindParam(':id', $this->id);
+
+      // Execute query
+      if($stmt->execute()) {
         return true;
+      }
+
+      printf("Error: %s.\n", $stmt->error);
+
+      return false;
     }
 
-    return false;
-  }
+    // Delete 
+    public function delete() {
+      // Create query
+      $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
 
-}
+      // Prepare statement
+      $stmt = $this->conn->prepare($query);
+
+      // Clean data
+      $this->id = htmlspecialchars(strip_tags($this->id));
+
+      // Bind data
+      $stmt->bindParam(':id', $this->id);
+
+      // Execute query
+      if($stmt->execute()) {
+        return true;
+      }
+
+      // Print error if something goes wrong
+      printf("Error: %s.\n", $stmt->error);
+
+      return false;
+    }
+
+
+    public function readProductOfCategory() {
+      // Create query
+      $query = $query = 'SELECT 
+        p.categoryId,
+        p.name,
+        p.price,
+        p.specialPrice,
+        p.discount,
+        p.description,
+        p.manufacturer,
+        p.status,
+        p.screen,
+        p.sim,
+        p.bluetooth,
+        p.memmory,
+        p.ram,
+        p.wlan,
+        p.gpu,
+        p.pin,
+        p.camera,
+        p.os
+      FROM
+        ' . $this->table . ' p
+      WHERE
+        p.categoryId = ? ';
+
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(1, $this->categoryId);
+
+      $stmt->execute();
+      return $stmt;
+    }
+
+ 
+  }
