@@ -1,8 +1,8 @@
 <?php 
-  class Catalog {
+  class Category {
     // DB stuff
     private $conn;
-    private $table = 'catalogies';
+    private $table = 'categories';
 
     // Post Properties
     public $id;
@@ -16,7 +16,6 @@
     // Get 
     public function read() {
       $query = 'SELECT 
-            p.id,
             p.image,
             p.name
           FROM
@@ -29,25 +28,20 @@
     }
 
     // Add 
-    public function create() {
+    public function add() {
       // Create query
       $query = 'INSERT INTO ' . 
           $this->table . '
         SET
-          id = :id,
           name = :name,
           image = :image';
 
       // Prepare statement
       $stmt = $this->conn->prepare($query);
 
-      // Clean data
-      $this->id = htmlspecialchars(strip_tags($this->id));
       $this->name = htmlspecialchars(strip_tags($this->name));
       $this->image = htmlspecialchars(strip_tags($this->image));
       
-      // Bind data
-      $stmt->bindParam(':id', $this->id);
       $stmt->bindParam(':name', $this->name);
       $stmt->bindParam(':image', $this->image);
 
@@ -78,8 +72,6 @@
       // Prepare statement
       $stmt = $this->conn->prepare($query);
 
-      // Clean data
-      $this->id = htmlspecialchars(strip_tags($this->id));
       $this->name = htmlspecialchars(strip_tags($this->name));
       $this->image = htmlspecialchars(strip_tags($this->image));
 
@@ -127,7 +119,6 @@
     public function read_single() {
       // Create query
       $query = 'SELECT 
-      c.id,
       c.name,
       c.image
      FROM
