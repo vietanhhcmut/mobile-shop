@@ -5,7 +5,7 @@ import { formatPrice, calcDiscountPrice } from '../../../../constants/constants'
 
 class PreviewedItem extends Component {
     state = {
-        mainImg: this.props.item.imgs[0]
+        mainImg: this.props.item.imgs[0] || null
     }
     handleChangeImg = img => () => {
         this.setState({
@@ -14,11 +14,13 @@ class PreviewedItem extends Component {
     }
     componentDidUpdate() {
         const { item } = this.props;
-        const index = item.imgs.findIndex(img => this.state.mainImg === img);
-        if (index === -1) {
-            this.setState({
-                mainImg: item.imgs[0]
-            });
+        if (this.state.mainImg) {
+            const index = item.imgs.findIndex(img => this.state.mainImg === img);
+            if (index === -1) {
+                this.setState({
+                    mainImg: item.imgs[0]
+                });
+            }
         }
     }
     render() {
@@ -56,11 +58,11 @@ class PreviewedItem extends Component {
                         <p>Vận chuyển: Từ 1-5 ngày</p>
                         <p>{item.description}</p>
                         <div className="previewed-item-detail__variant">
-                            <div className="variant-name">Color</div>
+                            <div className="variant-name">Màu</div>
                             <div className="variant-value">
                                 {
-                                    item.colors.map((backgroundColor, index) => (
-                                        <span style={{ backgroundColor }} key={index + backgroundColor} />
+                                    item.colors.map((color, index) => (
+                                        <span style={{ backgroundColor: color.color }} key={index + color.color} />
                                     ))
                                 }
                             </div>
@@ -74,7 +76,7 @@ class PreviewedItem extends Component {
                         <div className="previewed-item-detail__variant">
                             <div className="variant-name">RAM</div>
                             <div className="variant-value">
-                                {item.details.RAM}
+                                {item.ram}
                             </div>
                         </div>
                         <div className="item-availability">

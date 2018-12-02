@@ -3,9 +3,11 @@ import "./Header.css";
 import Menu from "./Menu/Menu";
 import Navbar from "./NavBar/NavBar";
 import { Link } from "react-router-dom";
-import { logoSite } from "../../../constants/constants";
+import { logoSite, calcTotalQuantity } from "../../../constants/constants";
+import Context from "../../../Context";
 
 export default class Header extends Component {
+  static contextType = Context;
   state = {
     active: "trang-chu",
     toggle: false,
@@ -75,7 +77,7 @@ export default class Header extends Component {
               </span>
 
               <div className="hidden-sm-down">Giỏ hàng</div>
-              <span className="header-card-big__cart-infor">6 sản phẩm</span>
+              <span className="header-card-big__cart-infor">{calcTotalQuantity(this.context.cart)} sản phẩm</span>
             </div>
           </Link>
         </div>
@@ -105,8 +107,7 @@ export default class Header extends Component {
                   shopping_cart
                 </i>
               </span>
-
-              <span className="header-card__cart-infor">6 sản phẩm</span>
+              <span className="header-card__cart-infor">{calcTotalQuantity(this.context.cart)} sản phẩm</span>
             </div>
           </Link>
 

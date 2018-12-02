@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './DetailedItem.css';
-import { api, formatPrice, calcDiscountPrice } from '../../../../constants/constants';
+import { formatPrice, calcDiscountPrice } from '../../../../constants/constants';
 import { withRouter } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,23 +8,31 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import DetailInfo from './DetailInfo/DetailInfo';
 import Review from './Review/Review';
-
+import Context from '../../../../Context';
+import axios from '../../../../constants/axiosInstance';
 
 class DetailedItem extends Component {
+    static contextType = Context;
     state = {
         item: null,
         showingImg: null,
         number: 1,
         tab: 1,
-        selectedColor: 0
+        selectedColor: 0,
+        imgAddToCartStyle: {
+            display: 'none'
+        }
     }
     componentDidMount() {
         const { id } = this.props.match.params;
-        api.getItem(id)
-            .then(item => this.setState({
-                item,
-                showingImg: item.imgs[0]
-            }));
+        axios.post("/api/product/readOneProduct.php", { id })
+            .then(res => {
+                console.log(res.data)
+                this.setState({ item: res.data, showingImg: res.data.imgs[0] });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
     handleChangeShowingImg = img => () => this.setState({ showingImg: img });
     handleChangeNumber = type => () => {
@@ -41,11 +49,33 @@ class DetailedItem extends Component {
         }
     }
     hanleSwitchTab = (e, tab) => this.setState({ tab });
-    handleClickColor = (index) => () => {
+    handleSelectColor = (index) => () => {
         this.setState({ selectedColor: index });
     }
+    handleAddToCart = (id, quantity, color) => {
+        const boundingImg = this.productImg.getBoundingClientRect();
+        this.setState({
+            imgAddToCartStyle: {
+                bottom: (window.innerHeight - boundingImg.bottom) + 'px',
+                left: boundingImg.left + 'px',
+                width: boundingImg.width + 'px',
+                height: boundingImg.height + 'px',
+            }
+        });
+        setTimeout(() => {
+            this.setState({
+                imgAddToCartStyle: {
+                    bottom: '30px',
+                    left: '30px',
+                    width: '0',
+                    height: '0',
+                }
+            });
+        }, 1);
+        this.context.handleAddToCart(id, quantity, color);
+    }
     render() {
-        const { item, selectedColor } = this.state;
+        const { item, selectedColor, number } = this.state;
         let generalItemInfo;
         if (item) {
             // CSS IN PREVIEWD ITEM
@@ -70,10 +100,10 @@ class DetailedItem extends Component {
                         <div className="variant-name">Color</div>
                         <div className="variant-value">
                             {
-                                item.colors.map((backgroundColor, index) => (
-                                    <span style={{ backgroundColor }} key={index + backgroundColor}
+                                item.colors.map((color, index) => (
+                                    <span style={{ backgroundColor: color.color }} key={index + color.color}
                                         className={selectedColor === index ? 'active' : ''}
-                                        onClick={this.handleClickColor(index)} />
+                                        onClick={this.handleSelectColor(index)} />
                                 ))
                             }
                         </div>
@@ -87,7 +117,7 @@ class DetailedItem extends Component {
                     <div className="previewed-item-detail__variant">
                         <div className="variant-name">RAM</div>
                         <div className="variant-value">
-                            {item.details.RAM}
+                            {item.ram}
                         </div>
                     </div>
                     <div className="item-availability">
@@ -104,7 +134,7 @@ class DetailedItem extends Component {
             <div className="item-detail">
                 <div className="item-detail__imgs">
                     <div className="main-img">
-                        <img src={this.state.showingImg} alt="phone" />
+                        <img src={this.state.showingImg} alt="phone" ref={img => this.productImg = img}/>
                     </div>
                     <div className="sub-imgs">
                         {
@@ -138,7 +168,8 @@ class DetailedItem extends Component {
                                 </i>
                             </div>
                         </div>
-                        <Button variant="outlined" color="secondary" className="add-cart-button">
+                        <Button variant="outlined" color="secondary" className="add-cart-button"
+                            onClick={() => this.handleAddToCart(item.id, number, item.colors[selectedColor].name)}>
                             ADD TO CART
                         </Button>
                     </div>
@@ -149,10 +180,13 @@ class DetailedItem extends Component {
                             <Tab value={1} label="Chi tiết sản phẩm" />
                             <Tab value={2} label="Đánh giá" />
                         </Tabs>
-                        {tab === 1 && item && <DetailInfo detail={item.details} />}
+                        {tab === 1 && item && <DetailInfo detail={item} />}
                         {tab === 2 && <Review />}
                     </AppBar>
                 </div>
+
+                <img src={this.state.showingImg} alt='Add product to cart' className='img-add-to-cart' 
+                    style={this.state.imgAddToCartStyle}/>
             </div >
         );
     }

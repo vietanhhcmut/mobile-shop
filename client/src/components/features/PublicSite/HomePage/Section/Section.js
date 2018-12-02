@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Section.css';
 import ProductItem from './../../../../common/ProductItem/ProductItem';
 import PreviewedItem from './../../../../common/ProductItem/PreviewedItem/PreviewedItem';
-import { api } from '../../../../../constants/constants';
+import axios from '../../../../../constants/axiosInstance';
 
 class Section extends Component {
     state = {
@@ -15,13 +15,43 @@ class Section extends Component {
         previewItem: false,
         item: 0,
     }
+    handleGetCategoryTop = (categoryId) => {
+        axios.post("/api/product/readTopProductOfCategory.php", { categoryId })
+            .then(res => {
+                this.setState({ items: res.data });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
     componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
-        api.getProducts()
-        .then(res => this.setState({ items: res }));
-        api.getBrands()
-        .then(res => this.setState({ brands: res }));
+        if (!this.props.brand) {
+            axios.get("/api/product/readTopProduct.php")
+                .then(res => {
+                    this.setState({ items: res.data });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+
+        axios.get("/api/category/readAllCategory.php")
+            .then(res => {
+                this.setState({ brands: res.data });
+                if (this.props.brand) {
+                    const { brands, activeBrand } = this.state;
+                    this.handleGetCategoryTop(brands[activeBrand].id);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        // api.getProducts()
+        // .then(res => this.setState({ items: res }));
+        // api.getBrands()
+        // .then(res => this.setState({ brands: res }));
     }
 
     componentWillUnmount() {
@@ -31,13 +61,13 @@ class Section extends Component {
     updateWindowDimensions = () => {
         this.setState({ screenWidth: window.innerWidth });
     }
-    handleRandomizeBrand = () => {
-        const brands = [ ...this.state.brands ];
-        if (brands.length < 3) return brands;
-        return [brands[0], brands[1], brands[2]];
-    }
+    // handleRandomizeBrand = () => {
+    //     const brands = [ ...this.state.brands ];
+    //     if (brands.length < 3) return brands;
+    //     return [brands[0], brands[1], brands[2]];
+    // }
     handleSlideItem = type => () => {
-        let { slidedWidth, screenWidth, firstVisibleChild} = this.state;
+        let { slidedWidth, screenWidth, firstVisibleChild } = this.state;
         switch (type) {
             case 'add':
                 slidedWidth += 10;
@@ -47,7 +77,7 @@ class Section extends Component {
                 break;
         }
         if ((slidedWidth <= -100 && screenWidth < 576) ||
-            (slidedWidth <= -90 && screenWidth < 768 && screenWidth >= 576 )||
+            (slidedWidth <= -90 && screenWidth < 768 && screenWidth >= 576) ||
             (slidedWidth <= -80 && screenWidth < 992 && screenWidth >= 768) ||
             (slidedWidth <= -70 && screenWidth < 1200 && screenWidth >= 992) ||
             (slidedWidth <= -60 && screenWidth >= 1200) ||
@@ -61,15 +91,21 @@ class Section extends Component {
         });
     }
     handleTogglePreviewItem = id => e => {
-        console.log(id);
         this.setState(prevState => ({
-                previewItem: !prevState.previewItem,
-                item: id,
+            previewItem: !prevState.previewItem,
+            item: id,
         }));
     }
+    handleClickBrand = brandIndex => () => {
+        const { brands } = this.state;
+        this.setState({ activeBrand: brandIndex });
+        this.handleGetCategoryTop(brands[brandIndex].id);
+    }
     render() {
-        const brands = this.handleRandomizeBrand().map((brd, id) => (
-            <button className={`section-action__button brand${this.state.activeBrand === id ? ' active' : ''}`} key={brd.id}>
+        const brands = this.state.brands.map((brd, id) => (
+            <button className={`section-action__button brand${this.state.activeBrand === id ? ' active' : ''}`}
+                key={brd.id}
+                onClick={this.handleClickBrand(id)}>
                 {brd.name}
             </button>
         ));
@@ -79,7 +115,7 @@ class Section extends Component {
             </div>
             :
             null;
-        const itemSection = this.state.items.map((item,id) => (
+        const itemSection = this.state.items.map((item, id) => (
             <ProductItem
                 item={item}
                 key={item.id}
@@ -88,7 +124,7 @@ class Section extends Component {
             />
         ));
         let slideStyle = {
-            transform: `translateX(${this.state.slidedWidth}%)`
+            transform: this.state.slidedWidth === 0 ? 'none' : `translateX(${this.state.slidedWidth}%)`
         };
         return (
             <React.Fragment>

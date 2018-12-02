@@ -2,17 +2,58 @@ import React from 'react';
 import './DetailInfo.css';
 
 const DetailInfo = ({ detail }) => {
-    const keys = Object.keys(detail);
+    const detailInfo = [
+        {
+            name: 'Màn hình',
+            value: detail.screen
+        },
+        {
+            name: 'SIM',
+            value: detail.sim
+        },
+        {
+            name: 'Bộ nhớ',
+            value: detail.memory
+        },
+        {
+            name: 'RAM',
+            value: detail.ram
+        },
+        {
+            name: 'Bluetooth',
+            value: detail.bluetooth
+        },
+        {
+            name: 'WLAN',
+            value: detail.wlan
+        },
+        {
+            name: 'GPS',
+            value: detail.gps
+        },
+        {
+            name: 'Pin',
+            value: detail.pin
+        },
+        {
+            name: 'Camera',
+            value: detail.camera
+        },
+        {
+            name: 'Hệ điều hành',
+            value: detail.os
+        },
+    ]
     return (
         <div className="detail-info">
             {
-                keys.map((key, id) => (
-                    <div className="detail-info-field" key={key+id}>
+                detailInfo.map(info => (
+                    <div className="detail-info-field" key={info.name}>
                         <div className="detail-info-field__key">
-                            {key}
+                            {info.name}
                         </div>
                         <div className="detail-info-field__value">
-                            {detail[key]}
+                            {info.value}
                         </div>
                     </div>
                 ))
