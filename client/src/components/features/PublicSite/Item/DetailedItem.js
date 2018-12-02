@@ -27,6 +27,7 @@ class DetailedItem extends Component {
         const { id } = this.props.match.params;
         axios.post("/api/product/readOneProduct.php", { id })
             .then(res => {
+                console.log(res.data)
                 this.setState({ item: res.data, showingImg: res.data.imgs[0] });
             })
             .catch(err => {
@@ -48,7 +49,7 @@ class DetailedItem extends Component {
         }
     }
     hanleSwitchTab = (e, tab) => this.setState({ tab });
-    handleClickColor = (index) => () => {
+    handleSelectColor = (index) => () => {
         this.setState({ selectedColor: index });
     }
     handleAddToCart = (id, quantity, color) => {
@@ -99,10 +100,10 @@ class DetailedItem extends Component {
                         <div className="variant-name">Color</div>
                         <div className="variant-value">
                             {
-                                item.colors.map((backgroundColor, index) => (
-                                    <span style={{ backgroundColor }} key={index + backgroundColor}
+                                item.colors.map((color, index) => (
+                                    <span style={{ backgroundColor: color.color }} key={index + color.color}
                                         className={selectedColor === index ? 'active' : ''}
-                                        onClick={this.handleClickColor(index)} />
+                                        onClick={this.handleSelectColor(index)} />
                                 ))
                             }
                         </div>
@@ -168,7 +169,7 @@ class DetailedItem extends Component {
                             </div>
                         </div>
                         <Button variant="outlined" color="secondary" className="add-cart-button"
-                            onClick={() => this.handleAddToCart(item.id, number, selectedColor)}>
+                            onClick={() => this.handleAddToCart(item.id, number, item.colors[selectedColor].name)}>
                             ADD TO CART
                         </Button>
                     </div>

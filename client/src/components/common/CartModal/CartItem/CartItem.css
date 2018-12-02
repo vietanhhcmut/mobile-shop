@@ -1,5 +1,5 @@
 .products__cart-item {
-    width: 280px;
+    width: 300px;
     display: flex;
     justify-content: space-evenly;
     position: relative;
@@ -13,7 +13,7 @@
 }
 .cart-item__product-img {
     width: 35%;
-    margin-right: 5%;
+    margin-right: 10px;
 }
 .cart-item__product-img > img {
     max-width: 100%;
@@ -27,6 +27,13 @@
     display: inline-block;
     color: black;
     margin: 5px auto;
+}
+.info__product-color {
+    font-size: 13px;
+    display: block;
+}
+.info__product-color > span {
+    color: #58b0da;
 }
 .info__discount-price {
     display: block;

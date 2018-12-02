@@ -17,8 +17,8 @@ class Section extends Component {
     }
     handleGetCategoryTop = (categoryId) => {
         axios.post("/api/product/readTopProductOfCategory.php", { categoryId })
-            .then(res1 => {
-                this.setState({ items: res1.data });
+            .then(res => {
+                this.setState({ items: res.data });
             })
             .catch(err => {
                 console.log(err);

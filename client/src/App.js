@@ -13,7 +13,7 @@ class App extends Component {
   }
   handleAddToCart = (productId, quantity, color) => {
     const cart = [...this.state.cart];
-    const index = cart.findIndex(_ => _.productId === productId);
+    const index = cart.findIndex(_ => (_.productId === productId) && (_.color === color));
     if (index === -1)
       cart.push({
         productId,
@@ -31,6 +31,14 @@ class App extends Component {
       this.setState({ addToCart: false });
     }, 3600);
   }
+  handleChangeQuantity = (cartItemIndex, quantity) => {
+    const cart = [...this.state.cart];
+    const cartItem = { ...cart[cartItemIndex] };
+    cartItem.quantity = quantity;
+    cart[cartItemIndex] = cartItem;
+    localStorage.setItem('cart', JSON.stringify(cart));
+    this.setState({ cart });
+  }
   render() {
     const { cart, addToCart } = this.state;
     return (
@@ -38,8 +46,9 @@ class App extends Component {
         <Switch>
           <Context.Provider value={{
             cart,
+            addToCart,
             handleAddToCart: this.handleAddToCart,
-            addToCart
+            handleChangeQuantity: this.handleChangeQuantity
           }}>
             {/* Phần dưới chưa tạo component */}
             <Route path="/admin/user" exact component={SignupPage} />

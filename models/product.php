@@ -23,6 +23,8 @@
     public $camera;
     public $os;
 
+    public $cart;
+
     public function __construct($db) {
       $this->conn = $db;
     }
@@ -238,7 +240,7 @@
 
     public function readProductOfCategory() {
       // Create query
-      $query = $query = 'SELECT * FROM ' . $this->table . ' p, colors, images 
+      $query = 'SELECT * FROM ' . $this->table . ' p, colors, images 
         WHERE (p.categoryId = ? AND p.id=colors.productId AND p.id=images.productId) 
         ORDER BY createdAt LIMIT 10';
 
@@ -341,5 +343,18 @@
     }
 
 
-    
+    public function calcTotalPrice() {
+      $totalPrice = 0;
+      $cart = $this->cart;
+      for ($i = 0; $i < sizeof($this->cart); $i++) {
+        $query = 'SELECT * FROM ' . $this->table . ' WHERE id=?';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $cart[$i]->productId);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $totalPrice += $row['price']*(100-$row['saleoff'])/100 * $cart[$i]->quantity;
+      }
+      return $totalPrice;
+    }
   }

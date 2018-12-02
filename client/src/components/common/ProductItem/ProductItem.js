@@ -67,7 +67,7 @@ class ProductItem extends Component {
                         }
                     </div>
                     <Button variant="outlined" color="secondary" className="item-adding-cart"
-                        onClick={() => this.handleAddToCart(item.id, 1, item.colors[0])}>
+                        onClick={() => this.handleAddToCart(item.id, 1, item.colors[0].name)}>
                         ADD TO CART
                     </Button>
                 </div>
