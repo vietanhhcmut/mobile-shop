@@ -6,8 +6,8 @@
   header("Access-Control-Max-Age: 3600");
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-  include_once 'config/database.php';
-  include_once 'objects/user.php';
+  include_once '../../config/database.php';
+  include_once '../../models/user.php';
 
   $database = new Database();
   $db = $database->getConnection();
@@ -25,15 +25,13 @@
   $user->gender = $data->gender;
   $user->birthday = $data->birthday;
 
-  var_dump($user);
+  // var_dump($user);
   if (!($user->emailExists())){
       // create the user
     if($user->create()){
     
       // set response code
       http_response_code(200);
-
-      // display message: user was created
       echo json_encode(array("message" => "User was created."));
     }
 

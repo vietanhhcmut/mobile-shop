@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Cart.css';
 import CartItem from './CartItem/CartItem';
 import { Link } from 'react-router-dom';
-import { calcDiscountPrice, formatPrice } from '../../../../constants/constants';
+import { calcDiscountPrice, formatPrice, calcTotalQuantity } from '../../../../constants/constants';
 
 class Cart extends Component {
     state = {
@@ -105,7 +105,7 @@ class Cart extends Component {
                         <div className='order-summary__total-checkout'>
                             <div className='total-checkout__row'>
                                 <span>
-                                    <b>{cart.reduce((sum, product) => sum + Number(product.quantity), 0)}</b> Sản phẩm
+                                    <b>{calcTotalQuantity(cart)}</b> Sản phẩm
                                 </span>
                                 <b>
                                     {formatPrice(cart.reduce((sum, product) =>

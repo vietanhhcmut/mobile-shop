@@ -35,6 +35,7 @@
     border-radius: 50%;
     color: white;
     font-size: 12px;
+    font-weight: bold;
 }
 .cart-modal__icon-wrapper:hover .icon-wrapper__cart-icon {
     color: #3387f2;
@@ -48,7 +49,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    animation: cart-icon-animation 1s ease-in;
+    animation: cart-icon-animation 1.2s ease-in-out;
     animation-iteration-count: 3;
 }
 
@@ -163,14 +164,13 @@
     0% {
         width: 0;
         height: 0;
-        border: 1px solid #58b0da;
-    }
-    99% {
-        width: 55px;
-        height: 55px;
-        border: 1px solid #58b0da;
+        border: 0 solid #58b0da;
+        opacity: 1;
     }
     100% {
-        border: none;
+        width: 70px;
+        height: 70px;
+        border: 20px solid #58b0da;
+        opacity: 0;
     }
 }
