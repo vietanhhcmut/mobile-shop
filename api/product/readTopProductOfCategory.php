@@ -18,11 +18,7 @@
 
   $product->categoryId = $data->categoryId;
 
-  $result = $product->readProductOfCategory();
+  $result = $product->readTopProductOfCategory();
 
-  $products_arr = array();
-  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      array_push($products_arr, $row);
-  }
   // Turn to JSON & output
-  echo json_encode($products_arr);
+  echo json_encode($result);

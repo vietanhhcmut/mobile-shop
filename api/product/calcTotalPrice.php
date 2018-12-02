@@ -16,13 +16,9 @@
 
   $data = json_decode(file_get_contents("php://input"));
 
-  $product->categoryId = $data->categoryId;
+  $product->cart = $data->cart;
 
-  $result = $product->readProductOfCategory();
+  $result = $product->calcTotalPrice();
 
-  $products_arr = array();
-  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      array_push($products_arr, $row);
-  }
   // Turn to JSON & output
-  echo json_encode($products_arr);
+  echo json_encode($result);

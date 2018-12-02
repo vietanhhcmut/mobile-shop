@@ -17,7 +17,7 @@ class ProductItem extends Component {
     handleChangeImg = img => () => {
         this.setState({ showingImg: img });
     }
-    handleAddToCart = (id, quantity, color) => {
+    handleAddToCart = (id, quantity, color) => () => {
         const boundingImg = this.productImg.getBoundingClientRect();
         this.setState({
             imgAddToCartStyle: {
@@ -67,7 +67,7 @@ class ProductItem extends Component {
                         }
                     </div>
                     <Button variant="outlined" color="secondary" className="item-adding-cart"
-                        onClick={() => this.handleAddToCart(item.id, 1, item.colors[0])}>
+                        onClick={this.handleAddToCart(item.id, 1, item.colors.length===0 ? 'Đen' : item.colors[0].name)}>
                         ADD TO CART
                     </Button>
                 </div>
