@@ -6,22 +6,19 @@
 
     // Post Properties
     public $id;
-    // public $catalog_name;
+    public $createdAt;
     public $categoryId;
     public $name;
     public $price;
-    public $specialPrice;
-    public $discount;
+    public $saleoff;
     public $description;
-    public $manufacturer;
-    public $status;
     public $screen;
     public $sim;
     public $memmory;
     public $ram;
     public $bluetooth;
     public $wlan;
-    public $gpu;
+    public $gps;
     public $pin;
     public $camera;
     public $os;
@@ -31,36 +28,45 @@
     }
 
     // Get product
-    public function read() {
-      $query = 'SELECT 
-            -- c.name as categoryName,
-            p.categoryId,
-            p.name,
-            p.price,
-            p.specialPrice,
-            p.discount,
-            p.description,
-            p.manufacturer,
-            p.status,
-            p.screen,
-            p.sim,
-            p.bluetooth,
-            p.memmory,
-            p.ram,
-            p.wlan,
-            p.gpu,
-            p.pin,
-            p.camera,
-            p.os
-          FROM
-            ' . $this->table . ' p';
-          // LEFT JOIN
-          //   category c ON p.categoryId = c.id';
+    public function readOneProduct() {
+      $query = 'SELECT * FROM ' . $this->table . ' WHERE id=?';
          
       $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(1, $this->id);
       $stmt->execute();
 
-      return $stmt;
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      $query = 'SELECT color, name FROM colors, product_color WHERE (product_color.productId = ? AND colors.id=product_color.colorId)';
+      $stmt1 = $this->conn->prepare($query);
+      $stmt1->bindParam(1, $row['id']);
+      $stmt1->execute();
+        
+      $row['colors'] = array();
+      while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+        array_push($row['colors'], $row1);
+      }
+
+      $query = 'SELECT path FROM images WHERE images.productId = ?';
+      $stmt2 = $this->conn->prepare($query);
+      $stmt2->bindParam(1, $row['id']);
+      $stmt2->execute();
+        
+      $row['imgs'] = array();
+      while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+        array_push($row['imgs'], $row2['path']);
+      }
+
+      $query = 'SELECT name FROM categories WHERE id = ?';
+      $stmt3 = $this->conn->prepare($query);
+      $stmt3->bindParam(1, $row['categoryId']);
+      $stmt3->execute();
+
+      $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+
+      $row['category'] = $row3['name'];
+
+      return $row;
     }
 
     // Add product
@@ -72,18 +78,15 @@
           name = :name,
           categoryId = :categoryId,
           price = :price,
-          specialPrice = :specialPrice,
-          discount = :discount,
+          saleoff = :saleoff,
           description = :description,
-          manufacturer = :manufacturer,
-          status = :status,
           screen = :screen,
           sim = :sim,
           memmory = :memmory,
           ram = :ram,
           bluetooth = :bluetooth,
           wlan = :wlan,
-          gpu = :gpu,
+          gps = :gps,
           pin = :pin,
           camera = :camera,
           os = :os';
@@ -94,18 +97,15 @@
       $this->name = htmlspecialchars(strip_tags($this->name));
       $this->categoryId = htmlspecialchars(strip_tags($this->categoryId));
       $this->price = htmlspecialchars(strip_tags($this->price));
-      $this->specialPrice = htmlspecialchars(strip_tags($this->specialPrice));
-      $this->discount = htmlspecialchars(strip_tags($this->discount));
+      $this->saleoff = htmlspecialchars(strip_tags($this->saleoff));
       $this->description = htmlspecialchars(strip_tags($this->description));
-      $this->manufacturer = htmlspecialchars(strip_tags($this->manufacturer));
-      $this->status = htmlspecialchars(strip_tags($this->status));
       $this->screen = htmlspecialchars(strip_tags($this->screen));
       $this->sim = htmlspecialchars(strip_tags($this->sim));
       $this->memmory = htmlspecialchars(strip_tags($this->memmory));
       $this->ram = htmlspecialchars(strip_tags($this->ram));
       $this->bluetooth = htmlspecialchars(strip_tags($this->bluetooth));
       $this->wlan = htmlspecialchars(strip_tags($this->wlan));
-      $this->gpu = htmlspecialchars(strip_tags($this->gpu));
+      $this->gps = htmlspecialchars(strip_tags($this->gps));
       $this->pin = htmlspecialchars(strip_tags($this->pin));
       $this->camera = htmlspecialchars(strip_tags($this->camera));
       $this->os = htmlspecialchars(strip_tags($this->os));
@@ -113,18 +113,15 @@
       $stmt->bindParam(':name', $this->name);
       $stmt->bindParam(':categoryId', $this->categoryId);
       $stmt->bindParam(':price', $this->price);
-      $stmt->bindParam(':specialPrice', $this->specialPrice);
-      $stmt->bindParam(':discount', $this->discount);
+      $stmt->bindParam(':saleoff', $this->saleoff);
       $stmt->bindParam(':description', $this->description);
-      $stmt->bindParam(':manufacturer', $this->manufacturer);
-      $stmt->bindParam(':status', $this->status);
       $stmt->bindParam(':screen', $this->screen);
       $stmt->bindParam(':sim', $this->sim);
       $stmt->bindParam(':memmory', $this->memmory);
       $stmt->bindParam(':ram', $this->ram);
       $stmt->bindParam(':bluetooth', $this->bluetooth);
       $stmt->bindParam(':wlan', $this->wlan);
-      $stmt->bindParam(':gpu', $this->gpu);
+      $stmt->bindParam(':gps', $this->gps);
       $stmt->bindParam(':pin', $this->pin);
       $stmt->bindParam(':camera', $this->camera);
       $stmt->bindParam(':os', $this->os);
@@ -150,18 +147,15 @@
           name = :name,
           categoryId = :categoryId,
           price = :price,
-          specialPrice = :specialPrice,
-          discount = :discount,
+          saleoff = :saleoff,
           description = :description,
-          manufacturer = :manufacturer,
-          status = :status,
           screen = :screen,
           sim = :sim,
           memmory = :memmory,
           ram = :ram,
           bluetooth = :bluetooth,
           wlan = :wlan,
-          gpu = :gpu,
+          gps = :gps,
           pin = :pin,
           camera = :camera,
           os = :os
@@ -175,18 +169,15 @@
       $this->name = htmlspecialchars(strip_tags($this->name));
       $this->categoryId = htmlspecialchars(strip_tags($this->categoryId));
       $this->price = htmlspecialchars(strip_tags($this->price));
-      $this->specialPrice = htmlspecialchars(strip_tags($this->specialPrice));
-      $this->discount = htmlspecialchars(strip_tags($this->discount));
+      $this->saleoff = htmlspecialchars(strip_tags($this->saleoff));
       $this->description = htmlspecialchars(strip_tags($this->description));
-      $this->manufacturer = htmlspecialchars(strip_tags($this->manufacturer));
-      $this->status = htmlspecialchars(strip_tags($this->status));
       $this->screen = htmlspecialchars(strip_tags($this->screen));
       $this->sim = htmlspecialchars(strip_tags($this->sim));
       $this->memmory = htmlspecialchars(strip_tags($this->memmory));
       $this->ram = htmlspecialchars(strip_tags($this->ram));
       $this->bluetooth = htmlspecialchars(strip_tags($this->bluetooth));
       $this->wlan = htmlspecialchars(strip_tags($this->wlan));
-      $this->gpu = htmlspecialchars(strip_tags($this->gpu));
+      $this->gps = htmlspecialchars(strip_tags($this->gps));
       $this->pin = htmlspecialchars(strip_tags($this->pin));
       $this->camera = htmlspecialchars(strip_tags($this->camera));
       $this->os = htmlspecialchars(strip_tags($this->os));
@@ -195,18 +186,15 @@
       $stmt->bindParam(':name', $this->name);
       $stmt->bindParam(':categoryId', $this->categoryId);
       $stmt->bindParam(':price', $this->price);
-      $stmt->bindParam(':specialPrice', $this->specialPrice);
-      $stmt->bindParam(':discount', $this->discount);
+      $stmt->bindParam(':saleoff', $this->saleoff);
       $stmt->bindParam(':description', $this->description);
-      $stmt->bindParam(':manufacturer', $this->manufacturer);
-      $stmt->bindParam(':status', $this->status);
       $stmt->bindParam(':screen', $this->screen);
       $stmt->bindParam(':sim', $this->sim);
       $stmt->bindParam(':memmory', $this->memmory);
       $stmt->bindParam(':ram', $this->ram);
       $stmt->bindParam(':bluetooth', $this->bluetooth);
       $stmt->bindParam(':wlan', $this->wlan);
-      $stmt->bindParam(':gpu', $this->gpu);
+      $stmt->bindParam(':gps', $this->gps);
       $stmt->bindParam(':pin', $this->pin);
       $stmt->bindParam(':camera', $this->camera);
       $stmt->bindParam(':os', $this->os);
@@ -250,29 +238,9 @@
 
     public function readProductOfCategory() {
       // Create query
-      $query = $query = 'SELECT 
-        p.categoryId,
-        p.name,
-        p.price,
-        p.specialPrice,
-        p.discount,
-        p.description,
-        p.manufacturer,
-        p.status,
-        p.screen,
-        p.sim,
-        p.bluetooth,
-        p.memmory,
-        p.ram,
-        p.wlan,
-        p.gpu,
-        p.pin,
-        p.camera,
-        p.os
-      FROM
-        ' . $this->table . ' p
-      WHERE
-        p.categoryId = ? ';
+      $query = $query = 'SELECT * FROM ' . $this->table . ' p, colors, images 
+        WHERE (p.categoryId = ? AND p.id=colors.productId AND p.id=images.productId) 
+        ORDER BY createdAt LIMIT 10';
 
       $stmt = $this->conn->prepare($query);
       $stmt->bindParam(1, $this->categoryId);
@@ -281,5 +249,97 @@
       return $stmt;
     }
 
- 
+    public function readTopProduct() {
+      // Create query
+      $query = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt LIMIT 10';
+
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute();
+
+      $products_arr = array();
+
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $query = 'SELECT color, name FROM colors, product_color WHERE (product_color.productId = ? AND colors.id=product_color.colorId)';
+        $stmt1 = $this->conn->prepare($query);
+        $stmt1->bindParam(1, $row['id']);
+        $stmt1->execute();
+          
+        $row['colors'] = array();
+        while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['colors'], $row1);
+        }
+
+        $query = 'SELECT path FROM images WHERE images.productId = ?';
+        $stmt2 = $this->conn->prepare($query);
+        $stmt2->bindParam(1, $row['id']);
+        $stmt2->execute();
+          
+        $row['imgs'] = array();
+        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['imgs'], $row2['path']);
+        }
+
+        $query = 'SELECT name FROM categories WHERE id = ?';
+        $stmt3 = $this->conn->prepare($query);
+        $stmt3->bindParam(1, $row['categoryId']);
+        $stmt3->execute();
+
+        $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+
+        $row['category'] = $row3['name'];
+
+
+        array_push($products_arr, $row);
+      }
+
+      return $products_arr;
+    }
+
+    public function readTopProductOfCategory() {
+      // Create query
+      $query = 'SELECT * FROM ' . $this->table . ' WHERE categoryId= ? ORDER BY createdAt LIMIT 10';
+
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(1, $this->categoryId);
+      $stmt->execute();
+
+      $products_arr = array();
+
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $query = 'SELECT color, name FROM colors, product_color WHERE (product_color.productId = ? AND colors.id=product_color.colorId)';
+        $stmt1 = $this->conn->prepare($query);
+        $stmt1->bindParam(1, $row['id']);
+        $stmt1->execute();
+          
+        $row['colors'] = array();
+        while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['colors'], $row1);
+        }
+
+        $query = 'SELECT path FROM images WHERE images.productId = ?';
+        $stmt2 = $this->conn->prepare($query);
+        $stmt2->bindParam(1, $row['id']);
+        $stmt2->execute();
+          
+        $row['imgs'] = array();
+        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['imgs'], $row2['path']);
+        }
+
+        $query = 'SELECT name FROM categories WHERE id = ?';
+        $stmt3 = $this->conn->prepare($query);
+        $stmt3->bindParam(1, $row['categoryId']);
+        $stmt3->execute();
+
+        $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+
+        $row['category'] = $row3['name'];
+        array_push($products_arr, $row);
+      }
+
+      return $products_arr;
+    }
+
+
+    
   }

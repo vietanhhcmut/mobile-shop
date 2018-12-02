@@ -56,11 +56,11 @@ class PreviewedItem extends Component {
                         <p>Vận chuyển: Từ 1-5 ngày</p>
                         <p>{item.description}</p>
                         <div className="previewed-item-detail__variant">
-                            <div className="variant-name">Color</div>
+                            <div className="variant-name">Màu</div>
                             <div className="variant-value">
                                 {
-                                    item.colors.map((backgroundColor, index) => (
-                                        <span style={{ backgroundColor }} key={index + backgroundColor} />
+                                    item.colors.map((color, index) => (
+                                        <span style={{ backgroundColor: color.color }} key={index + color.color} />
                                     ))
                                 }
                             </div>
@@ -74,7 +74,7 @@ class PreviewedItem extends Component {
                         <div className="previewed-item-detail__variant">
                             <div className="variant-name">RAM</div>
                             <div className="variant-value">
-                                {item.details.RAM}
+                                {item.ram}
                             </div>
                         </div>
                         <div className="item-availability">

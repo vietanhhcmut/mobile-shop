@@ -2,7 +2,7 @@
   // Headers
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
-  header('Access-Control-Allow-Methods: POST');
+  header('Access-Control-Allow-Methods: GET');
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
   include_once '../../config/database.php';
@@ -13,16 +13,11 @@
 
   $product = new Product($db);
 
+  $result = $product->readTopProduct();
 
-  $data = json_decode(file_get_contents("php://input"));
-
-  $product->categoryId = $data->categoryId;
-
-  $result = $product->readProductOfCategory();
-
-  $products_arr = array();
-  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      array_push($products_arr, $row);
-  }
+//   $products_arr = array();
+//   while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+//       array_push($products_arr, $row);
+//   }
   // Turn to JSON & output
-  echo json_encode($products_arr);
+  echo json_encode($result);

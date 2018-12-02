@@ -15,11 +15,7 @@
 
     // Get 
     public function read() {
-      $query = 'SELECT 
-            p.image,
-            p.name
-          FROM
-            ' . $this->table . ' p';
+      $query = 'SELECT * FROM ' . $this->table;
          
       $stmt = $this->conn->prepare($query);
       $stmt->execute();

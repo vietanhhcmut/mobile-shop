@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './DetailedItem.css';
-import { api, formatPrice, calcDiscountPrice } from '../../../../constants/constants';
+import { formatPrice, calcDiscountPrice } from '../../../../constants/constants';
 import { withRouter } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import DetailInfo from './DetailInfo/DetailInfo';
 import Review from './Review/Review';
 import Context from '../../../../Context';
+import axios from '../../../../constants/axiosInstance';
 
 class DetailedItem extends Component {
     static contextType = Context;
@@ -24,11 +25,13 @@ class DetailedItem extends Component {
     }
     componentDidMount() {
         const { id } = this.props.match.params;
-        api.getItem(id)
-            .then(item => this.setState({
-                item,
-                showingImg: item.imgs[0]
-            }));
+        axios.post("/api/product/readOneProduct.php", { id })
+            .then(res => {
+                this.setState({ item: res.data, showingImg: res.data.imgs[0] });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
     handleChangeShowingImg = img => () => this.setState({ showingImg: img });
     handleChangeNumber = type => () => {
@@ -113,7 +116,7 @@ class DetailedItem extends Component {
                     <div className="previewed-item-detail__variant">
                         <div className="variant-name">RAM</div>
                         <div className="variant-value">
-                            {item.details.RAM}
+                            {item.ram}
                         </div>
                     </div>
                     <div className="item-availability">
@@ -176,7 +179,7 @@ class DetailedItem extends Component {
                             <Tab value={1} label="Chi tiết sản phẩm" />
                             <Tab value={2} label="Đánh giá" />
                         </Tabs>
-                        {tab === 1 && item && <DetailInfo detail={item.details} />}
+                        {tab === 1 && item && <DetailInfo detail={item} />}
                         {tab === 2 && <Review />}
                     </AppBar>
                 </div>
