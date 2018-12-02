@@ -3,10 +3,10 @@
 class Database{
  
   // specify your own database credentials
-  private $host = "localhost";
+  private $host = "db4free.net";
   private $db_name = "mobile_shop";
-  private $username = "root";
-  private $password = "";
+  private $username = "mobile_shop";
+  private $password = "mobile_shop";
   public $conn;
 
   // get the database connection
