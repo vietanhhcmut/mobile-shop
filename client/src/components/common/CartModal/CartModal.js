@@ -9,8 +9,7 @@ import axios from '../../../constants/axiosInstance';
 class CartModal extends Component {
     static contextType = Context;
     state = {
-        showCart: false,
-        totalPrice: 0
+        showCart: false
         // cart: JSON.parse(localStorage.getItem('cart')) || []
         // [
         //     {
@@ -39,17 +38,17 @@ class CartModal extends Component {
         //     }
         // ]
     }
-    componentDidMount() {
-        const cart = this.context.cart;
-        axios.post("/api/product/calcTotalPrice.php", { cart })
-            .then(res => {
-                this.setState({ totalPrice: res.data });
-            })
-            .catch(err => {
-                console.log(err);
-            });
+    // componentDidMount() {
+    //     const cart = this.context.cart;
+    //     axios.post("/api/product/calcTotalPrice.php", { cart })
+    //         .then(res => {
+    //             this.setState({ totalPrice: res.data });
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
        
-    }
+    // }
     handleShowModal = () => {
         this.setState({ showCart: true });
     }
@@ -78,7 +77,7 @@ class CartModal extends Component {
     }
     render() {
         const { cart } = this.context;
-        const { showCart, totalPrice } = this.state;
+        const { showCart } = this.state;
         const styleCartContent = {
             transform: showCart ? 'translateY(0)' : 'translateY(300px)'
         }
@@ -104,23 +103,17 @@ class CartModal extends Component {
                         {cart.map((cartItem, index) =>
                             <CartItem
                                 key={cartItem.productId}
-                                // img={product.img}
-                                // name={product.name}
-                                // price={product.price}
-                                // saleoff={product.saleoff}
                                 index={index}
                                 productId={cartItem.productId}
                                 quantity={cartItem.quantity}
-                                handleIncreaseQuantity={this.handleIncreaseQuantity(index)}
-                                handleDecreaseQuantity={this.handleDecreaseQuantity(index)}
-                                handleDeleteProduct={this.handleDeleteProduct(index)} />
+                                color={cartItem.color} />
                         )}
                     </div>
                     <div className='cart-content__total-price'>
                         <div className='total-price__row'>
                             <span><b>{calcTotalQuantity(cart)}</b> Sản phẩm</span>
                             <span>
-                                {formatPrice(totalPrice)}
+                                {formatPrice(this.context.totalPrice)}
                             </span>
                         </div>
                         <div className='total-price__row'>
@@ -130,7 +123,7 @@ class CartModal extends Component {
                         <div className='total-price__row total-price__total'>
                             <span>Tổng cộng</span>
                             <b>
-                                {formatPrice(totalPrice)}
+                                {formatPrice(this.context.totalPrice)}
                             </b>
                         </div>
                         <div className='total-price__view-cart'>

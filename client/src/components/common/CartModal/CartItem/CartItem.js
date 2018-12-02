@@ -30,7 +30,7 @@ class CartItem extends Component {
     }
     render() {
         const { img, name, price, saleoff } = this.state;
-        const { index, quantity, handleDeleteProduct } = this.props;
+        const { index, quantity, color } = this.props;
         return (
             <div className='products__cart-item'>
                 <Link to='/' className='cart-item__product-img'>
@@ -44,15 +44,15 @@ class CartItem extends Component {
                         <span className='info__original-price'>{formatPrice(price)}</span> 
                         <i className='info__saleoff'>-{saleoff}%</i>
                     </div>
-                    <span className='info__product-color'>Màu: <span>Đen</span></span>
+                    <span className='info__product-color'>Màu: <span>color</span></span>
                     <div className='info__quantity-adjusting'>
-                        <span onClick={() => this.context.handleChangeQuantity(index, quantity - 1)}>-</span>
+                        <span onClick={this.context.handleChangeQuantity(index, quantity - 1)}>-</span>
                         <b className='quantity-adjusting__product-quantity'>{quantity}</b>
-                        <span onClick={() => this.context.handleChangeQuantity(index, quantity + 1)}>+</span>
+                        <span onClick={this.context.handleChangeQuantity(index, quantity + 1)}>+</span>
                     </div>
                 </div>
                 <i className="material-icons cart-item__remove-product"
-                    onClick={handleDeleteProduct}>clear</i>
+                    onClick={this.context.handleDeleteCartItem(index)}>clear</i>
             </div>
         );
     }

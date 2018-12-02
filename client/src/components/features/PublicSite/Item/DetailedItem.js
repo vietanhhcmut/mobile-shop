@@ -130,6 +130,7 @@ class DetailedItem extends Component {
             )
         }
         const { tab } = this.state;
+        if (item && item.colors.length !== 0) console.log(item.colors[selectedColor]);
         return (
             <div className="item-detail">
                 <div className="item-detail__imgs">
@@ -169,7 +170,7 @@ class DetailedItem extends Component {
                             </div>
                         </div>
                         <Button variant="outlined" color="secondary" className="add-cart-button"
-                            onClick={() => this.handleAddToCart(item.id, number, item.colors[selectedColor].name)}>
+                            onClick={() => this.handleAddToCart(item.id, number, item.colors.length===0 ? 'Đen' : item.colors[selectedColor].name)}>
                             ADD TO CART
                         </Button>
                     </div>
