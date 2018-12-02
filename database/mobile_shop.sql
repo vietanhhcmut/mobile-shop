@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2018 at 07:54 AM
+-- Generation Time: Dec 02, 2018 at 08:02 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -154,7 +154,7 @@ CREATE TABLE `products` (
   `description` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `screen` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sim` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `memmory` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `memory` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ram` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bluetooth` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `wlan` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -168,7 +168,7 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `createdAt`, `categoryId`, `name`, `price`, `saleoff`, `description`, `screen`, `sim`, `memmory`, `ram`, `bluetooth`, `wlan`, `pin`, `gps`, `camera`, `os`) VALUES
+INSERT INTO `products` (`id`, `createdAt`, `categoryId`, `name`, `price`, `saleoff`, `description`, `screen`, `sim`, `memory`, `ram`, `bluetooth`, `wlan`, `pin`, `gps`, `camera`, `os`) VALUES
 (1, '2018-12-01 11:24:19', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
 (2, '2018-12-01 08:29:25', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'N\'Đẹp, bền\'', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
 (3, '2018-12-01 12:29:27', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),

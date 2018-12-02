@@ -14,7 +14,7 @@
     public $description;
     public $screen;
     public $sim;
-    public $memmory;
+    public $memory;
     public $ram;
     public $bluetooth;
     public $wlan;
@@ -82,7 +82,7 @@
           description = :description,
           screen = :screen,
           sim = :sim,
-          memmory = :memmory,
+          memory = :memory,
           ram = :ram,
           bluetooth = :bluetooth,
           wlan = :wlan,
@@ -101,7 +101,7 @@
       $this->description = htmlspecialchars(strip_tags($this->description));
       $this->screen = htmlspecialchars(strip_tags($this->screen));
       $this->sim = htmlspecialchars(strip_tags($this->sim));
-      $this->memmory = htmlspecialchars(strip_tags($this->memmory));
+      $this->memory = htmlspecialchars(strip_tags($this->memory));
       $this->ram = htmlspecialchars(strip_tags($this->ram));
       $this->bluetooth = htmlspecialchars(strip_tags($this->bluetooth));
       $this->wlan = htmlspecialchars(strip_tags($this->wlan));
@@ -117,7 +117,7 @@
       $stmt->bindParam(':description', $this->description);
       $stmt->bindParam(':screen', $this->screen);
       $stmt->bindParam(':sim', $this->sim);
-      $stmt->bindParam(':memmory', $this->memmory);
+      $stmt->bindParam(':memory', $this->memory);
       $stmt->bindParam(':ram', $this->ram);
       $stmt->bindParam(':bluetooth', $this->bluetooth);
       $stmt->bindParam(':wlan', $this->wlan);
@@ -151,7 +151,7 @@
           description = :description,
           screen = :screen,
           sim = :sim,
-          memmory = :memmory,
+          memory = :memory,
           ram = :ram,
           bluetooth = :bluetooth,
           wlan = :wlan,
@@ -173,7 +173,7 @@
       $this->description = htmlspecialchars(strip_tags($this->description));
       $this->screen = htmlspecialchars(strip_tags($this->screen));
       $this->sim = htmlspecialchars(strip_tags($this->sim));
-      $this->memmory = htmlspecialchars(strip_tags($this->memmory));
+      $this->memory = htmlspecialchars(strip_tags($this->memory));
       $this->ram = htmlspecialchars(strip_tags($this->ram));
       $this->bluetooth = htmlspecialchars(strip_tags($this->bluetooth));
       $this->wlan = htmlspecialchars(strip_tags($this->wlan));
@@ -190,7 +190,7 @@
       $stmt->bindParam(':description', $this->description);
       $stmt->bindParam(':screen', $this->screen);
       $stmt->bindParam(':sim', $this->sim);
-      $stmt->bindParam(':memmory', $this->memmory);
+      $stmt->bindParam(':memory', $this->memory);
       $stmt->bindParam(':ram', $this->ram);
       $stmt->bindParam(':bluetooth', $this->bluetooth);
       $stmt->bindParam(':wlan', $this->wlan);
