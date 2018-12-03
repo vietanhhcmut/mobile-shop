@@ -2,12 +2,41 @@ import React, { Component } from 'react';
 import './CartItem.css';
 import { calcDiscountPrice, formatPrice } from '../../../../../constants/constants';
 import { Link } from 'react-router-dom';
+import axios from '../../../../../constants/axiosInstance';
+import Context from '../../../../../Context';
 
 class CartItem extends Component {
+    static contextType = Context;
+    state = {
+        img: '',
+        name: '',
+        price: 0,
+        saleoff: 0
+    }
+    componentDidMount() {
+        axios.post("/api/product/readOneProduct.php", { id: this.props.productId })
+            .then(res => {
+                const product = res.data;
+                this.setState({
+                    img: product.imgs[0],
+                    name: product.name,
+                    price: product.price,
+                    saleoff: product.saleoff
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+    handleChangeQuantity = (e) => {
+        const quantity = e.target.value;
+        if (quantity === '0' || quantity === '') return;
+        if (!/^[0-9]*$/.test(quantity)) return;
+        this.context.handleChangeQuantity(this.props.index, parseInt(quantity));
+    }
     render() {
-        const { img, name, price, saleoff, quantity, color, 
-            handleChangeQuantity, handleClickIncreaseQuantity, handleClickDecreaseQuantity, 
-            handleBlurQuantity, handleClickDeleteProduct } = this.props;
+        const { img, name, price, saleoff } = this.state;
+        const { index, quantity, color } = this.props;
         const discountPrice = calcDiscountPrice(price, saleoff);
         return (
             <div className='order__item'>
@@ -31,13 +60,16 @@ class CartItem extends Component {
                         <div className='quantity-total__product-quantity'>
                             <input className='product-quantity__quantity' 
                                 value={quantity} type="text" 
-                                onChange={handleChangeQuantity}
-                                onBlur={handleBlurQuantity(quantity)}  />
+                                onChange={this.handleChangeQuantity} />
                             <div className='product-quantity__arrows'>
                                 <div className="material-icons arrows__arrow-up"
-                                    onClick={handleClickIncreaseQuantity}>keyboard_arrow_up</div>
+                                    onClick={() => this.context.handleChangeQuantity(index, quantity + 1)}>
+                                    keyboard_arrow_up
+                                </div>
                                 <div className="material-icons arrows__arrow-down" 
-                                    onClick={handleClickDecreaseQuantity}>keyboard_arrow_down</div>
+                                    onClick={() => this.context.handleChangeQuantity(index, quantity - 1)}>
+                                    keyboard_arrow_down
+                                </div>
                             </div>
                         </div>
                         <div className='quantity-total__total-price'>
@@ -45,7 +77,7 @@ class CartItem extends Component {
                         </div>
                     </div>
                     <i className="material-icons item__remove-product"
-                        onClick={handleClickDeleteProduct}>delete</i>
+                        onClick={this.context.handleDeleteCartItem(index)}>delete</i>
                 </div>
             </div>
         );

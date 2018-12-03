@@ -12,22 +12,17 @@ import Context from '../../../../Context';
 import axios from '../../../../constants/axiosInstance';
 
 class DetailedItem extends Component {
-    static contextType = Context;
     state = {
         item: null,
         showingImg: null,
         number: 1,
         tab: 1,
-        selectedColor: 0,
-        imgAddToCartStyle: {
-            display: 'none'
-        }
+        selectedColor: 0
     }
     componentDidMount() {
         const { id } = this.props.match.params;
         axios.post("/api/product/readOneProduct.php", { id })
             .then(res => {
-                console.log(res.data)
                 this.setState({ item: res.data, showingImg: res.data.imgs[0] });
             })
             .catch(err => {
@@ -52,27 +47,9 @@ class DetailedItem extends Component {
     handleSelectColor = (index) => () => {
         this.setState({ selectedColor: index });
     }
-    handleAddToCart = (id, quantity, color) => {
+    handleAddToCart = (context, id, quantity, color) => {
         const boundingImg = this.productImg.getBoundingClientRect();
-        this.setState({
-            imgAddToCartStyle: {
-                bottom: (window.innerHeight - boundingImg.bottom) + 'px',
-                left: boundingImg.left + 'px',
-                width: boundingImg.width + 'px',
-                height: boundingImg.height + 'px',
-            }
-        });
-        setTimeout(() => {
-            this.setState({
-                imgAddToCartStyle: {
-                    bottom: '30px',
-                    left: '30px',
-                    width: '0',
-                    height: '0',
-                }
-            });
-        }, 1);
-        this.context.handleAddToCart(id, quantity, color);
+        context.handleAddToCart(id, quantity, color, boundingImg, this.state.showingImg);
     }
     render() {
         const { item, selectedColor, number } = this.state;
@@ -130,7 +107,6 @@ class DetailedItem extends Component {
             )
         }
         const { tab } = this.state;
-        if (item && item.colors.length !== 0) console.log(item.colors[selectedColor]);
         return (
             <div className="item-detail">
                 <div className="item-detail__imgs">
@@ -169,10 +145,15 @@ class DetailedItem extends Component {
                                 </i>
                             </div>
                         </div>
-                        <Button variant="outlined" color="secondary" className="add-cart-button"
-                            onClick={() => this.handleAddToCart(item.id, number, item.colors.length===0 ? 'Đen' : item.colors[selectedColor].name)}>
-                            ADD TO CART
-                        </Button>
+                        <Context.Consumer>
+                            {context => 
+                            <Button variant="outlined" color="secondary" className="add-cart-button"
+                                onClick={() => this.handleAddToCart(context, item.id, number, 
+                                    item.colors.length===0 ? 'Đen' : item.colors[selectedColor].name)}>
+                                ADD TO CART
+                            </Button>
+                            }
+                        </Context.Consumer>
                     </div>
                 </div>
                 <div className="item-detail__detail-info">
@@ -185,9 +166,6 @@ class DetailedItem extends Component {
                         {tab === 2 && <Review />}
                     </AppBar>
                 </div>
-
-                <img src={this.state.showingImg} alt='Add product to cart' className='img-add-to-cart' 
-                    style={this.state.imgAddToCartStyle}/>
             </div >
         );
     }

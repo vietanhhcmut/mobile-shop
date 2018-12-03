@@ -9,35 +9,14 @@ class ProductItem extends Component {
     static contextType = Context;
     state = {
         showingImg: this.props.item.imgs[0],
-        preview: false,
-        imgAddToCartStyle: {
-            display: 'none'
-        }
+        preview: false
     }
     handleChangeImg = img => () => {
         this.setState({ showingImg: img });
     }
     handleAddToCart = (id, quantity, color) => () => {
         const boundingImg = this.productImg.getBoundingClientRect();
-        this.setState({
-            imgAddToCartStyle: {
-                bottom: (window.innerHeight - boundingImg.bottom) + 'px',
-                left: boundingImg.left + 'px',
-                width: boundingImg.width + 'px',
-                height: boundingImg.height + 'px',
-            }
-        });
-        setTimeout(() => {
-            this.setState({
-                imgAddToCartStyle: {
-                    bottom: '30px',
-                    left: '30px',
-                    width: '0',
-                    height: '0',
-                }
-            });
-        }, 1);
-        this.context.handleAddToCart(id, quantity, color);
+        this.context.handleAddToCart(id, quantity, color, boundingImg, this.state.showingImg);
     }
     render() {
         const { item } = this.props;
@@ -74,9 +53,6 @@ class ProductItem extends Component {
                 <div className="product-item__sub-content">
                     {imgs}
                 </div>
-
-                <img src={this.state.showingImg} alt='Add product to cart' className='img-add-to-cart' 
-                    style={this.state.imgAddToCartStyle}/>
             </div>
         );
     }

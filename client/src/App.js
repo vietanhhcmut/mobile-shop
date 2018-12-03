@@ -25,7 +25,7 @@ class App extends Component {
         console.log(err);
       });
   }
-  handleAddToCart = (productId, quantity, color) => {
+  handleAddToCart = (productId, quantity, color, boundingImg, srcImg) => {
     const cart = [...this.state.cart];
     const index = cart.findIndex(_ => (_.productId === productId) && (_.color === color));
     if (index === -1)
@@ -41,12 +41,30 @@ class App extends Component {
     }
     this.handleCalcTotalPrice(cart);
     localStorage.setItem('cart', JSON.stringify(cart));
+
+    const tempImg = document.createElement('img');
+    tempImg.src = srcImg;
+    tempImg.className = 'img-add-to-cart';
+    tempImg.style.bottom = (window.innerHeight - boundingImg.bottom) + 'px';
+    tempImg.style.left = boundingImg.left + 'px';
+    tempImg.style.width = boundingImg.width + 'px';
+    tempImg.style.height = boundingImg.height + 'px';
+    document.getElementById('root').append(tempImg);
+
+    setTimeout(() => {
+      tempImg.style.bottom = '30px';
+      tempImg.style.left = '30px';
+      tempImg.style.width = '0';
+      tempImg.style.height = '0';
+    }, 1);
+
     this.setState({ cart, addToCart: true });
     setTimeout(() => {
       this.setState({ addToCart: false });
+      tempImg.remove();
     }, 3600);
   }
-  handleChangeQuantity = (cartItemIndex, quantity) => () => {
+  handleChangeQuantity = (cartItemIndex, quantity) => {
     if (quantity < 1) return;
     const cart = [...this.state.cart];
     const cartItem = { ...cart[cartItemIndex] };
