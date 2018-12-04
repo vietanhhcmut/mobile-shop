@@ -19,6 +19,15 @@ class Category extends Component {
     }
     componentDidMount() {
         const id = this.props.match.params.id;
+        this.handleInit(id);
+
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.match.params.id !== this.props.match.params.id) {
+            this.handleInit(this.props.match.params.id);
+        }
+    }
+    handleInit = (id) => {
         axios.get('/api/category/getOne.php?id=' + id)
             .then(res => {
                 this.setState({ category: res.data });
