@@ -4,7 +4,12 @@ import Modal from "react-modal";
 
 export default class NewProduct extends Component {
   state = {
-    items: [],
+    items: {
+        name: '',
+        img: ''
+    },
+    file: '',
+    imagePreviewUrl: ''
   }
   componentDidMount() {
     if (this.props.itemInfo !== null) {
@@ -16,7 +21,12 @@ export default class NewProduct extends Component {
 
   setStateInput = () => {
     this.setState({
-      items: []
+        items: {
+            name: '',
+            img: ''
+        },
+        file: '',
+        imagePreviewUrl: ''
     });
   }
 
@@ -26,34 +36,35 @@ export default class NewProduct extends Component {
     });
   };
   
-//   handleSubmit = e => {
-//     e.preventDefault();
-//     this.state.items.imgs.push(this.state.file.name);
-//     // console.log('handle uploading-', this.state.file);
-//     // console.log(this.state.items);
-//   }
-//   handleImageChange = e => {
-//     e.preventDefault();
+  handleSubmit = e => {
+    e.preventDefault();
+    this.state.items.imgs = [];
+    this.state.items.imgs.push(this.state.file.name);
+    // console.log('handle uploading-', this.state.file);
+    // console.log(this.state.items);
+  }
+  handleImageChange = e => {
+    e.preventDefault();
 
-//     let reader = new FileReader();
-//     let file = e.target.files[0];
+    let reader = new FileReader();
+    let file = e.target.files[0];
 
-//     reader.onloadend = () => {
-//       this.setState({
-//         file: file,
-//         imagePreviewUrl: reader.result
-//       });
-//     }
-//     reader.readAsDataURL(file)
-// }
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+    reader.readAsDataURL(file)
+}
   render() {
     const {items} = this.state;
-    // console.log(items);
-    // let {imagePreviewUrl} = this.state;
-    // let $imagePreview = null;
-    // if (imagePreviewUrl) {
-    //   $imagePreview = (<img src={imagePreviewUrl} />);
-    // } 
+    console.log(items);
+    let {imagePreviewUrl} = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      $imagePreview = (<img src={imagePreviewUrl} />);
+    } 
     return (
         <Modal isOpen={this.props.open} onRequestClose={this.props.onCloseModal} center className="CMSModal">
             <div className="modal-dialog">
@@ -90,14 +101,14 @@ export default class NewProduct extends Component {
                                     onChange={this.handleChange}
                                 />
                             </div>
-                            {/* <div className="form-group">
+                            <div className="form-group">
                                 <input className="fileInput form-control" 
                                     type="file" 
                                     onChange={(e)=>this.handleImageChange(e)} />
                                 <div className="imgPreview">
                                     {$imagePreview}
                                 </div>
-                            </div> */}
+                            </div>
                             
                         </div>
                         <div className="modal-footer">

@@ -67,23 +67,23 @@ class App extends Component {
   render() {
     const { cart, addToCart, totalPrice } = this.state;
     return (
+      <Context.Provider value={{
+        cart,
+        addToCart,
+        totalPrice,
+        handleAddToCart: this.handleAddToCart,
+        handleChangeQuantity: this.handleChangeQuantity,
+        handleDeleteCartItem: this.handleDeleteCartItem
+      }}>
       <BrowserRouter>
-        <Switch>
-          <Context.Provider value={{
-            cart,
-            addToCart,
-            totalPrice,
-            handleAddToCart: this.handleAddToCart,
-            handleChangeQuantity: this.handleChangeQuantity,
-            handleDeleteCartItem: this.handleDeleteCartItem
-          }}>
-            {/* Phần dưới chưa tạo component */}
-            <Route path="/admin/" component={AdminSite} />
-            <Route path="/sorry" component={NotFoundPage} />
-            <Route path="/" component={PublicSite} />
-          </Context.Provider>
-        </Switch>
+          <Switch>
+              {/* Phần dưới chưa tạo component */}
+              <Route path="/admin" component={AdminSite} />
+              <Route path="/sorry" component={NotFoundPage} />
+              <Route path="/" component={PublicSite} />
+          </Switch>
       </BrowserRouter>
+      </Context.Provider>
     );
   }
 }

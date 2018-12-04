@@ -4,9 +4,14 @@ import './NewProduct.css';
 
 export default class NewProduct extends Component {
   state = {
-    items: [],
-    file: '',
-    imagePreviewUrl: ''
+    items: {
+        name: '',
+        imgs: []
+    },
+    _upload_files : [],
+    _deleted_files : [],
+    _added_files : [],
+    imagePreviewUrl: []
   }
   componentDidMount() {
     if (this.props.itemInfo !== null) {
@@ -18,7 +23,10 @@ export default class NewProduct extends Component {
 
   setStateInput = () => {
     this.setState({
-      items: []
+        items: {
+            name: '',
+            imgs: []
+        }
     });
   }
 
@@ -29,32 +37,70 @@ export default class NewProduct extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.state.items.imgs.push(this.state.file.name);
-    // console.log('handle uploading-', this.state.file);
-    // console.log(this.state.items);
+    this.state.items.imgs = [];
+    for(var i = 0; i < this.state.file.length; i++){
+        this.state.items.imgs.push(this.state.file[i].name);
+    }
   }
   handleImageChange = e => {
+    // e.preventDefault();
+    // let files = e.target.files;
+    // var listfile = this.state.file;
+    // var listImg = this.state.imagePreviewUrl;
+    // for (var i = 0; i < files.length; i++) {
+    //     var file = files[i];
+    //     listfile.push(file);
+    //     let reader = new FileReader();
+    //     reader.onloadend = () => {
+    //         listImg.push(reader.result);
+    //         this.setState({
+    //             file: listfile,
+    //             imagePreviewUrl: listImg
+    //         });
+    //     }
+    //     reader.readAsDataURL(file);
+    // }
+    // console.log(listfile);
+    
     e.preventDefault();
-
-    let reader = new FileReader();
-    let file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
+    for(let i = 0; i < e.target.files.length; i++){
+       
+        var isExist = false;
+        for (let k = 0; k < this.state._upload_files.length; k++) { // Check file exist
+            if (e.target.files[i].size == this.state._upload_files[k].size &&
+                e.target.files[i].name == this.state._upload_files[k].name &&
+                e.target.files[i].lastModified == this.state._upload_files[k].lastModified) {
+                isExist = true;
+            }
+        }
+        if (!isExist) {
+            this.state._upload_files.push(e.target.files[i]);
+            this.state.imagePreviewUrl.push(URL.createObjectURL(e.target.files[i]));
+            this.setState({
+                imagePreviewUrl: this.state.imagePreviewUrl
+            });
+            
+        }
     }
-    reader.readAsDataURL(file)
+    
+}
+handleDelteImg = (index) => () => {
+    this.state._upload_files.splice(index, 1);
+    this.state.imagePreviewUrl = [];
+    for (let k = 0; k < this.state._upload_files.length; k++) { // Check file exist
+        this.state.imagePreviewUrl.push(URL.createObjectURL(this.state._upload_files[k]));
+        this.setState({
+            imagePreviewUrl: this.state.imagePreviewUrl
+        });
+    }
+    if(this.state._upload_files.length == 0) {
+        this.setState({
+            imagePreviewUrl: []
+        });
+    }
 }
   render() {
-    const {items} = this.state;
-    console.log(items);
-    let {imagePreviewUrl} = this.state;
-    let $imagePreview = null;
-    if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} />);
-    } 
+    const {items, imagePreviewUrl} = this.state;
     return (
         <Modal isOpen={this.props.open} onRequestClose={this.props.onCloseModal} center className="CMSModal">
             <div className="modal-dialog">
@@ -92,13 +138,29 @@ export default class NewProduct extends Component {
                                 />
                             </div>
                             <div className="form-group">
+                                <label>Ảnh</label>
+                                <div className="img__infoProduct">
+                                    {items.imgs.map(item=>(
+                                        <img src={item}/>
+                                    ))}
+                                </div>
+                                <div className="clear"></div>
+                            </div>
+                            <div className="form-group">
                                 <input className="fileInput form-control" 
                                     type="file" 
-                                    onChange={(e)=>this.handleImageChange(e)} />
+                                    onChange={(e)=>this.handleImageChange(e)} 
+                                    multiple />
                                 <div className="imgPreview">
-                                    {$imagePreview}
+                                    {imagePreviewUrl && imagePreviewUrl.map((item,index)=>(
+                                        <div className="imgPreview__content">
+                                            <img src={item} />
+                                            <span className="delete-imagePreview" onClick={this.handleDelteImg(index)}><i class="fas fa-times"></i></span>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
+                            
                             <div className="form-group">
                                 <label>Price</label>
                                 <input
@@ -133,6 +195,126 @@ export default class NewProduct extends Component {
                                     placeholder="description"
                                     rows="5"
                                     value={items.description}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Screen</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="screen"
+                                    type="text"
+                                    placeholder="screen"
+                                    value={items.screen}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Sim</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="sim"
+                                    type="text"
+                                    placeholder="sim"
+                                    value={items.sim}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Memory</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="memory"
+                                    type="text"
+                                    placeholder="memory"
+                                    value={items.memory}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Ram</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="ram"
+                                    type="text"
+                                    placeholder="ram"
+                                    value={items.ram}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Bluetooth</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="bluetooth"
+                                    type="text"
+                                    placeholder="bluetooth"
+                                    value={items.bluetooth}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Wlan</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="wlan"
+                                    type="text"
+                                    placeholder="wlan"
+                                    value={items.wlan}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>GPS</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="gps"
+                                    type="text"
+                                    placeholder="gps"
+                                    value={items.gps}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Pin</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="pin"
+                                    type="text"
+                                    placeholder="pin"
+                                    value={items.pin}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Camera</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="camera"
+                                    type="text"
+                                    placeholder="camera"
+                                    value={items.camera}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Os</label>
+                                <input
+                                    required
+                                    className="form-control"
+                                    id="os"
+                                    type="text"
+                                    placeholder="os"
+                                    value={items.os}
                                     onChange={this.handleChange}
                                 />
                             </div>
