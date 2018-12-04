@@ -26,16 +26,16 @@
 
   // var_dump($user);
   if (!($user->emailExists())){
-    if($user->create()){
+    if($user->add()){
     
       http_response_code(200);
-      echo json_encode(array("message" => "User was created."));
+      echo json_encode(array("message" => "User was added."));
     }
     else{
 
       http_response_code(403);
 
-      echo json_encode(array("message" => "Unable to create user."));
+      echo json_encode(array("message" => "Unable to add user."));
     }
   }
   else if ($user->emailExists()) {
