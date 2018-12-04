@@ -14,7 +14,7 @@ class CartItem extends Component {
         saleoff: 0
     }
     componentDidMount() {
-        axios.post("/api/product/readOneProduct.php", { id: this.props.productId })
+        axios.get("/api/product/getOne.php?id=" + this.props.productId)
             .then(res => {
                 const product = res.data;
                 this.setState({
@@ -30,14 +30,14 @@ class CartItem extends Component {
     }
     render() {
         const { img, name, price, saleoff } = this.state;
-        const { index, quantity, color } = this.props;
+        const { productId, index, quantity, color } = this.props;
         return (
             <div className='products__cart-item'>
-                <Link to='/' className='cart-item__product-img'>
+                <Link to={`/item/${productId}`} className='cart-item__product-img'>
                     <img src={img} alt="mobile" />
                 </Link>
                 <div className='cart-item__info'>
-                    <Link to='/' className='info__product-name'>{name}</Link>
+                    <Link to={`/item/${productId}`} className='info__product-name'>{name}</Link>
 
                     <span className='info__discount-price'>{formatPrice(calcDiscountPrice(price, saleoff))}</span>
                     <div>

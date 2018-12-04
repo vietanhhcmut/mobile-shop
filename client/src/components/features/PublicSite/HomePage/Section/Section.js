@@ -16,7 +16,7 @@ class Section extends Component {
         item: 0,
     }
     handleGetCategoryTop = (categoryId) => {
-        axios.post("/api/product/readTopProductOfCategory.php", { categoryId })
+        axios.post("/api/product/getTopCategoryProds.php", { categoryId })
             .then(res => {
                 this.setState({ items: res.data });
             })
@@ -28,7 +28,7 @@ class Section extends Component {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
         if (!this.props.brand) {
-            axios.get("/api/product/readTopProduct.php")
+            axios.get("/api/product/getTop.php")
                 .then(res => {
                     this.setState({ items: res.data });
                 })
@@ -37,7 +37,7 @@ class Section extends Component {
                 });
         }
 
-        axios.get("/api/category/readAllCategory.php")
+        axios.get("/api/category/getAll.php")
             .then(res => {
                 this.setState({ brands: res.data });
                 if (this.props.brand) {
@@ -48,10 +48,6 @@ class Section extends Component {
             .catch(err => {
                 console.log(err);
             });
-        // api.getProducts()
-        // .then(res => this.setState({ items: res }));
-        // api.getBrands()
-        // .then(res => this.setState({ brands: res }));
     }
 
     componentWillUnmount() {
@@ -61,11 +57,6 @@ class Section extends Component {
     updateWindowDimensions = () => {
         this.setState({ screenWidth: window.innerWidth });
     }
-    // handleRandomizeBrand = () => {
-    //     const brands = [ ...this.state.brands ];
-    //     if (brands.length < 3) return brands;
-    //     return [brands[0], brands[1], brands[2]];
-    // }
     handleSlideItem = type => () => {
         let { slidedWidth, screenWidth, firstVisibleChild } = this.state;
         switch (type) {

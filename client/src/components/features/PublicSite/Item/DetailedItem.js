@@ -21,7 +21,7 @@ class DetailedItem extends Component {
     }
     componentDidMount() {
         const { id } = this.props.match.params;
-        axios.post("/api/product/readOneProduct.php", { id })
+        axios.get("/api/product/getOne.php?id=" + id)
             .then(res => {
                 this.setState({ item: res.data, showingImg: res.data.imgs[0] });
             })
