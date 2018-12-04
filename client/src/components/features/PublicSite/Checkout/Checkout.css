@@ -181,7 +181,7 @@
         display: flex;
     }
     .checkout__info {
-        width: 65%;
+        width: 60%;
         margin-right: 1em;
     }
 }

@@ -1,40 +1,13 @@
 import React, { Component } from 'react';
 import './Cart.css';
-import { calcDiscountPrice, formatPrice } from './../../../../../constants/constants';
-import { Link } from 'react-router-dom';
+import { formatPrice } from './../../../../../constants/constants';
+import Context from '../../../../../Context';
+import CartItem from './CartItem/CartItem';
 
 class Cart extends Component {
+    static contextType = Context;
     state = {
         showCart: false,
-        cart: [
-            {
-                id: '123',
-                img: 'https://demo4leotheme.com/prestashop/leo_mobile/33-small_default/printed-dress.jpg',
-                name: 'Samsung Galaxy Tab',
-                price: 16998000,
-                saleoff: 5,
-                quantity: 1,
-                color: 'Black'
-            },
-            {
-                id: '456',
-                img: 'https://demo4leotheme.com/prestashop/leo_mobile/24-small_default/printed-chiffon-dress.jpg',
-                name: 'Sony Xperia XZs',
-                price: 7569000,
-                saleoff: 3,
-                quantity: 3,
-                color: 'White'
-            },
-            {
-                id: '789',
-                img: 'https://demo4leotheme.com/prestashop/leo_mobile/43-small_default/printed-dress.jpg',
-                name: 'OPPO F3 Plus',
-                price: 9890000,
-                saleoff: 10,
-                quantity: 2,
-                color: 'Gold'
-            }
-        ]
     }
     handleClickDetailsButton = () => {
         this.setState(prevState => {
@@ -42,7 +15,8 @@ class Cart extends Component {
         })
     }
     render() {
-        const { cart, showCart } = this.state;
+        const { cart, totalPrice } = this.context;
+        const { showCart } = this.state;
         return (
             <div className='checkout__checkout-cart'>
                 <div className='checkout-cart__title'>
@@ -54,35 +28,19 @@ class Cart extends Component {
                     </button>
                     {showCart &&
                         <div className='content__products'>
-                            {cart.map((product) =>
-                                <div key={product.id} className='products__product'>
-                                    <div className='product__img-details'>
-                                        <Link to='/' className='img-details__img'>
-                                            <img src={product.img} alt="mobile" />
-                                        </Link>
-                                        <div className='img-details__details'>
-                                            <span>
-                                                <span>{product.name}</span>
-                                                <b> x{product.quantity}</b>
-                                            </span>
-                                            <span>
-                                                <span>Color: </span>
-                                                <span className='details__color'>{product.color}</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <span>
-                                        {formatPrice(calcDiscountPrice(product.price, product.saleoff))}
-                                    </span>
-                                </div>
+                            {cart.map((cartItem) =>
+                                <CartItem 
+                                    key={cartItem.productId + cartItem.color}
+                                    productId={cartItem.productId}
+                                    quantity={cartItem.quantity}
+                                    color={cartItem.color} />
                             )}
                         </div>
                     }
                     <div className='content__row'>
                         <span><b>{cart.reduce((sum, product) => sum + Number(product.quantity), 0)}</b> Sản phẩm</span>
                         <span>
-                            {formatPrice(cart.reduce((sum, product) =>
-                                sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
+                            {formatPrice(totalPrice)}
                         </span>
                     </div>
                     <div className='content__row'>
@@ -93,8 +51,7 @@ class Cart extends Component {
                 <div className='checkout-cart__total'>
                     <span>Tổng cộng</span>
                     <b>
-                        {formatPrice(cart.reduce((sum, product) =>
-                            sum + calcDiscountPrice(product.price, product.saleoff) * Number(product.quantity), 0))}
+                        {formatPrice(totalPrice)}
                     </b>
                 </div>
                 <div className='checkout-cart__policy'>

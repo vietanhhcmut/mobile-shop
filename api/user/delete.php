@@ -8,11 +8,11 @@
 
 
   // required to encode json web token
-  include_once 'config/core.php';
-  include_once 'libs/php-jwt-master/src/BeforeValidException.php';
-  include_once 'libs/php-jwt-master/src/ExpiredException.php';
-  include_once 'libs/php-jwt-master/src/SignatureInvalidException.php';
-  include_once 'libs/php-jwt-master/src/JWT.php';
+  include_once '../../config/core.php';
+  include_once '../../libs/php-jwt-master/src/BeforeValidException.php';
+  include_once '../../libs/php-jwt-master/src/ExpiredException.php';
+  include_once '../../libs/php-jwt-master/src/SignatureInvalidException.php';
+  include_once '../../libs/php-jwt-master/src/JWT.php';
   use \Firebase\JWT\JWT;
 
 
@@ -31,41 +31,34 @@
   // get posted data
   $data = json_decode(file_get_contents("php://input"));
   
-  // get jwt
-  $jwt = isset($data->jwt) ? $data->jwt : "";
-  
-  // decode jwt here
+  $headers = apache_request_headers();
+  $jwt = $headers['Authorization'];
 
-  // if jwt is not empty
-  if ($jwt) {
-    // if decode succeed, show user details
-    try {
-      // decode jwt
+  if($jwt){
+    try{
       $decoded = JWT::decode($jwt, $key, array('HS256'));
 
       $user->id = $decoded->data->id;
 
-      // var_dump($user->delete());
-
       if($user->delete()){
-        // set response code
         http_response_code(200);
 
-        // response in json format
         echo json_encode(
               array(
-                  "message" => "User was deleted.",
-                  "jwt" => $jwt
+                  "message" => "User was deleted."
               )
           );
       }
 
+<<<<<<< HEAD:api/user/deleteUser.php
         // message if unable to update user
       else {
         // set response code
+=======
+      else{
+>>>>>>> f718de8774f6cf053081fbd9629a7c528008c71a:api/user/delete.php
         http_response_code(401);
 
-        // show error message
         echo json_encode(array("message" => "Unable to delete user."));
       }
     }
@@ -73,7 +66,7 @@
     // if decode fails, it means jwt is invalid
     catch (Exception $e){
       // set response code
-      http_response_code(401);
+      http_response_code(403);
 
       // show error message
       echo json_encode(array(
@@ -87,7 +80,7 @@
   else{
   
     // set response code
-    http_response_code(401);
+    http_response_code(403);
 
     // tell the user access denied
     echo json_encode(array("message" => "Access denied."));

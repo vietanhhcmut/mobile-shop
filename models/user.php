@@ -21,7 +21,7 @@ class User{
   }
 
   // create new user record
-  function create(){
+  function add(){
   
     // insert query
     $query = "INSERT INTO " . $this->table_name . "
