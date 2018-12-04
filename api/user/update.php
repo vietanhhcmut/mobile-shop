@@ -18,65 +18,60 @@
   
   $database = new Database();
   $db = $database->getConnection();
-  
   $user = new User($db);
 
   $data = json_decode(file_get_contents("php://input"));
-
   $headers = apache_request_headers();
-
   $jwt = $headers['Authorization'];
 
-  if($jwt){
+  if($jwt){  
     try {
-      $decoded = JWT::decode($jwt, $key, array('HS256'));
+      $decoded = JWT::decode($jwt, $key, array('HS256'));  
+      if ($decoded->data->isAdmin) {
+        $user->firstname = $data->firstname;
+        $user->lastname = $data->lastname;
+        $user->email = $data->email;
+        $user->password = $data->password;
+        $user->gender = $data->gender;
+        $user->birthday = $data->birthday;
+        $user->isAdmin = $data->isAdmin;
+        $user->id = $decoded->data->id;
 
-      $user->firstname = $data->firstname;
-      $user->lastname = $data->lastname;
-      $user->email = $data->email;
-      $user->password = $data->password;
-      $user->gender = $data->gender;
-      $user->birthday = $data->birthday;
-      $user->id = $decoded->data->id;
-      
-      if($user->update()){
-        $token = array(
-          "iss" => $iss,
-          "aud" => $aud,
-          "iat" => $iat,
-          "nbf" => $nbf,
-          "data" => array(
-              "id" => $user->id,
-              "firstname" => $user->firstname,
-              "lastname" => $user->lastname,
-              "email" => $user->email,
-              "gender" => $user->gender,
-              "birthday" => $user->birthday
-          )
-        );
-        $jwt = JWT::encode($token, $key);
-
-        http_response_code(200);
-
-        echo json_encode(
-              array(
-                  "message" => "User was updated.",
-                  "jwt" => $jwt
-              )
+        if($user->update()){
+          $token = array(
+            "iss" => $iss,
+            "aud" => $aud,
+            "iat" => $iat,
+            "nbf" => $nbf,
+            "data" => array(
+                "id" => $user->id,
+                "firstname" => $user->firstname,
+                "lastname" => $user->lastname,
+                "email" => $user->email,
+                "isAdmin" => $user->isAdmin
+            )
           );
+          $jwt = JWT::encode($token, $key);
+          http_response_code(200);
+          echo json_encode(
+                array(
+                    "message" => "User was updated.",
+                    "jwt" => $jwt
+                )
+            );
+          }
+        else{
+          http_response_code(403);
+          echo json_encode(array("message" => "Unable to update user."));
         }
-
+      }  
       else{
         http_response_code(403);
-
-        echo json_encode(array("message" => "Unable to update user."));
-      }
+        echo json_encode(array("message" => "Access denied"));
+      }     
     }
-
-    catch (Exception $e){
-    
+    catch (Exception $e){    
       http_response_code(403);
-
       echo json_encode(array(
           "message" => "Access denied.",
           "error" => $e->getMessage()
@@ -85,9 +80,7 @@
   }
 
   else{
-  
     http_response_code(401);
-
     echo json_encode(array("message" => "Access denied."));
   }
 ?>
