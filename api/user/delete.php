@@ -50,13 +50,7 @@
           );
       }
 
-<<<<<<< HEAD:api/user/deleteUser.php
-        // message if unable to update user
       else {
-        // set response code
-=======
-      else{
->>>>>>> f718de8774f6cf053081fbd9629a7c528008c71a:api/user/delete.php
         http_response_code(401);
 
         echo json_encode(array("message" => "Unable to delete user."));
