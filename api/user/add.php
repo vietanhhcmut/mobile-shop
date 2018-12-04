@@ -21,7 +21,7 @@
   $user->password = $data->password;
   $user->gender = $data->gender;
   $user->birthday = $data->birthday;
-  $user->isAdmin = 1;
+  $user->isAdmin = 0;
 
   if (!($user->emailExists())){
     if($user->add()){
