@@ -13,42 +13,29 @@
   $db = $database->getConnection();
 
   $user = new User($db);
-
-  // get posted data
   $data = json_decode(file_get_contents("php://input"));
   
-  // set product property values
   $user->firstname = $data->firstname;
   $user->lastname = $data->lastname;
   $user->email = $data->email;
   $user->password = $data->password;
   $user->gender = $data->gender;
   $user->birthday = $data->birthday;
+  $user->isAdmin = 0;
 
-  // var_dump($user);
   if (!($user->emailExists())){
-      // create the user
-    if($user->create()){
-    
-      // set response code
+    if($user->add()){
       http_response_code(200);
-      echo json_encode(array("message" => "User was created."));
+      echo json_encode(array("message" => "User was added."));
     }
-
-    // message if unable to create user
     else{
-
-      // set response code
-      http_response_code(400);
-
-      // display message: unable to create user
-      echo json_encode(array("message" => "Unable to create user."));
+      http_response_code(403);
+      echo json_encode(array("message" => "Unable to add user."));
     }
   }
   else if ($user->emailExists()) {
     http_response_code(409); //Conflict
     echo json_encode(array("message" => "This email already registered"));
   }
-  
   
 ?>

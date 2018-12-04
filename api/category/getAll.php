@@ -12,7 +12,7 @@
 
   $category = new Category($db);
 
-  $result = $category->read();
+  $result = $category->getAll();
 
   $categories_arr = array();
 

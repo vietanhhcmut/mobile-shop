@@ -24,13 +24,15 @@
     public $os;
 
     public $cart;
+    public $currentPage;
+    private $limit = 8;
 
     public function __construct($db) {
       $this->conn = $db;
     }
 
     // Get product
-    public function readOneProduct() {
+    public function getOne() {
       $query = 'SELECT * FROM ' . $this->table . ' WHERE id=?';
          
       $stmt = $this->conn->prepare($query);
@@ -238,20 +240,58 @@
     }
 
 
-    public function readProductOfCategory() {
+    public function getCategoryProds() {
+      $start = $this->currentPage * $this->limit;
       // Create query
-      $query = 'SELECT * FROM ' . $this->table . ' p, colors, images 
-        WHERE (p.categoryId = ? AND p.id=colors.productId AND p.id=images.productId) 
-        ORDER BY createdAt LIMIT 10';
+      $query = 'SELECT * FROM ' . $this->table . ' 
+        WHERE categoryId=? 
+        ORDER BY createdAt 
+        LIMIT ' .  $start . ',' . $this->limit;
 
       $stmt = $this->conn->prepare($query);
+
       $stmt->bindParam(1, $this->categoryId);
 
       $stmt->execute();
-      return $stmt;
+
+      $products_arr = array();
+
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $query = 'SELECT color, name FROM colors, product_color WHERE (product_color.productId = ? AND colors.id=product_color.colorId)';
+        $stmt1 = $this->conn->prepare($query);
+        $stmt1->bindParam(1, $row['id']);
+        $stmt1->execute();
+          
+        $row['colors'] = array();
+        while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['colors'], $row1);
+        }
+
+        $query = 'SELECT path FROM images WHERE images.productId = ?';
+        $stmt2 = $this->conn->prepare($query);
+        $stmt2->bindParam(1, $row['id']);
+        $stmt2->execute();
+          
+        $row['imgs'] = array();
+        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['imgs'], $row2['path']);
+        }
+
+        $query = 'SELECT name FROM categories WHERE id = ?';
+        $stmt3 = $this->conn->prepare($query);
+        $stmt3->bindParam(1, $row['categoryId']);
+        $stmt3->execute();
+
+        $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+
+        $row['category'] = $row3['name'];
+        array_push($products_arr, $row);
+      }
+
+      return $products_arr;
     }
 
-    public function readTopProduct() {
+    public function getTop() {
       // Create query
       $query = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt LIMIT 10';
 
@@ -297,7 +337,7 @@
       return $products_arr;
     }
 
-    public function readTopProductOfCategory() {
+    public function getTopCategoryProds() {
       // Create query
       $query = 'SELECT * FROM ' . $this->table . ' WHERE categoryId= ? ORDER BY createdAt LIMIT 10';
 
@@ -342,8 +382,7 @@
       return $products_arr;
     }
 
-
-    public function calcTotalPrice() {
+    public function getTotalPrice() {
       $totalPrice = 0;
       $cart = $this->cart;
       for ($i = 0; $i < sizeof($this->cart); $i++) {
@@ -356,5 +395,15 @@
         $totalPrice += $row['price']*(100-$row['saleoff'])/100 * $cart[$i]->quantity;
       }
       return $totalPrice;
+    }
+
+    public function getTotalPage() {
+      $query = 'SELECT * FROM ' . $this->table . ' WHERE categoryId= ?';
+
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(1, $this->categoryId);
+      $stmt->execute();
+
+      return ceil($stmt->rowCount() / $this->limit);
     }
   }

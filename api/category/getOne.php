@@ -13,14 +13,8 @@
 
   $category->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-  $category->read_single();
-
-  // Create array
-  $post_arr = array(
-    'name' => $category->name,
-    'image'=> $category->image
-  );
+  $result = $category->getOne();
 
   // Make JSON
-  print_r(json_encode($post_arr));
+  echo json_encode($result);
 

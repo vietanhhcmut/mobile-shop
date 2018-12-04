@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import "./LoginPage.css";
 import { Link } from "react-router-dom";
+import axios from "../../../../constants/axiosInstance";
 
 class LoginPage extends Component {
   state = {
     showPassword: false,
     email: "",
     password: "",
-    submitted: false
+    submitted: false,
+    loginError: false
   };
   handleValidateForm = () => {
     return this.state.password.length > 0;
@@ -30,19 +32,31 @@ class LoginPage extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.setState({
-      submitted: true
-    });
+    const { email, password } = this.state;
+    axios
+      .post("/api/user/login.php", {
+        email,
+        password
+      })
+      .then(res => {
+        if (res.status === 200) {
+          localStorage.setItem("userToken", res.data.token);
+          this.props.history.push("/");
+        }
+      })
+      .catch(err => {
+        console.log("err", err);
+        // this.setState({
+        //   loginError: true
+        // });
+      });
   };
 
   render() {
-    const { email, password, submitted, showPassword } = this.state;
+    const { email, password, submitted, showPassword, loginError } = this.state;
     let typePass = "password";
     let showPass = "Hiện";
-    let loginError = false;
-    if (email === "duyen@gmail.com" && password === "123") {
-      loginError = true;
-    }
+
     if (showPassword === true) {
       typePass = "text";
       showPass = "Ẩn";
@@ -74,9 +88,8 @@ class LoginPage extends Component {
                     <div className="login__form-help">Yêu cầu nhập email</div>
                   )}
               </div>
-              
+
               <div className="clear" />
-              
             </div>
             <div
               className={
@@ -86,7 +99,7 @@ class LoginPage extends Component {
               <label htmlFor="password">Mật khẩu</label>
               <div className="login__form-inputpassword">
                 <input
-                  type={typePass} 
+                  type={typePass}
                   name="password"
                   value={password}
                   onChange={this.handleChange}
@@ -100,11 +113,13 @@ class LoginPage extends Component {
                   {showPass}
                 </button>
                 {submitted &&
-                !password && (
-                  <div className="login__form-help">Yêu cầu nhập mật khẩu</div>
-                )}
+                  !password && (
+                    <div className="login__form-help">
+                      Yêu cầu nhập mật khẩu
+                    </div>
+                  )}
               </div>
-              <div className="clear" /> 
+              <div className="clear" />
             </div>
             <div className="login__form">
               <Link to="/password-recovery" className="login_form-forgot">
@@ -117,7 +132,9 @@ class LoginPage extends Component {
               </button>
             </div>
             {submitted &&
-              !loginError && password && email &&(
+              !loginError &&
+              password &&
+              email && (
                 <div className="login__form-help">
                   Email và mật khẩu không hợp lệ!
                 </div>

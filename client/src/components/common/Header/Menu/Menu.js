@@ -13,11 +13,11 @@ const Menu = ({
   <ul className="menu-items">
     <Link to="/" className="link">
       <li
-        id={active === "trang-chu" ? "menu-items__active" : ""}
+        id={active === "/" ? "menu-items__active" : ""}
         className="menu-items1"
         onClick={e => {
           handleToggle();
-          handleActivePage("trang-chu");
+          handleActivePage("/");
         }}
       >
         Trang chủ
@@ -60,11 +60,11 @@ const Menu = ({
     </div>
     <Link to="/about" className="link">
       <li
-        id={active === "gioi-thieu" ? "menu-items__active" : ""}
+        id={active === "/about" ? "menu-items__active" : ""}
         className="menu-items3"
         onClick={e => {
           handleToggle();
-          handleActivePage("gioi-thieu");
+          handleActivePage("/about");
         }}
       >
         Giới thiệu
@@ -72,11 +72,11 @@ const Menu = ({
     </Link>
     <Link to="/login" className="link">
       <li
-        id={active === "dang-nhap" ? "menu-items__active" : ""}
+        id={active === "/login" ? "menu-items__active" : ""}
         className="menu-items4"
         onClick={e => {
           handleToggle();
-          handleActivePage("dang-nhap");
+          handleActivePage("/login");
         }}
       >
         Đăng nhập
@@ -84,11 +84,11 @@ const Menu = ({
     </Link>
     <Link to="/signup" className="link">
       <li
-        id={active === "dang-ki" ? "menu-items__active" : ""}
+        id={active === "/signup" ? "menu-items__active" : ""}
         className="menu-items5"
         onClick={e => {
           handleToggle();
-          handleActivePage("dang-ki");
+          handleActivePage("/signup");
         }}
       >
         Đăng kí

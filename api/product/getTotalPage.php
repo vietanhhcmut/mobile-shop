@@ -13,11 +13,8 @@
 
   $product = new Product($db);
 
-  $result = $product->readTopProduct();
+  $product->categoryId = isset($_GET['categoryId']) ? $_GET['categoryId'] : die();
+  $result = $product->getTotalPage();
 
-//   $products_arr = array();
-//   while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-//       array_push($products_arr, $row);
-//   }
   // Turn to JSON & output
   echo json_encode($result);

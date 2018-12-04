@@ -2,7 +2,7 @@
   // Headers
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
-  header('Access-Control-Allow-Methods: POST');
+  header('Access-Control-Allow-Methods: PUT');
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
   include_once '../../config/database.php';
@@ -15,6 +15,8 @@
 
   $data = json_decode(file_get_contents("php://input"));
 
+  $product->id = $data->id;
+  
   $product->categoryId = $data->categoryId;
   $product->name = $data->name;
   $product->price = $data->price;
@@ -34,12 +36,15 @@
   $product->camera = $data->camera;
   $product->os = $data->os;
 
-  if($product->add()){
+
+  if ($product->update()) {
     http_response_code(200);
-    echo json_encode(array("message" => "Product was added"));
+    echo json_encode(array("message" => "Product was editted"));
   }
 
-  else{
+  else {
+
+    // set response code
     http_response_code(400);
-    echo json_encode(array("message" => "Unable to add product."));
+    echo json_encode(array("message" => "Unable to edit product."));
   }
