@@ -9,7 +9,6 @@ import axios from "../../../constants/axiosInstance";
 import { withRouter } from "react-router-dom";
 
 class Header extends Component {
-  static contextType = Context;
   state = {
     active: this.props.location.pathname,
     toggle: false,
@@ -48,8 +47,8 @@ class Header extends Component {
     });
   };
   render() {
-    // console.log(this.state.active);
     const { active, toggle, showMenu, categories } = this.state;
+    console.log(categories);
     return (
       <header>
         <div className="logo">
@@ -66,7 +65,9 @@ class Header extends Component {
 
               <div className="hidden-sm-down">Giỏ hàng</div>
               <span className="header-card-big__cart-infor">
-                {calcTotalQuantity(this.context.cart)} sản phẩm
+                <Context.Consumer>
+                  {context => calcTotalQuantity(context.cart) + " sản phẩm"}
+                </Context.Consumer>
               </span>
             </div>
           </Link>
@@ -98,7 +99,9 @@ class Header extends Component {
                 </i>
               </span>
               <span className="header-card__cart-infor">
-                {calcTotalQuantity(this.context.cart)} sản phẩm
+                <Context.Consumer>
+                  {context => calcTotalQuantity(context.cart) + " sản phẩm"}
+                </Context.Consumer>
               </span>
             </div>
           </Link>
