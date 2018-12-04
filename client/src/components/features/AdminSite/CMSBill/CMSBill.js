@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import swal from 'sweetalert';
-import {formatPrice} from './../../../../constants/constants';
 import './CMSBill.css';
+import DetailBill from'./DetailBill';
 
 
 export default class CMSUer extends Component {
   state = {
-    orders: []
+    orders: [],
+    open: false,
+    dataItem: [],
   }
   
   componentDidMount() {
@@ -21,7 +23,7 @@ export default class CMSUer extends Component {
                 ward: "Linh Trung",
                 address: "KTX Khu A",
                 phonenumber: "0123456789",
-                type: "approved"
+                type: true
             },
             {
                 id: 2,
@@ -32,7 +34,7 @@ export default class CMSUer extends Component {
                 ward: "Linh Trung",
                 address: "KTX Khu A",
                 phonenumber: "0123456789",
-                type: "pending"
+                type: false
             }
         ],
     });
@@ -51,12 +53,25 @@ export default class CMSUer extends Component {
     });
   }
   changeType = (item, index) => () => {
-      this.setState({
-
-      })
+    const state = Object.assign({}, this.state);
+    state.orders[index].type = !item.type;
+    this.setState(state);
   }
+
+  onOpenModal = (item) => () => {
+    this.setState({
+      open: !this.state.open,
+      dataItem: item
+    });
+    console.log(item);
+  }
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  }
+
   render() {
-    const {orders} = this.state;
+    const {orders, open} = this.state;
     let table = (
         <table className="table table-hover table-bordered">
           <thead>
@@ -64,7 +79,7 @@ export default class CMSUer extends Component {
               <th>STT</th>
               <th>Mã Đơn hàng</th>
               <th>Người mua</th>
-              <th>Active</th>
+              <th>Type</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -78,15 +93,20 @@ export default class CMSUer extends Component {
                 <td>Duyen</td>
                 
                 <td>
-                    {/* <label>
-                        <input type='checkbox'  onClick={() => this.changeActive(item, index)} /><span className='button-indecator' />
-                    </label> */}
                     <label class="switch">
-                        <input type="checkbox" checked />
+                        <input type="checkbox" defaultChecked={item.type} onClick={this.changeType(item, index)}/>
                         <span class="slider round"></span>
                     </label>
                 </td>
                 <td className="btn-action-delete">
+                    <a
+                        className="btn btn-primary"
+                        href="#"
+                        onClick={this.onOpenModal(item)}
+                    >
+                        <i class="fas fa-eye"></i>
+                    </a>
+
                     <a
                         className="btn btn-danger"
                         href="#"
@@ -94,6 +114,7 @@ export default class CMSUer extends Component {
                     >
                         <i className="fa fa-lg fa-trash" />
                     </a>
+                    
                 </td>
               </tr>
             ))}
@@ -103,11 +124,18 @@ export default class CMSUer extends Component {
     return (
       <div className="dashboard">
         <div className="dashboard__header">
-          <h1>User</h1>
+          <h1>Đơn hàng</h1>
         </div>
         <div className="dashboard__content">
             {table}
         </div>
+        {open && (
+          <DetailBill
+            onCloseModal={this.onCloseModal}
+            open={this.state.open}
+            itemInfo={this.state.dataItem}
+          />
+        )}
       </div>
     );
   }

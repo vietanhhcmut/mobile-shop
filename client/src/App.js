@@ -1,15 +1,23 @@
+
+import React, { Component } from 'react';
+import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import PublicSite from './components/features/PublicSite/PublicSite';
+import SignupPage from './components/features/PublicSite/SignupPage/SignupPage';
+import NotFoundPage from './components/features/NotFoundPage/NotFoundPage';
 import AdminSite from './components/features/AdminSite/AdminSite'
+import Context from './Context';
+import axios from './constants/axiosInstance';
+
 class App extends Component {
   state = {
-    cart: JSON.parse(localStorage.getItem('cart')) || [],
+    cart: JSON.parse(localStorage.getItem("cart")) || [],
     totalPrice: 0,
     addToCart: false
   };
   componentDidMount() {
     this.handleCalcTotalPrice(this.state.cart);
   }
-  
-
   handleCalcTotalPrice = cart => {
     axios
       .post("/api/product/getTotalPrice.php", { cart })
@@ -19,7 +27,7 @@ class App extends Component {
       .catch(err => {
         console.log(err);
       });
-  }
+  };
   handleAddToCart = (productId, quantity, color, boundingImg, srcImg) => {
     const cart = [...this.state.cart];
     const index = cart.findIndex(
@@ -70,14 +78,14 @@ class App extends Component {
     this.handleCalcTotalPrice(cart);
     localStorage.setItem("cart", JSON.stringify(cart));
     this.setState({ cart });
-  
+  };
   handleDeleteCartItem = index => () => {
     const cart = [...this.state.cart];
     cart.splice(index, 1);
     this.handleCalcTotalPrice(cart);
     localStorage.setItem("cart", JSON.stringify(cart));
     this.setState({ cart });
-  }
+  };
   render() {
     const { cart, addToCart, totalPrice } = this.state;
     return (
@@ -89,14 +97,15 @@ class App extends Component {
         handleChangeQuantity: this.handleChangeQuantity,
         handleDeleteCartItem: this.handleDeleteCartItem
       }}>
-      <BrowserRouter>
-        <Switch>
-              {/* Phần dưới chưa tạo component */}
-              <Route path="/admin" component={AdminSite} />
-              <Route path="/sorry" component={NotFoundPage} />
-              <Route path="/" component={PublicSite} />
-          </Switch>
-      </BrowserRouter>
+        <BrowserRouter>
+            <Switch>
+                {/* Phần dưới chưa tạo component */}
+                <Route path="/admin" component={AdminSite} />
+                <Route path="/sorry" component={NotFoundPage} />
+                <Route path="/" component={PublicSite} />
+            </Switch>
+
+        </BrowserRouter>
       </Context.Provider>
     );
   }
