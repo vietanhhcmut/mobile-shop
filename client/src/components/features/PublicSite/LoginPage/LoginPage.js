@@ -11,6 +11,9 @@ class LoginPage extends Component {
     submitted: false,
     loginError: false
   };
+  componentDidMount() {
+    console.log(this.props);
+  }
   handleValidateForm = () => {
     return this.state.password.length > 0;
   };

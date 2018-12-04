@@ -1,2 +1,10 @@
 @import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+
+.img-add-to-cart {
+    position: fixed;
+    transition: all 1.2s ease-in-out;
+    z-index: 2000;
+    opacity: 0.7;
+}

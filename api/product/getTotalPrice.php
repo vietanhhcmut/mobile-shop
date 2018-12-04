@@ -16,9 +16,9 @@
 
   $data = json_decode(file_get_contents("php://input"));
 
-  $product->id = $data->id;
+  $product->cart = $data->cart;
 
-  $result = $product->readOneProduct();
+  $result = $product->getTotalPrice();
 
   // Turn to JSON & output
   echo json_encode($result);

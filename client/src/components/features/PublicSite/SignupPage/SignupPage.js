@@ -112,7 +112,7 @@ class SignupPage extends Component {
       ) {
         // console.log(this.state.email);
         axios
-          .post("/BTL_Web/mobile-shop/api/user/createUser.php", {
+          .post("/BTL_Web/mobile-shop/api/user/add.php", {
             firstname: firstName,
             lastname: lastName,
             email: email,

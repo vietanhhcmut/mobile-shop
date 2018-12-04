@@ -14,7 +14,7 @@
     }
 
     // Get 
-    public function read() {
+    public function getAll() {
       $query = 'SELECT * FROM ' . $this->table;
          
       $stmt = $this->conn->prepare($query);
@@ -112,29 +112,18 @@
     }
 
     // Get Single 
-    public function read_single() {
+    public function getOne() {
       // Create query
-      $query = 'SELECT 
-      c.name,
-      c.image
-     FROM
-       ' . $this->table . ' c
-     WHERE
-       c.id = ?
-     LIMIT 0,1';
+      $query = 'SELECT * FROM ' . $this->table . ' WHERE id = ?';
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(1, $this->id);
 
-     $stmt = $this->conn->prepare($query);
-     
-     $stmt->bindParam(1, $this->id);
+      // Execute query
+      $stmt->execute();
 
-     // Execute query
-     $stmt->execute();
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-     // Set properties
-     $this->name = $row['name'];
-     $this->image = $row['image'];
+      return $row;
    }
  
   }
