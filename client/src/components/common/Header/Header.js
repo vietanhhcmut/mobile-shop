@@ -48,7 +48,6 @@ class Header extends Component {
   };
   render() {
     const { active, toggle, showMenu, categories } = this.state;
-    console.log(categories);
     return (
       <header>
         <div className="logo">

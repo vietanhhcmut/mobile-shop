@@ -110,7 +110,6 @@ class SignupPage extends Component {
         lastDotPos > 2 &&
         email.length - lastDotPos > 2
       ) {
-        console.log(this.state.email);
         axios
           .post("/api/user/add.php", {
             firstname: firstName,
