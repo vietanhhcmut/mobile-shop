@@ -51,7 +51,7 @@ class CartItem extends Component {
                             <span className='product-info__original-price'>{formatPrice(price)}</span>
                             <span className='product-info__saleoff'>-{saleoff}%</span>
                             <p className='product-info__color'>
-                                <b>Color: </b>
+                                <b>Màu: </b>
                                 <span>{color}</span>
                             </p>
                         </div>
