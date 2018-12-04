@@ -5,6 +5,7 @@ import Navbar from "./NavBar/NavBar";
 import { Link } from "react-router-dom";
 import { logoSite, calcTotalQuantity } from "../../../constants/constants";
 import Context from "../../../Context";
+import axios from '../../../constants/axiosInstance';
 
 export default class Header extends Component {
   static contextType = Context;
@@ -12,33 +13,17 @@ export default class Header extends Component {
     active: "trang-chu",
     toggle: false,
     showMenu: false,
-    categories: [
-      {
-        id: 1,
-        name: "Sam Sung"
-      },
-      {
-        id: 2,
-        name: "Nokia"
-      },
-      {
-        id: 3,
-        name: "Apple"
-      },
-      {
-        id: 4,
-        name: "LG"
-      },
-      {
-        id: 5,
-        name: "TCL Communication"
-      },
-      {
-        id: 6,
-        name: "Sony Mobile"
-      }
-    ]
+    categories: []
   };
+  componentDidMount() {
+    axios.get('/api/category/getAll.php')
+      .then(res => {
+        this.setState({ categories: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
   handleToggle = () => {
     this.setState(prevState => {
       return {

@@ -36,11 +36,8 @@ export default class Menu extends Component {
           <div className="table-categories">
             <div className="table-categories__item1">
               {categories.map(category => (
-                <Link to={`/category/${category.id}`} className="link">
-                  <div
-                    key={category.id}
-                    onClick={this.handleActivePage("danh-muc")}
-                  >
+                <Link to={`/category/${category.id}`} className="link" key={category.id}>
+                  <div onClick={this.handleActivePage("danh-muc")}>
                     {category.name}
                   </div>
                 </Link>

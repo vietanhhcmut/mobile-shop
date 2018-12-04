@@ -9,6 +9,9 @@ class LoginPage extends Component {
     password: "",
     submitted: false
   };
+  componentDidMount() {
+    console.log(this.props);
+  }
   handleValidateForm = () => {
     return this.state.password.length > 0;
   };

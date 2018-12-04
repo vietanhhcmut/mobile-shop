@@ -17,7 +17,7 @@ class App extends Component {
     this.handleCalcTotalPrice(this.state.cart);
   }
   handleCalcTotalPrice = (cart) => {
-    axios.post("/api/product/calcTotalPrice.php", { cart })
+    axios.post("/api/product/getTotalPrice.php", { cart })
       .then(res => {
         this.setState({ totalPrice: res.data });
       })
