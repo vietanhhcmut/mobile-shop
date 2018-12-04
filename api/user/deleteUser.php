@@ -32,14 +32,14 @@
   $data = json_decode(file_get_contents("php://input"));
   
   // get jwt
-  $jwt=isset($data->jwt) ? $data->jwt : "";
+  $jwt = isset($data->jwt) ? $data->jwt : "";
   
   // decode jwt here
 
   // if jwt is not empty
-  if($jwt){
+  if ($jwt) {
     // if decode succeed, show user details
-    try{
+    try {
       // decode jwt
       $decoded = JWT::decode($jwt, $key, array('HS256'));
 
@@ -61,7 +61,7 @@
       }
 
         // message if unable to update user
-      else{
+      else {
         // set response code
         http_response_code(401);
 
