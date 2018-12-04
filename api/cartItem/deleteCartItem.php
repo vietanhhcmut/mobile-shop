@@ -20,12 +20,11 @@
 
   // Delete 
   if($cartItem->delete()) {
-    http_response_code(200);
     echo json_encode(
       array('message' => 'Item was deleted')
     );
   } else {
-    http_response_code(401);
+    http_response_code(403);
     echo json_encode(
       array('message' => 'Unable to delete item')
     );

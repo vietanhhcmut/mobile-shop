@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./SignupPage.css";
-import axios from "axios";
+import axios from "../../../../constants/axiosInstance";
 
 class SignupPage extends Component {
   state = {
@@ -110,19 +110,16 @@ class SignupPage extends Component {
         lastDotPos > 2 &&
         email.length - lastDotPos > 2
       ) {
-        console.log(this.state.email);
+        // console.log(this.state.email);
         axios
-          .post(
-            "http://localhost/BTL_Web/mobile-shop/api/user/createUser.php",
-            {
-              firstname: firstName,
-              lastname: lastName,
-              email: email,
-              pass: pass,
-              gender: this.state.gender,
-              birthday: this.state.birthday
-            }
-          )
+          .post("/BTL_Web/mobile-shop/api/user/createUser.php", {
+            firstname: firstName,
+            lastname: lastName,
+            email: email,
+            pass: pass,
+            gender: this.state.gender,
+            birthday: this.state.birthday
+          })
           .then(res => {
             if (res.status === 200) {
               this.props.history.push("/login");
