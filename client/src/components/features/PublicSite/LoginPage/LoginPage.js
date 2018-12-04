@@ -37,7 +37,7 @@ class LoginPage extends Component {
     event.preventDefault();
     const { email, password } = this.state;
     axios
-      .post("/BTL_Web/mobile-shop/api/user/login.php", {
+      .post("/api/user/login.php", {
         email,
         password
       })

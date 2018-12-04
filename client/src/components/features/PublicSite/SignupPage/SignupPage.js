@@ -110,9 +110,9 @@ class SignupPage extends Component {
         lastDotPos > 2 &&
         email.length - lastDotPos > 2
       ) {
-        // console.log(this.state.email);
+        console.log(this.state.email);
         axios
-          .post("/BTL_Web/mobile-shop/api/user/add.php", {
+          .post("/api/user/add.php", {
             firstname: firstName,
             lastname: lastName,
             email: email,
