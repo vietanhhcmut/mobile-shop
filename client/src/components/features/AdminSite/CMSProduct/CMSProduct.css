@@ -1,0 +1,98 @@
+.dashboard {
+    margin-left: 25%;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.dashboard__header, .dashboard__content-filter {
+    text-align: center;
+}
+
+.dashboard__content-filter select {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height: 36px;
+    padding: 0 1rem;
+    min-width: 300px;
+    margin: 5px;
+}
+
+.dashboard__content-filter button {
+    margin: 4px;
+    height: 30px;
+    vertical-align: top;
+}
+
+.dashboard__product {
+    float: left;
+    width: 25%;
+    text-align: center;
+}
+.dashboard__product img {
+    height: 50%;
+    width: 90%;
+    object-fit: contain;
+}
+
+.dashboard__product-title {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.dashboard__product-price {
+    color: #f94b4b;
+    font-size: 13px;
+    font-weight: 600;
+    height: 50px;
+}
+
+.dashboard__product-saleoff > span:first-child {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.dashboard__product-saleoff > span:last-child {
+    padding: 2px;
+    background: #f94b4b;
+    color: white;
+    margin-left: 5px;
+}
+
+.dashboard__product-saleoff > span:last-child::after {
+    display: inline;
+    content: '%';
+}
+
+.dashboard__product-button-edit, .dashboard__product-button-delete {
+    border: none;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    outline: none;
+}
+.dashboard__product-button-edit {
+    
+    background: lightgreen;
+    
+}
+
+.dashboard__product-button-delete {
+    background: lightcoral;
+}
+
+.dashboard__product-button-edit:hover, .dashboard__product-button-delete:hover {
+    filter: saturate(0%);
+}
+
+.dashboard__btn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    border: none;
+    height: 50px;
+    width: 50px;
+    background: cornflowerblue;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+}

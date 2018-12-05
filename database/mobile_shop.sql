@@ -2,10 +2,10 @@
 -- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 02, 2018 at 08:02 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.11
+-- Host: 127.0.0.1:3306
+-- Generation Time: Dec 04, 2018 at 02:54 PM
+-- Server version: 8.0.13
+-- PHP Version: 7.2.10-0ubuntu0.18.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -33,7 +33,7 @@ CREATE TABLE `cartitem` (
   `userId` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `color` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
+  `color` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -52,8 +52,8 @@ INSERT INTO `cartitem` (`id`, `userId`, `productId`, `quantity`, `color`) VALUES
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `name` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -75,8 +75,8 @@ INSERT INTO `categories` (`id`, `name`, `image`) VALUES
 
 CREATE TABLE `colors` (
   `id` int(11) NOT NULL,
-  `color` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `color` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -97,7 +97,7 @@ INSERT INTO `colors` (`id`, `color`, `name`) VALUES
 
 CREATE TABLE `images` (
   `id` int(11) NOT NULL,
-  `path` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `path` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `productId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -123,12 +123,12 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `feeShip` int(255) NOT NULL,
   `totalPrice` int(255) NOT NULL,
-  `city` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `district` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ward` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ward` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `phonenumber` int(11) NOT NULL,
-  `type` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
+  `type` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -148,38 +148,38 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `categoryId` int(11) NOT NULL,
-  `name` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` int(255) NOT NULL,
   `saleoff` int(255) NOT NULL,
-  `description` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `screen` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sim` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `memory` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ram` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bluetooth` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `wlan` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pin` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gps` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `camera` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `os` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
+  `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `screen` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sim` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `memory` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ram` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bluetooth` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wlan` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pin` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gps` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `camera` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `os` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `createdAt`, `categoryId`, `name`, `price`, `saleoff`, `description`, `screen`, `sim`, `memory`, `ram`, `bluetooth`, `wlan`, `pin`, `gps`, `camera`, `os`) VALUES
-(1, '2018-12-01 11:24:19', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(2, '2018-12-01 08:29:25', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'N\'Đẹp, bền\'', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(3, '2018-12-01 12:29:27', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(4, '2018-12-01 12:32:34', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(5, '2018-12-01 13:32:34', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(6, '2018-12-01 17:32:34', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(7, '2018-12-01 19:36:34', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(8, '2018-12-01 21:27:34', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(9, '2018-12-01 07:23:19', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(10, '2018-12-01 10:26:19', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
-(11, '2018-12-01 12:36:33', 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)');
+INSERT INTO `products` (`id`, `categoryId`, `name`, `price`, `saleoff`, `description`, `screen`, `sim`, `memory`, `ram`, `bluetooth`, `wlan`, `pin`, `gps`, `camera`, `os`) VALUES
+(1, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(2, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'N\'Đẹp, bền\'', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(3, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(4, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(5, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(6, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(7, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(8, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(9, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(10, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)'),
+(11, 5, 'Samsung Galaxy Note 9', 22451000, 5, 'Đẹp, bền', 'Super AMOLED, 5.1\", Quad HD (2K)', '2 SIM Nano ', '32 GB', '4 GB', 'apt-X, LE, A2DP, v5.0', '5Ghz', '4000 mAh', 'BDS, A-GPS, GLONASS', '8 MP', 'Android 8.1 (Oreo)');
 
 -- --------------------------------------------------------
 
@@ -211,9 +211,9 @@ INSERT INTO `product_color` (`id`, `productId`, `colorId`) VALUES
 CREATE TABLE `reviews` (
   `id` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
-  `name` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `createAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -225,12 +225,13 @@ CREATE TABLE `reviews` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `firstname` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lastname` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gender` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birthday` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstname` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isAdmin` tinyint(1) NOT NULL,
+  `gender` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthday` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -239,9 +240,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `gender`, `birthday`, `created`, `modified`) VALUES
-(17, 'Lan', 'Bui', 'lan@gmail.com', '$2y$10$PwTKHZmOjLoUXsdnSZ4uYe86OD6ZklbpOxx/VlPBVt7Q0kqLX3txW', 'nu', '11/07/1997', '2018-11-30 01:00:25', '2018-11-29 18:00:25'),
-(18, 'Lan', 'Bui', 'lanbui@gmail.com', '$2y$10$Sf7Y6uSOpj2jYVJfv0H5Mu4hWC.o2D/sCOmSfra5Y0H7pkuuX7ChO', 'nu', '11/07/1997', '2018-11-30 01:01:31', '2018-11-29 18:01:31');
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `isAdmin`, `gender`, `birthday`) VALUES
+(23, 'Bui', 'Lan', 'builan@gmail.com', '$2y$10$4tZQ.p2fgFoEGXmuzbgv0eBGcYx96mvQsVxFks5P4qJmlpnOoNa6C', 0, 'nu', '11/7/1975'),
+(24, 'Mai', 'Dao', 'dao@gmail.com', '$2y$10$PZAl.IDrPZ0Jzk8VWrsP6uvweatJW/2vibhwldAq3gEX6L5QP2Qf2', 0, 'nu', '11/7/1975');
 
 --
 -- Indexes for dumped tables
@@ -361,7 +362,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables

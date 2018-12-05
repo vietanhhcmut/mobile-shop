@@ -1,0 +1,69 @@
+.logo__admin {
+    position: fixed;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar {
+    position: fixed;
+    width: 20%;
+    background: #4a4a4a;
+    color: #fff;
+    top: 80px;
+}
+
+.sidebar__menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar__menu li {
+    border-bottom: 1px solid #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.sidebar__menu a {
+    color: #fff;
+}
+
+.sidebar__menu a li:hover {
+    background-color: #58b0da;
+}
+
+.sidebar__menu a:hover {
+    text-decoration: none;
+}
+
+.sidebar__submenu {
+   position: relative; 
+}
+
+.sidebar__submenu:hover span {
+    display: block;
+    padding: 0 10px 10px 10px;
+}
+
+.sidebar__submenu span i {
+    position: absolute;
+    right: 5px;
+}
+
+.sidebar__tree-submenu {
+    display: none;
+    background: cadetblue;
+}
+
+.sidebar__tree-submenu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar__tree-submenu ul a li {
+    border: none;
+}
+.sidebar__submenu:hover .sidebar__tree-submenu{
+    display: block;
+}
+

@@ -1,0 +1,12 @@
+.admin-site {
+    width: 100%;
+    margin: auto;
+    background: white;
+    padding: 0 25px;
+}
+
+@media (min-width: 992px) {
+    .admin-site {
+        width: 88%;
+    }
+}

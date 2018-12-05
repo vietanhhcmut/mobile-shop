@@ -1,0 +1,68 @@
+.CMSModal__body {
+    display: block;
+    right: 0;
+    position: relative;
+    border: none;
+    color: #000;
+    box-shadow: none;
+    animation: none;
+}
+
+.CMSModal__body .form-group .form-control {
+    color: #000;
+}
+.CMSModal {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+.closeModal {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: none;
+}
+
+.imgPreview {
+    padding-top: 10px;
+}
+
+.imgPreview .imgPreview__content {
+    position: relative;
+}
+
+.imgPreview .imgPreview__content .delete-imagePreview {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    background: #fff;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    line-height: 20px;
+    cursor: pointer;
+}
+.imgPreview .imgPreview__content img {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 10px;
+}
+
+.img__infoProduct img {
+    float: left;
+    width: calc(100% / 3);
+}
+
+.colorInput {
+    height: 30px;
+}

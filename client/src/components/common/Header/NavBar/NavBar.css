@@ -42,7 +42,7 @@ i.material-icons.category__icon {
   display: flex;
   flex-direction: row;
   font-size: 13px;
-  top: 52px;
+  top: 50px;
   width: 500px;
   color: black;
   left: 0px;
@@ -136,7 +136,7 @@ i.material-icons.category__icon {
     width: 145px;
   }
   .table-categories {
-    top: 52px;
+    top: 50px;
   }
   li.navbar-item {
     padding: 0 25px;

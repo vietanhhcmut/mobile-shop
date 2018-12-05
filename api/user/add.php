@@ -13,8 +13,6 @@
   $db = $database->getConnection();
 
   $user = new User($db);
-
-  // get posted data
   $data = json_decode(file_get_contents("php://input"));
   
   $user->firstname = $data->firstname;
@@ -23,18 +21,15 @@
   $user->password = $data->password;
   $user->gender = $data->gender;
   $user->birthday = $data->birthday;
+  $user->isAdmin = 0;
 
-  // var_dump($user);
   if (!($user->emailExists())){
     if($user->add()){
-    
       http_response_code(200);
       echo json_encode(array("message" => "User was added."));
     }
     else{
-
       http_response_code(403);
-
       echo json_encode(array("message" => "Unable to add user."));
     }
   }

@@ -11,9 +11,6 @@ class LoginPage extends Component {
     submitted: false,
     loginError: false
   };
-  componentDidMount() {
-    console.log(this.props);
-  }
   handleValidateForm = () => {
     return this.state.password.length > 0;
   };
@@ -37,7 +34,7 @@ class LoginPage extends Component {
     event.preventDefault();
     const { email, password } = this.state;
     axios
-      .post("/BTL_Web/mobile-shop/api/user/login.php", {
+      .post("/api/user/login.php", {
         email,
         password
       })

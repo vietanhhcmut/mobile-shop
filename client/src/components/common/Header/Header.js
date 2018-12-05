@@ -5,24 +5,25 @@ import Navbar from "./NavBar/NavBar";
 import { Link } from "react-router-dom";
 import { logoSite, calcTotalQuantity } from "../../../constants/constants";
 import Context from "../../../Context";
-import axios from '../../../constants/axiosInstance';
+import axios from "../../../constants/axiosInstance";
+import { withRouter } from "react-router-dom";
 
-export default class Header extends Component {
-  static contextType = Context;
+class Header extends Component {
   state = {
-    active: "trang-chu",
+    active: this.props.location.pathname,
     toggle: false,
     showMenu: false,
     categories: []
   };
   componentDidMount() {
-    axios.get('/api/category/getAll.php')
+    axios
+      .get("/api/category/getAll.php")
       .then(res => {
         this.setState({ categories: res.data });
       })
       .catch(err => {
         console.log(err);
-      })
+      });
   }
   handleToggle = () => {
     this.setState(prevState => {
@@ -62,7 +63,11 @@ export default class Header extends Component {
               </span>
 
               <div className="hidden-sm-down">Giỏ hàng</div>
-              <span className="header-card-big__cart-infor">{calcTotalQuantity(this.context.cart)} sản phẩm</span>
+              <span className="header-card-big__cart-infor">
+                <Context.Consumer>
+                  {context => calcTotalQuantity(context.cart) + " sản phẩm"}
+                </Context.Consumer>
+              </span>
             </div>
           </Link>
         </div>
@@ -92,7 +97,11 @@ export default class Header extends Component {
                   shopping_cart
                 </i>
               </span>
-              <span className="header-card__cart-infor">{calcTotalQuantity(this.context.cart)} sản phẩm</span>
+              <span className="header-card__cart-infor">
+                <Context.Consumer>
+                  {context => calcTotalQuantity(context.cart) + " sản phẩm"}
+                </Context.Consumer>
+              </span>
             </div>
           </Link>
 
@@ -123,3 +132,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default withRouter(Header);

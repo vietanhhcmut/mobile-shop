@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
+import { withRouter } from "react-router-dom";
 
-export default class Menu extends Component {
+class NavBar extends Component {
   state = {
-    active: "trang-chu"
+    active: this.props.location.pathname
   };
   handleActivePage = page => () => {
     this.setState({
@@ -18,8 +19,8 @@ export default class Menu extends Component {
         <Link to="/" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "trang-chu" ? "active-page" : ""}
-            onClick={this.handleActivePage("trang-chu")}
+            id={this.state.active === "/" ? "active-page" : ""}
+            onClick={this.handleActivePage("/")}
           >
             Trang chủ
           </li>
@@ -36,7 +37,11 @@ export default class Menu extends Component {
           <div className="table-categories">
             <div className="table-categories__item1">
               {categories.map(category => (
-                <Link to={`/category/${category.id}`} className="link" key={category.id}>
+                <Link
+                  to={`/category/${category.id}`}
+                  className="link"
+                  key={category.id}
+                >
                   <div onClick={this.handleActivePage("danh-muc")}>
                     {category.name}
                   </div>
@@ -54,8 +59,8 @@ export default class Menu extends Component {
         <Link to="/about" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "gioi-thieu" ? "active-page" : ""}
-            onClick={this.handleActivePage("gioi-thieu")}
+            id={this.state.active === "/about" ? "active-page" : ""}
+            onClick={this.handleActivePage("/about")}
           >
             Giới thiệu
           </li>
@@ -63,8 +68,8 @@ export default class Menu extends Component {
         <Link to="/signup" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "dang-ki" ? "active-page" : ""}
-            onClick={this.handleActivePage("dang-ki")}
+            id={this.state.active === "/signup" ? "active-page" : ""}
+            onClick={this.handleActivePage("/signup")}
           >
             Đăng kí
           </li>
@@ -72,8 +77,8 @@ export default class Menu extends Component {
         <Link to="/login" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "dang-nhap" ? "active-page" : ""}
-            onClick={this.handleActivePage("dang-nhap")}
+            id={this.state.active === "/login" ? "active-page" : ""}
+            onClick={this.handleActivePage("/login")}
           >
             Đăng nhập
           </li>
@@ -82,3 +87,4 @@ export default class Menu extends Component {
     );
   }
 }
+export default withRouter(NavBar);
