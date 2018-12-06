@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PublicSite from './components/features/PublicSite/PublicSite';
-import SignupPage from './components/features/PublicSite/SignupPage/SignupPage';
 import NotFoundPage from './components/features/NotFoundPage/NotFoundPage';
 import AdminSite from './components/features/AdminSite/AdminSite'
 import Context from './Context';

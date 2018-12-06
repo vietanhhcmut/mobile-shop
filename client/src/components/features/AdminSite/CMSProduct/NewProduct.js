@@ -9,8 +9,6 @@ export default class NewProduct extends Component {
         imgs: []
     },
     _upload_files : [],
-    _deleted_files : [],
-    _added_files : [],
     imagePreviewUrl: []
   }
   componentDidMount() {
@@ -37,39 +35,23 @@ export default class NewProduct extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.state.items.imgs = [];
-    for(var i = 0; i < this.state.file.length; i++){
-        this.state.items.imgs.push(this.state.file[i].name);
+    const state = Object.assign({}, this.state);
+    if(this.state._upload_files.length > 0) {
+        state.items.imgs = [];
+        for(var i = 0; i < this.state._upload_files.length; i++){
+            state.items.imgs.push(this.state._upload_files[i].name);
+        }
     }
   }
   handleImageChange = e => {
-    // e.preventDefault();
-    // let files = e.target.files;
-    // var listfile = this.state.file;
-    // var listImg = this.state.imagePreviewUrl;
-    // for (var i = 0; i < files.length; i++) {
-    //     var file = files[i];
-    //     listfile.push(file);
-    //     let reader = new FileReader();
-    //     reader.onloadend = () => {
-    //         listImg.push(reader.result);
-    //         this.setState({
-    //             file: listfile,
-    //             imagePreviewUrl: listImg
-    //         });
-    //     }
-    //     reader.readAsDataURL(file);
-    // }
-    // console.log(listfile);
-    
     e.preventDefault();
     for(let i = 0; i < e.target.files.length; i++){
        
         var isExist = false;
         for (let k = 0; k < this.state._upload_files.length; k++) { // Check file exist
-            if (e.target.files[i].size == this.state._upload_files[k].size &&
-                e.target.files[i].name == this.state._upload_files[k].name &&
-                e.target.files[i].lastModified == this.state._upload_files[k].lastModified) {
+            if (e.target.files[i].size === this.state._upload_files[k].size &&
+                e.target.files[i].name === this.state._upload_files[k].name &&
+                e.target.files[i].lastModified === this.state._upload_files[k].lastModified) {
                 isExist = true;
             }
         }
@@ -82,24 +64,25 @@ export default class NewProduct extends Component {
             
         }
     }
-    
 }
 handleDelteImg = (index) => () => {
     this.state._upload_files.splice(index, 1);
-    this.state.imagePreviewUrl = [];
+    const state = Object.assign({}, this.state);
+    state.imagePreviewUrl = [];
     for (let k = 0; k < this.state._upload_files.length; k++) { // Check file exist
         this.state.imagePreviewUrl.push(URL.createObjectURL(this.state._upload_files[k]));
         this.setState({
             imagePreviewUrl: this.state.imagePreviewUrl
         });
     }
-    if(this.state._upload_files.length == 0) {
+    if(this.state._upload_files.length === 0) {
         this.setState({
             imagePreviewUrl: []
         });
     }
 }
   render() {
+      console.log(this.state.items);
     const {items, imagePreviewUrl} = this.state;
     return (
         <Modal isOpen={this.props.open} onRequestClose={this.props.onCloseModal} center className="CMSModal">
@@ -141,7 +124,7 @@ handleDelteImg = (index) => () => {
                                 <label>Ảnh</label>
                                 <div className="img__infoProduct">
                                     {items.imgs.map(item=>(
-                                        <img src={item}/>
+                                        <img src={item} alt={items.name}/>
                                     ))}
                                 </div>
                                 <div className="clear"></div>
@@ -154,7 +137,7 @@ handleDelteImg = (index) => () => {
                                 <div className="imgPreview">
                                     {imagePreviewUrl && imagePreviewUrl.map((item,index)=>(
                                         <div className="imgPreview__content">
-                                            <img src={item} />
+                                            <img src={item} alt={items.name}/>
                                             <span className="delete-imagePreview" onClick={this.handleDelteImg(index)}><i class="fas fa-times"></i></span>
                                         </div>
                                     ))}
@@ -198,7 +181,7 @@ handleDelteImg = (index) => () => {
                                     onChange={this.handleChange}
                                 />
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label>Screen</label>
                                 <input
                                     required
@@ -317,7 +300,7 @@ handleDelteImg = (index) => () => {
                                     value={items.os}
                                     onChange={this.handleChange}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                         <div className="modal-footer">
                             <button type="submit" className="btn btn-primary">

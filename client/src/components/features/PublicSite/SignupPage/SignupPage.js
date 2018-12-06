@@ -112,12 +112,12 @@ class SignupPage extends Component {
       ) {
         axios
           .post("/api/user/add.php", {
-            firstname: firstName,
-            lastname: lastName,
             email: email,
             password: pass,
             gender: this.state.gender,
-            birthday: this.state.birthday
+            birthday: this.state.birthday,
+            lastname: lastName,
+            firstname: firstName
           })
           .then(res => {
             if (res.status === 200) {

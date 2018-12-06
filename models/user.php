@@ -19,41 +19,44 @@ class User{
   }
 
   function add(){
-    $query = "INSERT INTO " . $this->table_name . "
-            SET
-                firstname = :firstname,
-                lastname = :lastname,
-                email = :email,
-                gender = :gender,
-                birthday = :birthday,
-                isAdmin = :isAdmin,
-                password = :password";
-                
-    $stmt = $this->conn->prepare($query);
+    if ($this->emailExists()) return -1;
+    else {
+        $query = "INSERT INTO " . $this->table_name . "
+                SET
+                    firstname = :firstname,
+                    lastname = :lastname,
+                    email = :email,
+                    gender = :gender,
+                    birthday = :birthday,
+                    isAdmin = :isAdmin,
+                    password = :password";
+                    
+        $stmt = $this->conn->prepare($query);
 
-    $this->firstname=htmlspecialchars(strip_tags($this->firstname));
-    $this->lastname=htmlspecialchars(strip_tags($this->lastname));
-    $this->email=htmlspecialchars(strip_tags($this->email));
-    $this->password=htmlspecialchars(strip_tags($this->password));
-    $this->gender=htmlspecialchars(strip_tags($this->gender));
-    $this->birthday=htmlspecialchars(strip_tags($this->birthday));
-    $this->isAdmin=htmlspecialchars(strip_tags($this->isAdmin));
+        $this->firstname=htmlspecialchars(strip_tags($this->firstname));
+        $this->lastname=htmlspecialchars(strip_tags($this->lastname));
+        $this->email=htmlspecialchars(strip_tags($this->email));
+        $this->password=htmlspecialchars(strip_tags($this->password));
+        $this->gender=htmlspecialchars(strip_tags($this->gender));
+        $this->birthday=htmlspecialchars(strip_tags($this->birthday));
+        $this->isAdmin=htmlspecialchars(strip_tags($this->isAdmin));
 
-    $stmt->bindParam(':firstname', $this->firstname);
-    $stmt->bindParam(':lastname', $this->lastname);
-    $stmt->bindParam(':email', $this->email);
-    $stmt->bindParam(':gender', $this->gender);
-    $stmt->bindParam(':birthday', $this->birthday);
-    $stmt->bindParam(':isAdmin', $this->isAdmin);
+        $stmt->bindParam(':firstname', $this->firstname);
+        $stmt->bindParam(':lastname', $this->lastname);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':gender', $this->gender);
+        $stmt->bindParam(':birthday', $this->birthday);
+        $stmt->bindParam(':isAdmin', $this->isAdmin);
 
-    $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-    $stmt->bindParam(':password', $password_hash);
+        $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
+        $stmt->bindParam(':password', $password_hash);
 
-    if($stmt->execute()){
-        return true;
+        if ($stmt->execute()) {
+            return 1;
+        }
+    
+        return 0;
     }
-
-    return false;
   }
 
   function emailExists(){

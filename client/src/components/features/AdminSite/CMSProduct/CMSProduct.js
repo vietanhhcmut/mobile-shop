@@ -96,8 +96,9 @@ export default class CMSProduct extends Component {
           </div>
           <div className="dashboard__content-grid">
             {items}
+            <div className="clear"></div>
           </div>
-          <div className="clear"></div>
+          
           <button
             type="button"
             className="dashboard__btn"

@@ -10,12 +10,15 @@ import { withRouter } from "react-router-dom";
 
 class Header extends Component {
   state = {
-    active: this.props.location.pathname,
+    active: "",
     toggle: false,
     showMenu: false,
     categories: []
   };
   componentDidMount() {
+    this.setState({
+      active: this.props.location.pathname
+    });
     axios
       .get("/api/category/getAll.php")
       .then(res => {
@@ -26,14 +29,13 @@ class Header extends Component {
       });
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.location.pathname !== this.props.location.pathname) {
-  //     this.setState({
-  //       active: this.props.location.pathname
-  //     });
-  //   }
-  //   console.log(this.state.active);
-  // }
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        active: this.props.location.pathname
+      });
+    }
+  }
 
   handleToggle = () => {
     this.setState(prevState => {
@@ -93,7 +95,11 @@ class Header extends Component {
         </div>
         <nav>
           <div className="navbar-big">
-            <Navbar categories={this.state.categories} />
+            <Navbar
+              active={active}
+              handleActivePage={this.handleActivePage}
+              categories={this.state.categories}
+            />
           </div>
           <div className="toggle" onClick={this.handleToggle}>
             <span className="toggle__icon">

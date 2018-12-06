@@ -140,7 +140,7 @@ class LoginPage extends Component {
           </form>
           <div className="login-page__no-account">
             <Link to="/signup" className="no-account">
-              Bạn chưa có mật khẩu? Hãy tạo tài khoản mới nào!!!
+              Bạn chưa có tài khoản? Hãy tạo tài khoản mới nào!!!
             </Link>
           </div>
         </div>

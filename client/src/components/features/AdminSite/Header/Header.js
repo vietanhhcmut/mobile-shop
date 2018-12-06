@@ -2,19 +2,9 @@ import React, { Component } from "react";
 import './Header.css'
 import { Link } from "react-router-dom";
 import { logoSite } from "../../../../constants/constants";
-import { api } from '../../../../constants/constants';
 
 export default class Header extends Component {
-    state = {
-        categories: []
-    }
-    
-    componentDidMount() {
-        api.getBrands()
-          .then(categories => this.setState({ categories }));
-    }
     render() {
-        const { categories } = this.state;
         return (
             <div>
                 <header>

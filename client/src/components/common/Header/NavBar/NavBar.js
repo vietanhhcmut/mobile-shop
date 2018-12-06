@@ -1,26 +1,18 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
-import { withRouter } from "react-router-dom";
+// import { withRouter } from "react-router-dom";
 
-class NavBar extends Component {
-  state = {
-    active: this.props.location.pathname
-  };
-  handleActivePage = page => () => {
-    this.setState({
-      active: page
-    });
-  };
+export default class NavBar extends Component {
   render() {
-    const { categories } = this.props;
+    const { categories, active, handleActivePage } = this.props;
     return (
       <ul className="navbar-items">
         <Link to="/" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "/" ? "active-page" : ""}
-            onClick={this.handleActivePage("/")}
+            id={active === "/" ? "active-page" : ""}
+            onClick={() => handleActivePage("/")}
           >
             Trang chủ
           </li>
@@ -28,7 +20,7 @@ class NavBar extends Component {
 
         <li
           className="navbar-item category"
-          id={this.state.active === "danh-muc" ? "active-page" : ""}
+          id={active === "danh-muc" ? "active-page" : ""}
         >
           <span className="navbar-item__categories">
             Danh mục
@@ -42,7 +34,7 @@ class NavBar extends Component {
                   className="link"
                   key={category.id}
                 >
-                  <div onClick={this.handleActivePage("danh-muc")}>
+                  <div onClick={() => handleActivePage("danh-muc")}>
                     {category.name}
                   </div>
                 </Link>
@@ -59,8 +51,8 @@ class NavBar extends Component {
         <Link to="/about" className="navbar-item__link">
           <li
             className="navbar-item"
-            id={this.state.active === "/about" ? "active-page" : ""}
-            onClick={this.handleActivePage("/about")}
+            id={active === "/about" ? "active-page" : ""}
+            onClick={() => handleActivePage("/about")}
           >
             Giới thiệu
           </li>
@@ -68,20 +60,19 @@ class NavBar extends Component {
 
         {localStorage.getItem("userToken") ? (
           <Fragment>
-            <Link to="/signup" className="navbar-item__link">
+            <Link to="/info" className="navbar-item__link">
               <li
                 className="navbar-item"
-                id={this.state.active === "/signup" ? "active-page" : ""}
-                onClick={this.handleActivePage("/signup")}
+                id={active === "/info" ? "active-page" : ""}
+                onClick={() => handleActivePage("/info")}
               >
                 Thông tin
               </li>
             </Link>
-            <Link to="/login" className="navbar-item__link">
+            <Link to="/" className="navbar-item__link">
               <li
                 className="navbar-item"
                 onClick={e => {
-                  // this.handleActivePage("/");
                   localStorage.removeItem("userToken");
                 }}
               >
@@ -94,8 +85,8 @@ class NavBar extends Component {
             <Link to="/signup" className="navbar-item__link">
               <li
                 className="navbar-item"
-                id={this.state.active === "/signup" ? "active-page" : ""}
-                onClick={this.handleActivePage("/signup")}
+                id={active === "/signup" ? "active-page" : ""}
+                onClick={() => handleActivePage("/signup")}
               >
                 Đăng kí
               </li>
@@ -103,8 +94,8 @@ class NavBar extends Component {
             <Link to="/login" className="navbar-item__link">
               <li
                 className="navbar-item"
-                id={this.state.active === "/login" ? "active-page" : ""}
-                onClick={this.handleActivePage("/login")}
+                id={active === "/login" ? "active-page" : ""}
+                onClick={() => handleActivePage("/login")}
               >
                 Đăng nhập
               </li>
@@ -115,4 +106,3 @@ class NavBar extends Component {
     );
   }
 }
-export default withRouter(NavBar);

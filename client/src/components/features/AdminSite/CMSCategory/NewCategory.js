@@ -8,13 +8,17 @@ export default class NewProduct extends Component {
         name: '',
         img: ''
     },
-    file: '',
+    _upload_files : '',
     imagePreviewUrl: ''
   }
   componentDidMount() {
     if (this.props.itemInfo !== null) {
         this.setState({
-          items: this.props.itemInfo,
+        //   items: this.props.itemInfo,
+            items: {
+                name: this.props.itemInfo.name,
+                img: "https://demo4leotheme.com/prestashop/leo_mobile/27-large_default/printed-chiffon-dress.jpg"
+            }
         });
       }
   }
@@ -25,7 +29,7 @@ export default class NewProduct extends Component {
             name: '',
             img: ''
         },
-        file: '',
+        _upload_files: '',
         imagePreviewUrl: ''
     });
   }
@@ -38,33 +42,33 @@ export default class NewProduct extends Component {
   
   handleSubmit = e => {
     e.preventDefault();
-    this.state.items.imgs = [];
-    this.state.items.imgs.push(this.state.file.name);
-    // console.log('handle uploading-', this.state.file);
-    // console.log(this.state.items);
-  }
-  handleImageChange = e => {
-    e.preventDefault();
-
-    let reader = new FileReader();
-    let file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
+    if(this.state._upload_files !== ""){
+        this.setState({
+            items: {
+                img: this.state._upload_files.name,
+            }
+        })
     }
-    reader.readAsDataURL(file)
+  }
+
+handleImageChange = e => {
+    e.preventDefault();
+    let file = e.target.files[0];
+    this.setState({
+        _upload_files: file,
+        imagePreviewUrl: URL.createObjectURL(e.target.files[0])
+    });
+    
+}
+handleDelteImg = () => {
+    this.setState({
+        _upload_files: '',
+        imagePreviewUrl: ''
+    })
 }
   render() {
-    const {items} = this.state;
-    console.log(items);
-    let {imagePreviewUrl} = this.state;
-    let $imagePreview = null;
-    if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} />);
-    } 
+    const {items,imagePreviewUrl} = this.state;
+    console.log(this.state);
     return (
         <Modal isOpen={this.props.open} onRequestClose={this.props.onCloseModal} center className="CMSModal">
             <div className="modal-dialog">
@@ -102,11 +106,21 @@ export default class NewProduct extends Component {
                                 />
                             </div>
                             <div className="form-group">
+                                <label>Ảnh</label>
+                                <div className="img__infoProduct">
+                                    <img src={items.img} alt={items.name}/>
+                                </div>
+                                <div className="clear"></div>
+                            </div>
+                            <div className="form-group">
                                 <input className="fileInput form-control" 
                                     type="file" 
                                     onChange={(e)=>this.handleImageChange(e)} />
                                 <div className="imgPreview">
-                                    {$imagePreview}
+                                    {imagePreviewUrl && <div className="imgPreview__content">
+                                        <img src={imagePreviewUrl} alt={items.name}/>
+                                        <span className="delete-imagePreview" onClick={this.handleDelteImg}><i class="fas fa-times"></i></span>
+                                    </div>}
                                 </div>
                             </div>
                             
