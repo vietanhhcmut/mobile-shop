@@ -25,6 +25,8 @@
 
     public $cart;
     public $currentPage;
+    public $prodFilter;
+    public $prodArrange;
     private $limit = 8;
 
     public function __construct($db) {
@@ -242,11 +244,30 @@
 
     public function getCategoryProds() {
       $start = $this->currentPage * $this->limit;
+      $arrange = 'ORDER BY createdAt DESC';
+      switch ($this->prodArrange) {
+        case 1: $arrange = 'ORDER BY createdAt DESC'; break;
+        case 2: $arrange = 'ORDER BY createdAt'; break;
+        case 3: $arrange = 'ORDER BY price*(100-saleoff) DESC'; break;
+        case 4: $arrange = 'ORDER BY price*(100-saleoff)'; break;
+        case 5: $arrange = 'ORDER BY name'; break;
+        case 6: $arrange = 'ORDER BY name DESC'; break;
+        default: break;
+      }
+      $filter = '';
+      switch ($this->prodFilter) {
+        case 1: $filter = 'AND price*(100 - saleoff)/100 < 3000000'; break;
+        case 2: $filter = 'AND price*(100 - saleoff)/100 >= 3000000 AND price*(100 - saleoff)/100 < 6000000'; break;
+        case 3: $filter = 'AND price*(100 - saleoff)/100 >= 6000000 AND price*(100 - saleoff)/100 < 10000000'; break;
+        case 4: $filter = 'AND price*(100 - saleoff)/100 >= 10000000 AND price*(100 - saleoff)/100 < 15000000'; break;
+        case 5: $filter = 'AND price*(100 - saleoff)/100 >= 15000000'; break;
+        default: break;
+      }
       // Create query
       $query = 'SELECT * FROM ' . $this->table . ' 
-        WHERE categoryId=? 
-        ORDER BY createdAt 
-        LIMIT ' .  $start . ',' . $this->limit;
+        WHERE categoryId=? '. $filter. ' '.
+        $arrange.
+        ' LIMIT ' .  $start . ',' . $this->limit;
 
       $stmt = $this->conn->prepare($query);
 
@@ -398,7 +419,18 @@
     }
 
     public function getTotalPage() {
-      $query = 'SELECT * FROM ' . $this->table . ' WHERE categoryId= ?';
+      $filter = '';
+      switch ($this->prodFilter) {
+        case 1: $filter = 'AND price*(100 - saleoff)/100 < 3000000'; break;
+        case 2: $filter = 'AND price*(100 - saleoff)/100 >= 3000000 AND price*(100 - saleoff)/100 < 6000000'; break;
+        case 3: $filter = 'AND price*(100 - saleoff)/100 >= 6000000 AND price*(100 - saleoff)/100 < 10000000'; break;
+        case 4: $filter = 'AND price*(100 - saleoff)/100 >= 10000000 AND price*(100 - saleoff)/100 < 15000000'; break;
+        case 5: $filter = 'AND price*(100 - saleoff)/100 >= 15000000'; break;
+        default: break;
+      }
+      // Create query
+      $query = 'SELECT * FROM ' . $this->table . ' 
+        WHERE categoryId=? '. $filter;
 
       $stmt = $this->conn->prepare($query);
       $stmt->bindParam(1, $this->categoryId);

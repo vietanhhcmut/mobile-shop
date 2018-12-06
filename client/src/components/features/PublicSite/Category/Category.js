@@ -15,12 +15,13 @@ class Category extends Component {
         items: [],
         previewingItem: null,
         currentPage: 0,
-        totalPage: 0
+        totalPage: 0,
+        prodArrange: 1,
+        prodFilter: 0
     }
     componentDidMount() {
         const id = this.props.match.params.id;
         this.handleInit(id);
-
     }
     componentDidUpdate(prevProps) {
         if (prevProps.match.params.id !== this.props.match.params.id) {
@@ -35,21 +36,21 @@ class Category extends Component {
             .catch(err => {
                 console.log(err);
             });
-        this.handleGetCategoryProds(this.state.currentPage);
-        axios.get('/api/product/getTotalPage.php?categoryId=' + id)
-            .then(res => {
-                this.setState({ totalPage: res.data });
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        const { currentPage, prodArrange, prodFilter } = this.state;
+        this.handleGetCategoryProds(currentPage, prodArrange, prodFilter);
+        this.handleGetTotalPage(prodFilter);
     }
     handlePreviewItem = (previewingItem) => e => {
         this.setState({ previewingItem });
     }
-    handleGetCategoryProds = (currentPage) => {
+    handleGetCategoryProds = (currentPage, prodArrange, prodFilter) => {
         const id = this.props.match.params.id;
-        axios.get(`/api/product/getCategoryProds.php?categoryId=${id}&page=${currentPage}`)
+        axios.post('/api/product/getCategoryProds.php', {
+            categoryId: id,
+            currentPage,
+            prodArrange,
+            prodFilter
+        })
             .then(res => {
                 this.setState({ items: res.data });
             })
@@ -57,12 +58,35 @@ class Category extends Component {
                 console.log(err);
             });
     }
+    handleGetTotalPage = (prodFilter) => {
+        const id = this.props.match.params.id;
+        axios.post('/api/product/getTotalPage.php', {
+            categoryId: id,
+            prodFilter
+        })
+            .then(res => {
+                this.setState({ totalPage: res.data });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
     handleSelectPage = (index) => () => {
         this.setState({ currentPage: index });
-        this.handleGetCategoryProds(index);
+        this.handleGetCategoryProds(index, this.state.prodArrange, this.state.prodFilter);
+    }
+    handleArrangeProducts = (e) => {
+        this.setState({ prodArrange: e.target.value, currentPage: 0 });
+        this.handleGetCategoryProds(0, e.target.value, this.state.prodFilter);
+    }
+    handleFilterPrice = (prodFilter) => () => {
+        if (this.state.prodFilter === prodFilter) return;
+        this.setState({ prodFilter, currentPage: 0 });
+        this.handleGetCategoryProds(0, this.state.prodArrange, prodFilter);
+        this.handleGetTotalPage(prodFilter);
     }
     render() {
-        const { currentPage, totalPage } = this.state;
+        const { currentPage, totalPage, prodArrange, prodFilter } = this.state;
         const items = this.state.items.map(item => (
             <div className="category-product" key={item.id} >
                 <ProductItem
@@ -78,14 +102,31 @@ class Category extends Component {
                     <img src={this.state.category.image} alt="background" />
                 </div>
                 <div className="category__products">
-                    <div className="category-products-filter">
-                        <select name="" id="">
-                            <option value="name">Tên A - Z</option>
-                            <option value="name">Tên Z - A</option>
-                            <option value="name">Giá từ cao đến thấp</option>
-                            <option value="name">Giá từ thấp đến cao</option>
+                    <div className="category-products-arrange">
+                        <select value={prodArrange} onChange={this.handleArrangeProducts}>
+                            <option value={1}>Mới nhất</option>
+                            <option value={2}>Cũ nhất</option>
+                            <option value={3}>Giá cao đến thấp</option>
+                            <option value={4}>Giá thấp đến cao</option>
+                            <option value={5}>Tên A - Z</option>
+                            <option value={6}>Tên Z - A</option>
                         </select>
-                        <Button variant="contained">Lọc</Button>
+                        <Button variant="contained">Sắp xếp</Button>
+                    </div>
+                    <div className="category-products-filter">
+                        <b>Chọn mức giá:</b> 
+                        <span className={'filter-price ' + (prodFilter === 0 ? 'filter--active' : '')} 
+                            onClick={this.handleFilterPrice(0)}>Tất cả</span>
+                        <span className={'filter-price ' + (prodFilter === 1 ? 'filter--active' : '')} 
+                            onClick={this.handleFilterPrice(1)}>Dưới 3 triệu</span>
+                        <span className={'filter-price ' + (prodFilter === 2 ? 'filter--active' : '')} 
+                            onClick={this.handleFilterPrice(2)}>Từ 3 - 6 triệu</span>
+                        <span className={'filter-price ' + (prodFilter === 3 ? 'filter--active' : '')} 
+                            onClick={this.handleFilterPrice(3)}>Từ 6 - 10 triệu</span>
+                        <span className={'filter-price ' + (prodFilter === 4 ? 'filter--active' : '')}  
+                            onClick={this.handleFilterPrice(4)}>Từ 10 - 15 triệu</span>
+                        <span className={'filter-price ' + (prodFilter === 5 ? 'filter--active' : '')}  
+                            onClick={this.handleFilterPrice(5)}>Trên 15 triệu</span>
                     </div>
                     <div className="category-products-grid">
                         {items}
