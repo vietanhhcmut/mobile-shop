@@ -14,10 +14,9 @@
   $user = new User($db);
 
   $data = json_decode(file_get_contents("php://input"));
-
   $user->email = $data->email;
   $email_exists = $user->emailExists();
-  // var_dump($user);
+  var_dump($data);
   // var_dump($email_exists);
   // var_dump(password_verify($data->password, $user->password));
  
@@ -55,4 +54,5 @@
     http_response_code(403);
     echo json_encode(array("message" => "Login failed."));
   }
+      
 ?>

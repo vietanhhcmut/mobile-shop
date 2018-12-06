@@ -98,7 +98,7 @@ class SignupPage extends Component {
       });
   };
 
-  handleCreateSuccess = (firstName, lastName, email, pass) => () => {
+  handleCreateSuccess = (firstName, lastName, email, pass) => {
     this.handleValidateForm(firstName, lastName, email, pass);
     if (firstName !== "" && lastName !== "" && email !== "" && pass !== "") {
       let lastAtPos = email.lastIndexOf("@");
@@ -328,12 +328,9 @@ class SignupPage extends Component {
               </section>
               <footer className="page-content__footer">
                 <button
-                  onClick={this.handleCreateSuccess(
-                    firstName,
-                    lastName,
-                    email,
-                    pass
-                  )}
+                  onClick={() =>
+                    this.handleCreateSuccess(firstName, lastName, email, pass)
+                  }
                   className="button-save"
                   data-link-action="save-customer"
                   type="submit"
