@@ -23,19 +23,19 @@
   $user->birthday = $data->birthday;
   $user->isAdmin = 0;
 
-  if (!($user->emailExists())){
-    if($user->add()){
-      http_response_code(200);
-      echo json_encode(array("message" => "User was added."));
-    }
-    else{
-      http_response_code(403);
-      echo json_encode(array("message" => "Unable to add user."));
-    }
-  }
-  else if ($user->emailExists()) {
+  $result = $user->add();
+  if ($result == -1) {
     http_response_code(409); //Conflict
     echo json_encode(array("message" => "This email already registered"));
   }
+  else if ($result == 1) {
+    http_response_code(200);
+    echo json_encode(array("message" => "User was added."));
+  }
+  else {
+    http_response_code(403);
+      echo json_encode(array("message" => "Unable to add user."));
+  }
+  
   
 ?>

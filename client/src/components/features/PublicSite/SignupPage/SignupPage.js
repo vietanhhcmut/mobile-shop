@@ -115,7 +115,7 @@ class SignupPage extends Component {
             firstname: firstName,
             lastname: lastName,
             email: email,
-            pass: pass,
+            password: pass,
             gender: this.state.gender,
             birthday: this.state.birthday
           })
