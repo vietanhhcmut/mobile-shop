@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 import { withRouter } from "react-router-dom";
@@ -65,24 +65,52 @@ class NavBar extends Component {
             Giới thiệu
           </li>
         </Link>
-        <Link to="/signup" className="navbar-item__link">
-          <li
-            className="navbar-item"
-            id={this.state.active === "/signup" ? "active-page" : ""}
-            onClick={this.handleActivePage("/signup")}
-          >
-            Đăng kí
-          </li>
-        </Link>
-        <Link to="/login" className="navbar-item__link">
-          <li
-            className="navbar-item"
-            id={this.state.active === "/login" ? "active-page" : ""}
-            onClick={this.handleActivePage("/login")}
-          >
-            Đăng nhập
-          </li>
-        </Link>
+
+        {localStorage.getItem("userToken") ? (
+          <Fragment>
+            <Link to="/signup" className="navbar-item__link">
+              <li
+                className="navbar-item"
+                id={this.state.active === "/signup" ? "active-page" : ""}
+                onClick={this.handleActivePage("/signup")}
+              >
+                Thông tin
+              </li>
+            </Link>
+            <Link to="/login" className="navbar-item__link">
+              <li
+                className="navbar-item"
+                onClick={e => {
+                  // this.handleActivePage("/");
+                  localStorage.removeItem("userToken");
+                }}
+              >
+                Đăng xuất
+              </li>
+            </Link>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Link to="/signup" className="navbar-item__link">
+              <li
+                className="navbar-item"
+                id={this.state.active === "/signup" ? "active-page" : ""}
+                onClick={this.handleActivePage("/signup")}
+              >
+                Đăng kí
+              </li>
+            </Link>
+            <Link to="/login" className="navbar-item__link">
+              <li
+                className="navbar-item"
+                id={this.state.active === "/login" ? "active-page" : ""}
+                onClick={this.handleActivePage("/login")}
+              >
+                Đăng nhập
+              </li>
+            </Link>
+          </Fragment>
+        )}
       </ul>
     );
   }

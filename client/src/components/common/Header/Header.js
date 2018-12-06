@@ -25,6 +25,16 @@ class Header extends Component {
         console.log(err);
       });
   }
+
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.location.pathname !== this.props.location.pathname) {
+  //     this.setState({
+  //       active: this.props.location.pathname
+  //     });
+  //   }
+  //   console.log(this.state.active);
+  // }
+
   handleToggle = () => {
     this.setState(prevState => {
       return {

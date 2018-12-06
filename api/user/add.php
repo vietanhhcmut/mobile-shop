@@ -14,7 +14,7 @@
 
   $user = new User($db);
   $data = json_decode(file_get_contents("php://input"));
-  
+        
   $user->firstname = $data->firstname;
   $user->lastname = $data->lastname;
   $user->email = $data->email;
@@ -23,7 +23,13 @@
   $user->birthday = $data->birthday;
   $user->isAdmin = 0;
 
-  if (!($user->emailExists())){
+  // var_dump($user->emailExists());
+
+  if ($user->emailExists()){
+    http_response_code(409); //Conflict
+    echo json_encode(array("message" => "This email already registered"));
+  }
+  else {
     if($user->add()){
       http_response_code(200);
       echo json_encode(array("message" => "User was added."));
@@ -32,10 +38,7 @@
       http_response_code(403);
       echo json_encode(array("message" => "Unable to add user."));
     }
-  }
-  else if ($user->emailExists()) {
-    http_response_code(409); //Conflict
-    echo json_encode(array("message" => "This email already registered"));
+   
   }
   
 ?>

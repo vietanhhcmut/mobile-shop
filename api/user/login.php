@@ -17,6 +17,9 @@
 
   $user->email = $data->email;
   $email_exists = $user->emailExists();
+  // var_dump($user);
+  // var_dump($email_exists);
+  // var_dump(password_verify($data->password, $user->password));
  
   include_once '../../config/core.php';
   include_once '../../libs/php-jwt-master/src/BeforeValidException.php';

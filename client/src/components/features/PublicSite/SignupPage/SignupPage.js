@@ -115,7 +115,7 @@ class SignupPage extends Component {
             firstname: firstName,
             lastname: lastName,
             email: email,
-            pass: pass,
+            password: pass,
             gender: this.state.gender,
             birthday: this.state.birthday
           })
@@ -125,6 +125,7 @@ class SignupPage extends Component {
             }
           })
           .catch(err => {
+            console.log(err);
             this.setState({
               showModal: "show-modal"
             });

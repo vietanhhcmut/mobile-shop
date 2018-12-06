@@ -56,10 +56,7 @@ class User{
     return false;
   }
 
-  // check if given email exist in the database
   function emailExists(){
-  
-    // query to check if email exists
     $query = "SELECT *
             FROM " . $this->table_name . "
             WHERE email = ?

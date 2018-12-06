@@ -41,14 +41,12 @@ class LoginPage extends Component {
       .then(res => {
         if (res.status === 200) {
           localStorage.setItem("userToken", res.data.token);
+          // console.log("localStorage.getItem('userToken')", res.data.token);
           this.props.history.push("/");
         }
       })
       .catch(err => {
         console.log("err", err);
-        // this.setState({
-        //   loginError: true
-        // });
       });
   };
 

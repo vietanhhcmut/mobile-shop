@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import "./Menu.css";
 
@@ -70,30 +70,60 @@ const Menu = ({
         Giới thiệu
       </li>
     </Link>
-    <Link to="/login" className="link">
-      <li
-        id={active === "/login" ? "menu-items__active" : ""}
-        className="menu-items4"
-        onClick={e => {
-          handleToggle();
-          handleActivePage("/login");
-        }}
-      >
-        Đăng nhập
-      </li>
-    </Link>
-    <Link to="/signup" className="link">
-      <li
-        id={active === "/signup" ? "menu-items__active" : ""}
-        className="menu-items5"
-        onClick={e => {
-          handleToggle();
-          handleActivePage("/signup");
-        }}
-      >
-        Đăng kí
-      </li>
-    </Link>
+    {localStorage.getItem("userToken") ? (
+      <Fragment>
+        <Link to="/info" className="link">
+          <li
+            id={active === "/logout" ? "menu-items__active" : ""}
+            className="menu-items4"
+            onClick={e => {
+              handleToggle();
+              handleActivePage("/logout");
+            }}
+          >
+            Thông tin
+          </li>
+        </Link>
+        <Link to="/login" className="link">
+          <li
+            className="menu-items5"
+            onClick={e => {
+              localStorage.removeItem("userToken");
+              // handleActivePage("/");
+            }}
+          >
+            Đăng xuất
+          </li>
+        </Link>
+      </Fragment>
+    ) : (
+      <Fragment>
+        <Link to="/login" className="link">
+          <li
+            id={active === "/login" ? "menu-items__active" : ""}
+            className="menu-items4"
+            onClick={e => {
+              handleToggle();
+              handleActivePage("/login");
+            }}
+          >
+            Đăng nhập
+          </li>
+        </Link>
+        <Link to="/signup" className="link">
+          <li
+            id={active === "/signup" ? "menu-items__active" : ""}
+            className="menu-items5"
+            onClick={e => {
+              handleToggle();
+              handleActivePage("/signup");
+            }}
+          >
+            Đăng kí
+          </li>
+        </Link>
+      </Fragment>
+    )}
   </ul>
 );
 export default Menu;
