@@ -10,7 +10,7 @@ class LoginPage extends Component {
     password: "",
     submitted: false,
     loginError: false
-  };
+  }
   handleValidateForm = () => {
     return this.state.password.length > 0;
   };
