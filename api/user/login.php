@@ -50,8 +50,8 @@
             )
             );
   }
-  else{
-    http_response_code(403);
+  else {
+    http_response_code(401);
     echo json_encode(array("message" => "Login failed."));
   }
       
