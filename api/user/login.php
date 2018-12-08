@@ -22,10 +22,10 @@
 
   if($email_exists && password_verify($data->password, $user->password)) {
     $token = array(
-      "iss" => $iss,
-      "aud" => $aud,
-      "iat" => $iat,
-      "nbf" => $nbf,
+      // "iss" => $iss,
+      // "aud" => $aud,
+      // "iat" => $iat,
+      // "nbf" => $nbf,
       "data" => array(
           "id" => $user->id,
           "isAdmin" => $user->isAdmin
@@ -37,7 +37,7 @@
             array(
                 "token" => $jwt
             )
-            );
+          );
   }
   else {
     http_response_code(401);
