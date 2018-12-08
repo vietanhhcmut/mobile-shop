@@ -7,9 +7,6 @@
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
   include_once '../../config/core.php';
-  include_once '../../libs/php-jwt-master/src/BeforeValidException.php';
-  include_once '../../libs/php-jwt-master/src/ExpiredException.php';
-  include_once '../../libs/php-jwt-master/src/SignatureInvalidException.php';
   include_once '../../libs/php-jwt-master/src/JWT.php';
   use \Firebase\JWT\JWT;
 
@@ -24,7 +21,7 @@
   $headers = apache_request_headers();
   $jwt = $headers['Authorization'];
 
-  if($jwt){  
+  if($jwt) {  
     try {
       $decoded = JWT::decode($jwt, $key, array('HS256'));  
       if ($decoded->data->isAdmin) {
@@ -37,7 +34,7 @@
         $user->isAdmin = $data->isAdmin;
         $user->id = $decoded->data->id;
 
-        if($user->update()){
+        if($user->update()) {
           $token = array(
             "iss" => $iss,
             "aud" => $aud,
@@ -45,9 +42,6 @@
             "nbf" => $nbf,
             "data" => array(
                 "id" => $user->id,
-                "firstname" => $user->firstname,
-                "lastname" => $user->lastname,
-                "email" => $user->email,
                 "isAdmin" => $user->isAdmin
             )
           );
@@ -55,32 +49,31 @@
           http_response_code(200);
           echo json_encode(
                 array(
-                    "message" => "User was updated.",
                     "jwt" => $jwt
                 )
             );
           }
-        else{
-          http_response_code(403);
+        else {
+          http_response_code(401);
           echo json_encode(array("message" => "Unable to update user."));
         }
       }  
-      else{
+      else {
         http_response_code(403);
         echo json_encode(array("message" => "Access denied"));
       }     
     }
-    catch (Exception $e){    
-      http_response_code(403);
+    catch (Exception $e) {    
+      http_response_code(401);
       echo json_encode(array(
-          "message" => "Access denied.",
+          "message" => "Unable to update user.",
           "error" => $e->getMessage()
       ));
     }
   }
 
-  else{
-    http_response_code(401);
+  else {
+    http_response_code(403);
     echo json_encode(array("message" => "Access denied."));
   }
 ?>

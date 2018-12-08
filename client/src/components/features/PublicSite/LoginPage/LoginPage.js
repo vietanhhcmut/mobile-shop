@@ -10,7 +10,7 @@ class LoginPage extends Component {
     password: "",
     submitted: false,
     loginError: false
-  }
+  };
   handleValidateForm = () => {
     return this.state.password.length > 0;
   };
@@ -39,10 +39,8 @@ class LoginPage extends Component {
         password
       })
       .then(res => {
-        if (res.status === 200) {
-          localStorage.setItem("userToken", res.data.token);
-          this.props.history.push("/");
-        }
+        localStorage.setItem("userToken", res.data.token);
+        this.props.history.push("/");
       })
       .catch(err => {
         console.log("err", err);

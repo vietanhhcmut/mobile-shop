@@ -120,12 +120,9 @@ class SignupPage extends Component {
             firstname: firstName
           })
           .then(res => {
-            if (res.status === 200) {
-              this.props.history.push("/login");
-            }
+            this.props.history.push("/login");
           })
           .catch(err => {
-            console.log(err);
             this.setState({
               showModal: "show-modal"
             });
