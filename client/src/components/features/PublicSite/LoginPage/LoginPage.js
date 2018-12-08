@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import "./LoginPage.css";
 import { Link } from "react-router-dom";
 import axios from "../../../../constants/axiosInstance";
+import Context from "../../../../Context";
 
 class LoginPage extends Component {
+  static contextType = Context;
   state = {
     showPassword: false,
     email: "",
@@ -41,9 +43,9 @@ class LoginPage extends Component {
       .then(res => {
         console.log(res.data);
         if (res.status === 200) {
-          // console.log(res.data.token);
           localStorage.setItem("userToken", res.data.token);
           this.props.history.push("/");
+          this.context.handleGetCart();
         }
       })
       .catch(err => {
