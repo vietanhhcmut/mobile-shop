@@ -3,7 +3,6 @@
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
   header('Access-Control-Allow-Methods: POST');
-  header("Access-Control-Max-Age: 3600");
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
   include_once '../../config/database.php';
@@ -16,7 +15,7 @@
   $data = json_decode(file_get_contents("php://input"));
   $user->email = $data->email;
   $email_exists = $user->emailExists();
-  var_dump($data);
+
   // var_dump($email_exists);
   // var_dump(password_verify($data->password, $user->password));
  

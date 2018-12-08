@@ -10,34 +10,32 @@
 
   $database = new Database();
   $db = $database->getConnection();
-  // echo $data;
 
   $user = new User($db);
   $data = json_decode(file_get_contents("php://input"));
 
-  // if($data != NULL){
-    $user->email = $data->email;   
-    $user->firstname = $data->firstname;
-    $user->lastname = $data->lastname;
-    $user->password = $data->password;
-    $user->gender = $data->gender;
-    $user->birthday = $data->birthday;
-    $user->isAdmin = 0;
+  if($data != NULL){
+    $user->id = $data->id; 
+    $result = $user->findUser();
 
-    $result = $user->add();
-    if ($result == -1) {
-      http_response_code(409); //Conflict
-      echo json_encode(array("message" => "This email already registered"));
-    }
-    else if ($result == 1) {
+    if ($result == 1) {
       http_response_code(200);
-      echo json_encode(array("message" => "User was added."));
+      echo json_encode(array(
+        "id" => $user->id,
+        "firstname" => $user->firstname,
+        "lastname" => $user->lastname,
+        "email" => $user->email,
+        "isAdmin" => $user->isAdmin,
+        "gender" => $user->gender,
+        "birthday"=>$user->birthday,
+        "password"=>$user->password
+    ));
     }
     else {
       http_response_code(403);
-        echo json_encode(array("message" => "Unable to add user."));
+        echo json_encode(array("message" => "No user"));
     }
-  // }
+  }
   
   
 ?>
