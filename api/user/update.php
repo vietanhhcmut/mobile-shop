@@ -20,48 +20,42 @@
   $data = json_decode(file_get_contents("php://input"));
   $headers = apache_request_headers();
   $jwt = $headers['Authorization'];
-
+  var_dump($headers);
   if($jwt) {  
     try {
       $decoded = JWT::decode($jwt, $key, array('HS256'));  
-      if ($decoded->data->isAdmin) {
-        $user->firstname = $data->firstname;
-        $user->lastname = $data->lastname;
-        $user->email = $data->email;
-        $user->password = $data->password;
-        $user->gender = $data->gender;
-        $user->birthday = $data->birthday;
-        $user->isAdmin = $data->isAdmin;
-        $user->id = $decoded->data->id;
+      $user->firstname = $data->firstname;
+      $user->lastname = $data->lastname;
+      $user->email = $data->email;
+      $user->password = $data->password;
+      $user->gender = $data->gender;
+      $user->birthday = $data->birthday;
+      $user->isAdmin = $data->isAdmin;
+      $user->id = $decoded->data->id;
 
-        if($user->update()) {
-          $token = array(
-            "iss" => $iss,
-            "aud" => $aud,
-            "iat" => $iat,
-            "nbf" => $nbf,
-            "data" => array(
-                "id" => $user->id,
-                "isAdmin" => $user->isAdmin
-            )
+      if($user->update()) {
+        $token = array(
+          "iss" => $iss,
+          "aud" => $aud,
+          "iat" => $iat,
+          "nbf" => $nbf,
+          "data" => array(
+              "id" => $user->id,
+              "isAdmin" => $user->isAdmin
+          )
+        );
+        $jwt = JWT::encode($token, $key);
+        http_response_code(200);
+        echo json_encode(
+              array(
+                  "jwt" => $jwt
+              )
           );
-          $jwt = JWT::encode($token, $key);
-          http_response_code(200);
-          echo json_encode(
-                array(
-                    "jwt" => $jwt
-                )
-            );
-          }
-        else {
-          http_response_code(401);
-          echo json_encode(array("message" => "Unable to update user."));
         }
-      }  
       else {
-        http_response_code(403);
-        echo json_encode(array("message" => "Access denied"));
-      }     
+        http_response_code(401);
+        echo json_encode(array("message" => "Unable to update user."));
+      }
     }
     catch (Exception $e) {    
       http_response_code(401);

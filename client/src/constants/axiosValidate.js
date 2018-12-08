@@ -1,8 +1,11 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://localhost",
+  baseURL: "http://localhost/BTL_Web/mobile-shop",
   headers: {
-    "Authorization": localStorage.getItem("userToken")  
+    "Content-Type": " application/x-www-form-urlencoded",
+    Authorization: localStorage.getItem("userToken")
+      ? localStorage.getItem("userToken")
+      : ""
   }
 });

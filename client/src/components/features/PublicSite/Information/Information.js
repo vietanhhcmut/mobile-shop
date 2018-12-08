@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import axios from "../../../../constants/axiosInstance";
+import axiosUpdate from "../../../../constants/axiosValidate";
 
 class InfoPage extends Component {
   state = {
+    id: "",
     firstName: "",
     lastName: "",
     email: "",
     pass: "",
-    passOld: "",
+    // passOld: "",
     gender: "nam",
     birthday: "",
 
@@ -17,7 +19,7 @@ class InfoPage extends Component {
     idLastName: "",
     idEmail: "",
     idPass: "",
-    idPassOld: "",
+    // idPassOld: "",
     validateEmail: ""
   };
 
@@ -26,11 +28,12 @@ class InfoPage extends Component {
       .post("/api/user/validate_token.php", {
         jwt: localStorage.getItem("userToken")
       })
-      .then(res => {
+      .then(respond => {
         axios
-          .post("/api/user/infor.php", { id: res.data.data.id })
+          .post("/api/user/infor.php", { id: respond.data.data.id })
           .then(res => {
             this.setState({
+              id: respond.data.data.id,
               firstName: res.data.firstname,
               lastName: res.data.lastname,
               email: res.data.email,
@@ -120,13 +123,13 @@ class InfoPage extends Component {
         idPass: "field-required"
       });
 
-    passOld === "" &&
-      this.setState({
-        idPassOld: "field-required"
-      });
+    // passOld === "" &&
+    //   this.setState({
+    //     idPassOld: "field-required"
+    //   });
   };
 
-  handleCreateSuccess = (firstName, lastName, email, pass) => {
+  handleUpdateUser = (firstName, lastName, email, pass) => {
     this.handleValidateForm(firstName, lastName, email, pass);
     if (firstName !== "" && lastName !== "" && email !== "" && pass !== "") {
       let lastAtPos = email.lastIndexOf("@");
@@ -138,8 +141,18 @@ class InfoPage extends Component {
         lastDotPos > 2 &&
         email.length - lastDotPos > 2
       ) {
-        axios
-          .post("/api/user/update.php", {
+        // console.log({
+        //   id: this.state.id,
+        //   email: email,
+        //   password: pass,
+        //   gender: this.state.gender,
+        //   birthday: this.state.birthday,
+        //   lastname: lastName,
+        //   firstname: firstName
+        // });
+        axiosUpdate
+          .put("/api/user/update.php", {
+            id: this.state.id,
             email: email,
             password: pass,
             gender: this.state.gender,
@@ -148,6 +161,7 @@ class InfoPage extends Component {
             firstname: firstName
           })
           .then(res => {
+            console.log(res);
             this.props.history.push("/info");
           })
           .catch(err => {
@@ -179,8 +193,9 @@ class InfoPage extends Component {
       idPass,
       validateEmail,
       gender,
-      birthday,
-      passOld
+      birthday
+      // passOld,
+      // idPassOld
     } = this.state;
     return (
       <div>
@@ -291,7 +306,7 @@ class InfoPage extends Component {
                   <div className="col-md-3 form-control-comment" />
                 </div>
 
-                <div className="form-group row ">
+                {/* <div className="form-group row ">
                   <label className="col-md-3 form-control-label required">
                     Mật khẩu cũ
                   </label>
@@ -299,7 +314,7 @@ class InfoPage extends Component {
                     <div className="input-group js-parent-focus">
                       <input
                         name="pass"
-                        className={"form-control " + idPass}
+                        className={"form-control " + idPassOld}
                         value={passOld}
                         onChange={this.handleUserInput("idPassOld")}
                         type={showPassword ? "text" : "password"}
@@ -314,13 +329,13 @@ class InfoPage extends Component {
                         </button>
                       </span>
                     </div>
-                    <div className={"field-hide" + idPass}>
+                    <div className={"field-hide" + idPassOld}>
                       Hãy nhập "Mật khẩu cũ" của bạn
                     </div>
                   </div>
 
                   <div className="col-md-3 form-control-comment" />
-                </div>
+                </div> */}
 
                 <div className="form-group row ">
                   <label className="col-md-3 form-control-label required">
@@ -372,7 +387,7 @@ class InfoPage extends Component {
               <footer className="page-content__footer">
                 <button
                   onClick={() =>
-                    this.handleCreateSuccess(firstName, lastName, email, pass)
+                    this.handleUpdateUser(firstName, lastName, email, pass)
                   }
                   className="button-save"
                   data-link-action="save-customer"
