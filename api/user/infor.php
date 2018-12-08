@@ -28,12 +28,11 @@
         "isAdmin" => $user->isAdmin,
         "gender" => $user->gender,
         "birthday"=>$user->birthday,
-        "password"=>$user->password
     ));
     }
     else {
       http_response_code(403);
-        echo json_encode(array("message" => "No user"));
+      echo json_encode(array("message" => "No user was found"));
     }
   }
   

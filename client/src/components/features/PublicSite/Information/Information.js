@@ -7,6 +7,7 @@ class InfoPage extends Component {
     lastName: "",
     email: "",
     pass: "",
+    passOld: "",
     gender: "nam",
     birthday: "",
 
@@ -16,6 +17,7 @@ class InfoPage extends Component {
     idLastName: "",
     idEmail: "",
     idPass: "",
+    idPassOld: "",
     validateEmail: ""
   };
 
@@ -25,7 +27,18 @@ class InfoPage extends Component {
         jwt: localStorage.getItem("userToken")
       })
       .then(res => {
-        console.log(localStorage.getItem("userToken"));
+        axios
+          .post("/api/user/infor.php", { id: res.data.data.id })
+          .then(res => {
+            this.setState({
+              firstName: res.data.firstname,
+              lastName: res.data.lastname,
+              email: res.data.email,
+              gender: res.data.gender,
+              birthday: res.data.birthday
+            });
+          })
+          .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
   }
@@ -67,7 +80,7 @@ class InfoPage extends Component {
     });
   };
 
-  handleValidateForm = (firstName, lastName, email, pass) => {
+  handleValidateForm = (firstName, lastName, email, pass, passOld) => {
     firstName === "" &&
       this.setState({
         idFirstName: "field-required"
@@ -106,6 +119,11 @@ class InfoPage extends Component {
       this.setState({
         idPass: "field-required"
       });
+
+    passOld === "" &&
+      this.setState({
+        idPassOld: "field-required"
+      });
   };
 
   handleCreateSuccess = (firstName, lastName, email, pass) => {
@@ -121,7 +139,7 @@ class InfoPage extends Component {
         email.length - lastDotPos > 2
       ) {
         axios
-          .post("/api/user/add.php", {
+          .post("/api/user/update.php", {
             email: email,
             password: pass,
             gender: this.state.gender,
@@ -130,12 +148,9 @@ class InfoPage extends Component {
             firstname: firstName
           })
           .then(res => {
-            if (res.status === 200) {
-              this.props.history.push("/login");
-            }
+            this.props.history.push("/info");
           })
           .catch(err => {
-            console.log(err);
             this.setState({
               showModal: "show-modal"
             });
@@ -164,7 +179,8 @@ class InfoPage extends Component {
       idPass,
       validateEmail,
       gender,
-      birthday
+      birthday,
+      passOld
     } = this.state;
     return (
       <div>
@@ -277,7 +293,38 @@ class InfoPage extends Component {
 
                 <div className="form-group row ">
                   <label className="col-md-3 form-control-label required">
-                    Mật khẩu
+                    Mật khẩu cũ
+                  </label>
+                  <div className="col-md-6">
+                    <div className="input-group js-parent-focus">
+                      <input
+                        name="pass"
+                        className={"form-control " + idPass}
+                        value={passOld}
+                        onChange={this.handleUserInput("idPassOld")}
+                        type={showPassword ? "text" : "password"}
+                      />
+                      <span className="input-group-btn">
+                        <button
+                          onClick={this.handleShowPassword}
+                          type="button"
+                          className="input-group-btn show"
+                        >
+                          {showPassword ? "Ẩn" : "Hiện"}
+                        </button>
+                      </span>
+                    </div>
+                    <div className={"field-hide" + idPass}>
+                      Hãy nhập "Mật khẩu cũ" của bạn
+                    </div>
+                  </div>
+
+                  <div className="col-md-3 form-control-comment" />
+                </div>
+
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label required">
+                    Mật khẩu mới
                   </label>
                   <div className="col-md-6">
                     <div className="input-group js-parent-focus">
@@ -299,7 +346,7 @@ class InfoPage extends Component {
                       </span>
                     </div>
                     <div className={"field-hide" + idPass}>
-                      Hãy nhập "Mật khẩu" của bạn
+                      Hãy nhập "Mật khẩu mới" của bạn
                     </div>
                   </div>
 
