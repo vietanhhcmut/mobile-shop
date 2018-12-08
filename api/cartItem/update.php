@@ -2,8 +2,7 @@
   // Headers
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
-  header('Access-Control-Allow-Methods: GET');
-  // header('Access-Control-Allow-Credentials: true');
+  header('Access-Control-Allow-Methods: POST');
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
   include_once '../../config/core.php';
@@ -28,15 +27,19 @@
     $cartItem = new CartItem($db);
     
     $decoded = JWT::decode($token, $key, array('HS256'));
+
     $cartItem->userId = $decoded->data->id;
+
+    $data = json_decode(file_get_contents("php://input"));
+    $cartItem->productId = $data->productId;
+    $cartItem->quantity = $data->quantity;
+    $cartItem->color = $data->color;
     
-    $result = $cartItem->getUserCart();
+    $result = $cartItem->update();
     
-    echo json_encode($result);
+    if ($result) http_response_code(200);
+    else http_response_code(400);
   }
   else {
     http_response_code(401);    
   }
-
-
-?>
