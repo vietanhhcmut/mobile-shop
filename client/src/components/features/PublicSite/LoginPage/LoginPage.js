@@ -39,6 +39,7 @@ class LoginPage extends Component {
         password
       })
       .then(res => {
+        console.log(res.data);
         if (res.status === 200) {
           // console.log(res.data.token);
           localStorage.setItem("userToken", res.data.token);

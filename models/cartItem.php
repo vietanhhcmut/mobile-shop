@@ -1,6 +1,6 @@
 <?php
 // 'user' object
-class CartItem{
+class CartItem {
  
   // database connection and table name
   private $conn;
