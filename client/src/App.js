@@ -7,15 +7,31 @@ import NotFoundPage from './components/features/NotFoundPage/NotFoundPage';
 import AdminSite from './components/features/AdminSite/AdminSite'
 import Context from './Context';
 import axios from './constants/axiosInstance';
+import axiosValidate from './constants/axiosValidate';
 
 class App extends Component {
   state = {
-    cart: JSON.parse(localStorage.getItem("cart")) || [],
+    cart: [],
     totalPrice: 0,
     addToCart: false
   };
   componentDidMount() {
+    this.handleGetCart();
     this.handleCalcTotalPrice(this.state.cart);
+  }
+  handleGetCart = () => {
+    if (localStorage.getItem('userToken')) {
+      axiosValidate.get('/api/cartItem/getUserCart.php')
+        .then(res => {
+          this.setState({ cart: res.data });
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    else {
+      this.setState({ cart: JSON.parse(localStorage.getItem("cart")) || [] });
+    }
   }
   handleCalcTotalPrice = cart => {
     axios
@@ -27,6 +43,7 @@ class App extends Component {
         console.log(err);
       });
   };
+
   handleAddToCart = (productId, quantity, color, boundingImg, srcImg) => {
     const cart = [...this.state.cart];
     const index = cart.findIndex(
@@ -43,8 +60,26 @@ class App extends Component {
       cartItem.quantity += quantity;
       cart[index] = cartItem;
     }
+    this.setState({ cart });
+
+    if (localStorage.getItem('userToken')) {
+      axiosValidate.post('/api/cartItem/add', {
+        productId,
+        quantity,
+        color
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    else {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
     this.handleCalcTotalPrice(cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
 
     const tempImg = document.createElement("img");
     tempImg.src = srcImg;
@@ -62,7 +97,7 @@ class App extends Component {
       tempImg.style.height = "0";
     }, 1);
 
-    this.setState({ cart, addToCart: true });
+    this.setState({ addToCart: true });
     setTimeout(() => {
       this.setState({ addToCart: false });
       tempImg.remove();
