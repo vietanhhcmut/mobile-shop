@@ -17,13 +17,20 @@ class App extends Component {
   };
   componentDidMount() {
     this.handleGetCart();
-    this.handleCalcTotalPrice(this.state.cart);
   }
   handleGetCart = () => {
     if (localStorage.getItem('userToken')) {
       axiosValidate.get('/api/cartItem/getUserCart.php')
         .then(res => {
-          this.setState({ cart: res.data });
+          console.log(res);
+          const cart = res.data.map(_ => ({
+            userId: _.userId,
+            productId: _.productId,
+            quantity: parseInt(_.quantity),
+            color: _.color
+          }))
+          this.setState({ cart });
+          this.handleCalcTotalPrice(cart);
         })
         .catch(err => {
           console.log(err);
@@ -60,17 +67,9 @@ class App extends Component {
       cartItem.quantity += quantity;
       cart[index] = cartItem;
     }
-    this.setState({ cart });
 
     if (localStorage.getItem('userToken')) {
-      axiosValidate.post('/api/cartItem/add', {
-        productId,
-        quantity,
-        color
-      })
-        .then(res => {
-          console.log(res);
-        })
+      axiosValidate.post('/api/cartItem/add.php', { productId, quantity, color })
         .catch(err => {
           console.log(err);
         });
@@ -97,7 +96,7 @@ class App extends Component {
       tempImg.style.height = "0";
     }, 1);
 
-    this.setState({ addToCart: true });
+    this.setState({ cart, addToCart: true });
     setTimeout(() => {
       this.setState({ addToCart: false });
       tempImg.remove();
@@ -110,14 +109,33 @@ class App extends Component {
     cartItem.quantity = quantity;
     cart[cartItemIndex] = cartItem;
     this.handleCalcTotalPrice(cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    if (localStorage.getItem('userToken')) {
+      const { productId, color } = cartItem;
+      axiosValidate.post('/api/cartItem/update.php', { productId, quantity, color })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    else {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
     this.setState({ cart });
   };
   handleDeleteCartItem = index => () => {
     const cart = [...this.state.cart];
+    const cartItem = cart[index];
     cart.splice(index, 1);
     this.handleCalcTotalPrice(cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    if (localStorage.getItem('userToken')) {
+      const { productId, color } = cartItem;
+      axiosValidate.delete(`/api/cartItem/delete.php?productId=${productId}&color=${color}`)
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    else {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
     this.setState({ cart });
   };
   render() {
@@ -129,15 +147,16 @@ class App extends Component {
         totalPrice,
         handleAddToCart: this.handleAddToCart,
         handleChangeQuantity: this.handleChangeQuantity,
-        handleDeleteCartItem: this.handleDeleteCartItem
+        handleDeleteCartItem: this.handleDeleteCartItem,
+        handleGetCart: this.handleGetCart
       }}>
         <BrowserRouter>
-            <Switch>
-                {/* Phần dưới chưa tạo component */}
-                <Route path="/admin" component={AdminSite} />
-                <Route path="/sorry" component={NotFoundPage} />
-                <Route path="/" component={PublicSite} />
-            </Switch>
+          <Switch>
+            {/* Phần dưới chưa tạo component */}
+            <Route path="/admin" component={AdminSite} />
+            <Route path="/sorry" component={NotFoundPage} />
+            <Route path="/" component={PublicSite} />
+          </Switch>
 
         </BrowserRouter>
       </Context.Provider>

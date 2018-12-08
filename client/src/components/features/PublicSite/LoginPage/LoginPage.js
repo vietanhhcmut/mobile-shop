@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import "./LoginPage.css";
 import { Link } from "react-router-dom";
 import axios from "../../../../constants/axiosInstance";
+import Context from "../../../../Context";
 
 class LoginPage extends Component {
+  static contextType = Context;
   state = {
     showPassword: false,
     email: "",
@@ -41,6 +43,7 @@ class LoginPage extends Component {
       .then(res => {
         localStorage.setItem("userToken", res.data.token);
         this.props.history.push("/");
+        this.context.handleGetCart();
       })
       .catch(err => {
         console.log("err", err);

@@ -7,25 +7,20 @@
 
   include_once '../../config/database.php';
   include_once '../../models/cartItem.php';
- 
+  
   $database = new Database();
   $db = $database->getConnection();
-  
+
+  include_once './auth.php';
+
   $cartItem = new CartItem($db);
 
-  $data = json_decode(file_get_contents("php://input"));
+  $cartItem->userId = $userId;
 
-  // Set ID to update
-  $cartItem->id = $data->id;
+  $cartItem->productId = isset($_GET['productId']) ? $_GET['productId'] : die();
+  $cartItem->color = isset($_GET['color']) ? $_GET['color'] : die();
 
-  // Delete 
-  if($cartItem->delete()) {
-    echo json_encode(
-      array('message' => 'Item was deleted')
-    );
-  } else {
-    http_response_code(403);
-    echo json_encode(
-      array('message' => 'Unable to delete item')
-    );
-  }
+  $result = $cartItem->delete();
+  
+  if ($result) http_response_code(200);
+  else http_response_code(400);
