@@ -22,6 +22,7 @@ class App extends Component {
     if (localStorage.getItem('userToken')) {
       axiosValidate.get('/api/cartItem/getUserCart.php')
         .then(res => {
+          console.log(res);
           const cart = res.data.map(_ => ({
             userId: _.userId,
             productId: _.productId,
@@ -111,9 +112,6 @@ class App extends Component {
     if (localStorage.getItem('userToken')) {
       const { productId, color } = cartItem;
       axiosValidate.post('/api/cartItem/update.php', { productId, quantity, color })
-        .then(res => {
-          console.log(res);
-        })
         .catch(err => {
           console.log(err);
         });
@@ -125,9 +123,19 @@ class App extends Component {
   };
   handleDeleteCartItem = index => () => {
     const cart = [...this.state.cart];
+    const cartItem = cart[index];
     cart.splice(index, 1);
     this.handleCalcTotalPrice(cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    if (localStorage.getItem('userToken')) {
+      const { productId, color } = cartItem;
+      axiosValidate.delete(`/api/cartItem/delete.php?productId=${productId}&color=${color}`)
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    else {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
     this.setState({ cart });
   };
   render() {
@@ -139,7 +147,8 @@ class App extends Component {
         totalPrice,
         handleAddToCart: this.handleAddToCart,
         handleChangeQuantity: this.handleChangeQuantity,
-        handleDeleteCartItem: this.handleDeleteCartItem
+        handleDeleteCartItem: this.handleDeleteCartItem,
+        handleGetCart: this.handleGetCart
       }}>
         <BrowserRouter>
           <Switch>

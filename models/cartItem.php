@@ -124,22 +124,23 @@ class CartItem{
   // Delete 
   public function delete(){
     // Create query
-    $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+    $query = "DELETE FROM " . $this->table_name . " WHERE userId=:userId AND productId=:productId AND color=:color";
 
     // Prepare statement
     $stmt = $this->conn->prepare($query);
 
     // Clean data
-    $this->id = htmlspecialchars(strip_tags($this->id));
+    $this->userId = htmlspecialchars(strip_tags($this->userId));
+    $this->productId = htmlspecialchars(strip_tags($this->productId));
+    $this->color = htmlspecialchars(strip_tags($this->color));
 
     // Bind data
-    $stmt->bindParam(':id', $this->id);
+    $stmt->bindParam(':userId', $this->userId);
+    $stmt->bindParam(':productId', $this->productId);
+    $stmt->bindParam(':color', $this->color);
 
     // execute the query
-    if($stmt->execute()){
-        return true;
-    }
-
+    if ($stmt->execute()) return true;
     return false;
   }
 
