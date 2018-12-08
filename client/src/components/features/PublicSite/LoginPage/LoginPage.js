@@ -40,6 +40,7 @@ class LoginPage extends Component {
       })
       .then(res => {
         if (res.status === 200) {
+          // console.log(res.data.token);
           localStorage.setItem("userToken", res.data.token);
           // console.log("localStorage.getItem('userToken')", res.data.token);
           this.props.history.push("/");
