@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../../../constants/axiosInstance";
-import axiosUpdate from "../../../../constants/axiosValidate";
+import axiosValidate from "../../../../constants/axiosValidate";
 
 class InfoPage extends Component {
   state = {
@@ -9,7 +9,6 @@ class InfoPage extends Component {
     lastName: "",
     email: "",
     pass: "",
-    // passOld: "",
     gender: "nam",
     birthday: "",
 
@@ -19,7 +18,6 @@ class InfoPage extends Component {
     idLastName: "",
     idEmail: "",
     idPass: "",
-    // idPassOld: "",
     validateEmail: ""
   };
 
@@ -30,7 +28,7 @@ class InfoPage extends Component {
       })
       .then(respond => {
         axios
-          .post("/api/user/infor.php", { id: respond.data.data.id })
+          .post("/api/user/info.php", { id: respond.data.data.id })
           .then(res => {
             this.setState({
               id: respond.data.data.id,
@@ -122,11 +120,6 @@ class InfoPage extends Component {
       this.setState({
         idPass: "field-required"
       });
-
-    // passOld === "" &&
-    //   this.setState({
-    //     idPassOld: "field-required"
-    //   });
   };
 
   handleUpdateUser = (firstName, lastName, email, pass) => {
@@ -150,8 +143,9 @@ class InfoPage extends Component {
         //   lastname: lastName,
         //   firstname: firstName
         // });
-        axiosUpdate
-          .put("/api/user/update.php", {
+
+        axiosValidate
+          .post("/api/user/update.php", {
             id: this.state.id,
             email: email,
             password: pass,
@@ -194,8 +188,6 @@ class InfoPage extends Component {
       validateEmail,
       gender,
       birthday
-      // passOld,
-      // idPassOld
     } = this.state;
     return (
       <div>
@@ -305,37 +297,6 @@ class InfoPage extends Component {
 
                   <div className="col-md-3 form-control-comment" />
                 </div>
-
-                {/* <div className="form-group row ">
-                  <label className="col-md-3 form-control-label required">
-                    Mật khẩu cũ
-                  </label>
-                  <div className="col-md-6">
-                    <div className="input-group js-parent-focus">
-                      <input
-                        name="pass"
-                        className={"form-control " + idPassOld}
-                        value={passOld}
-                        onChange={this.handleUserInput("idPassOld")}
-                        type={showPassword ? "text" : "password"}
-                      />
-                      <span className="input-group-btn">
-                        <button
-                          onClick={this.handleShowPassword}
-                          type="button"
-                          className="input-group-btn show"
-                        >
-                          {showPassword ? "Ẩn" : "Hiện"}
-                        </button>
-                      </span>
-                    </div>
-                    <div className={"field-hide" + idPassOld}>
-                      Hãy nhập "Mật khẩu cũ" của bạn
-                    </div>
-                  </div>
-
-                  <div className="col-md-3 form-control-comment" />
-                </div> */}
 
                 <div className="form-group row ">
                   <label className="col-md-3 form-control-label required">
