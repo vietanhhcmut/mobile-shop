@@ -163,7 +163,7 @@ class DetailedItem extends Component {
                             <Tab value={2} label="Đánh giá" />
                         </Tabs>
                         {tab === 1 && item && <DetailInfo detail={item} />}
-                        {tab === 2 && <Review />}
+                        {tab === 2 && <Review productId={item.id} />}
                     </AppBar>
                 </div>
             </div >

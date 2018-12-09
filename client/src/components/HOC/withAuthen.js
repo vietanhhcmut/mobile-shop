@@ -9,7 +9,6 @@ const withAuthen = wrappedComponent => {
         componentDidMount() {
             const token = localStorage.token;
             if (token) {
-                axiosInstance.
             }
 
         }
