@@ -18,23 +18,23 @@
 
   if($num > 0) {
     $orders_arr = array();
-    $orders_arr['item'] = array();
+    // $orders_arr['item'] = array();
 
     while($row = $result->fetch(PDO::FETCH_ASSOC)) {
       extract($row);
     
-      $order_item = array(
-        'feeShip' => $feeShip,
-        'totalPrice' => $totalPrice,
-        'city' => $city,
-        'district' => $district,
-        'ward' => $ward,
-        'address' => $address,
-        'type' => $type,
-        'phonenumber'=> $phonenumber
+      // $order_item = array(
+      //   'feeShip' => $feeShip,
+      //   'totalPrice' => $totalPrice,
+      //   'city' => $city,
+      //   'district' => $district,
+      //   'ward' => $ward,
+      //   'address' => $address,
+      //   'type' => $type,
+      //   'phonenumber'=> $phonenumber
         
-      );
-      array_push($orders_arr['item'], $order_item);
+      // );
+      array_push($orders_arr, $row);
     }
     
     // Turn to JSON & output

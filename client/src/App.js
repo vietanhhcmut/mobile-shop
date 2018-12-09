@@ -22,7 +22,6 @@ class App extends Component {
     if (localStorage.getItem('userToken')) {
       axiosValidate.get('/api/cartItem/getUserCart.php')
         .then(res => {
-          console.log(res);
           const cart = res.data.map(_ => ({
             userId: _.userId,
             productId: _.productId,

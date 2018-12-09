@@ -23,7 +23,7 @@
   if($category->update()) {
     http_response_code(200);
     echo json_encode(
-      array('message' => 'Catalog was editted')
+      $category
     );
   } else {
     http_response_code(401);

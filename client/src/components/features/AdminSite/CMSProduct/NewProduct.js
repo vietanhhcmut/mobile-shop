@@ -123,8 +123,8 @@ handleDelteImg = (index) => () => {
                             <div className="form-group">
                                 <label>Ảnh</label>
                                 <div className="img__infoProduct">
-                                    {items.imgs.map(item=>(
-                                        <img src={item} alt={items.name}/>
+                                    {items.imgs.map((item, index) =>(
+                                        <img src={item} alt={items.name} key={index}/>
                                     ))}
                                 </div>
                                 <div className="clear"></div>
@@ -138,7 +138,7 @@ handleDelteImg = (index) => () => {
                                     {imagePreviewUrl && imagePreviewUrl.map((item,index)=>(
                                         <div className="imgPreview__content">
                                             <img src={item} alt={items.name}/>
-                                            <span className="delete-imagePreview" onClick={this.handleDelteImg(index)}><i class="fas fa-times"></i></span>
+                                            <span className="delete-imagePreview" onClick={this.handleDelteImg(index)}><i className="fas fa-times"></i></span>
                                         </div>
                                     ))}
                                 </div>
@@ -308,7 +308,7 @@ handleDelteImg = (index) => () => {
                             </button>
                         </div>
                         <button onClick={this.props.onCloseModal} className="closeModal">
-                            <i class="fas fa-times"></i>
+                            <i className="fas fa-times"></i>
                         </button>
                     </div>
                 </form>

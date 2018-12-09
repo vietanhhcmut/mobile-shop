@@ -23,6 +23,7 @@ export default class CMSUer extends Component {
     });
   })
   componentDidMount() {
+
     this.dummyRes()
       .then(res => {
         this.setState({ users: res.data });
@@ -48,12 +49,13 @@ export default class CMSUer extends Component {
     const { users } = this.state;
     console.log(users);
     let table = (
+
       <table className="table table-hover table-bordered">
         <thead>
           <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Actions</th>
+            <th>Hành động</th>
           </tr>
         </thead>
         <tbody>
