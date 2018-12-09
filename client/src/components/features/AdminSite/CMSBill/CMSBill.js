@@ -79,8 +79,8 @@ export default class CMSUer extends Component {
               <th>STT</th>
               <th>Mã Đơn hàng</th>
               <th>Người mua</th>
-              <th>Type</th>
-              <th>Action</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>

@@ -84,7 +84,7 @@ export default class CMSProduct extends Component {
     return (
       <div className="dashboard">
         <div className="dashboard__header">
-          <h1>Product</h1>
+          <h1>Sản phẩm</h1>
         </div>
         <div className="dashboard__content">
           <div className="dashboard__content-filter">

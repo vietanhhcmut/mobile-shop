@@ -53,11 +53,13 @@ export default class NewProduct extends Component {
 
 handleImageChange = e => {
     e.preventDefault();
-    let file = e.target.files[0];
-    this.setState({
-        _upload_files: file,
-        imagePreviewUrl: URL.createObjectURL(e.target.files[0])
-    });
+    if (e.target.files.length > 0) {
+        let file = e.target.files[0];
+        this.setState({
+            _upload_files: file,
+            imagePreviewUrl: URL.createObjectURL(e.target.files[0])
+        });
+    }
     
 }
 handleDelteImg = () => {
