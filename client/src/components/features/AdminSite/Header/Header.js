@@ -24,8 +24,8 @@ export default class Header extends Component {
                             </span>
                             <div className="sidebar__tree-submenu">
                                 <ul>
-                                    <Link to="/admin/category"><li>Category</li></Link>
-                                    <Link to="/admin/product"><li>Product</li></Link>
+                                    <Link to="/admin/category"><li>Danh mục</li></Link>
+                                    <Link to="/admin/product"><li>Sản phẩm</li></Link>
                                 </ul>
                             </div>
                         </li>

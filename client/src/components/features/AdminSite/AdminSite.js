@@ -13,7 +13,7 @@ export default class AdminSite extends Component {
             <div className="admin-site">
                 <Header />
                 <Switch>
-                    <Route path="/admin" exact component={CMSProduct} />
+                    <Route path="/admin" exact component={CMSBill} />
                     <Route path="/admin/bill" exact component={CMSBill} />
                     <Route path="/admin/user" exact component={CMSUser} />
                     <Route path="/admin/product" exact component={CMSProduct} />

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import swal from 'sweetalert';
 import './CMSBill.css';
 import DetailBill from './DetailBill';
-
+import axios from '../../../../constants/axiosInstance';
 
 export default class CMSUer extends Component {
   state = {
@@ -12,32 +12,41 @@ export default class CMSUer extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      orders: [
-        {
-          id: 1,
-          feeShip: 30000,
-          totalPrice: 100000,
-          city: "Ho Chi Minh",
-          district: "Thu Duc",
-          ward: "Linh Trung",
-          address: "KTX Khu A",
-          phonenumber: "0123456789",
-          type: true
-        },
-        {
-          id: 2,
-          feeShip: 30000,
-          totalPrice: 100000,
-          city: "Ho Chi Minh",
-          district: "Thu Duc",
-          ward: "Linh Trung",
-          address: "KTX Khu A",
-          phonenumber: "0123456789",
-          type: false
-        }
-      ],
-    });
+    // this.setState({
+    //   orders: [
+    //     {
+    //       id: 1,
+    //       feeShip: 30000,
+    //       totalPrice: 100000,
+    //       city: "Ho Chi Minh",
+    //       district: "Thu Duc",
+    //       ward: "Linh Trung",
+    //       address: "KTX Khu A",
+    //       phonenumber: "0123456789",
+    //       type: true
+    //     },
+    //     {
+    //       id: 2,
+    //       feeShip: 30000,
+    //       totalPrice: 100000,
+    //       city: "Ho Chi Minh",
+    //       district: "Thu Duc",
+    //       ward: "Linh Trung",
+    //       address: "KTX Khu A",
+    //       phonenumber: "0123456789",
+    //       type: false
+    //     }
+    //   ],
+    // });
+    axios.get("/api/order/getAll.php")
+      .then(res => {
+          this.setState({
+            orders: res.data
+          });
+      })
+      .catch(err => {
+          console.log(err);
+      });
   }
 
   handleDelete = (item) => () => {
@@ -63,7 +72,6 @@ export default class CMSUer extends Component {
       open: !this.state.open,
       dataItem: item
     });
-    console.log(item);
   }
 
   onCloseModal = () => {
@@ -72,6 +80,7 @@ export default class CMSUer extends Component {
 
   render() {
     const { orders, open } = this.state;
+    console.log(orders);
     let table = (
       <table className="table table-hover table-bordered">
         <thead>
@@ -79,8 +88,8 @@ export default class CMSUer extends Component {
             <th>STT</th>
             <th>Mã Đơn hàng</th>
             <th>Người mua</th>
-            <th>Type</th>
-            <th>Action</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
           </tr>
         </thead>
         <tbody>
