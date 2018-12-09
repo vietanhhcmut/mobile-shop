@@ -59,6 +59,32 @@ class User{
     }
   }
 
+  function findUser(){
+    $query = "SELECT * FROM " . $this->table_name . "
+    WHERE id = ?
+    LIMIT 0,1";
+
+    $stmt = $this->conn->prepare($query);
+    $this->id = htmlspecialchars(strip_tags($this->id));
+    $stmt->bindParam(1, $this->id);
+
+    $stmt->execute();
+    $num = $stmt->rowCount();
+    if($num>0){
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->id = $row['id'];
+        $this->firstname = $row['firstname'];
+        $this->lastname = $row['lastname'];
+        $this->password = $row['password'];
+        $this->isAdmin = $row['isAdmin'];
+        $this->email = $row['email'];
+        $this->gender = $row['gender'];
+        $this->birthday = $row['birthday'];
+    return true;
+    }
+    return false;
+  }
+  
   function emailExists(){
     $query = "SELECT *
             FROM " . $this->table_name . "

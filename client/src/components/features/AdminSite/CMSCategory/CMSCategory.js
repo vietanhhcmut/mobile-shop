@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import swal from 'sweetalert';
-import { api } from './../../../../constants/constants';
+import axios from '../../../../constants/axiosInstance';
 import NewCategory from './NewCategory';
 
 export default class CMSUer extends Component {
@@ -9,10 +9,17 @@ export default class CMSUer extends Component {
     open: false,
     dataItem: [],
   }
-  
+
   componentDidMount() {
-    api.getBrands()
-      .then(categories => this.setState({ categories }));
+    axios.get("/api/category/getAll.php")
+      .then(res => {
+        this.setState({
+          categories: res.data
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handleDelete = (item) => () => {
@@ -39,64 +46,75 @@ export default class CMSUer extends Component {
   onCloseModal = () => {
     this.setState({ open: false });
   }
+  handleRenameCat = (newName, _id) => {
+    const categories = [...this.state.categories];
+    const id = categories.findIndex(cat => cat.id === _id);
+    if (id >= 0) {
+      categories[id].name = newName;
+      this.setState({
+        categories
+      });
+    }
+  }
 
   render() {
-    const {categories, open} = this.state;
+    const { categories, open } = this.state;
     let table = (
-        <table className="table table-hover table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Actions</th>
+      <table className="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Tên</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          {categories.map((item, index) => (
+            <tr key={index}>
+              <td>{item.name}</td>
+
+              <td className="btn-action-delete">
+                <a
+                  className="btn btn-primary"
+                  href="#"
+                  onClick={this.onOpenModal(item)}
+                >
+                  <i className="fa fa-lg fa-edit" />
+                </a>
+
+                <a
+                  className="btn btn-danger"
+                  href="#"
+                  onClick={this.handleDelete(item.id)}
+                >
+                  <i className="fa fa-lg fa-trash" />
+                </a>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {categories.map((item, index) => (
-              <tr key={index}>
-                <td>{item.name}</td>
-
-                <td className="btn-action-delete">
-                    <a
-                        className="btn btn-primary"
-                        href="#"
-                        onClick={this.onOpenModal(item)}
-                    >
-                        <i className="fa fa-lg fa-edit" />
-                    </a>
-
-                    <a
-                        className="btn btn-danger"
-                        href="#"
-                        onClick={this.handleDelete(item.id)}
-                    >
-                        <i className="fa fa-lg fa-trash" />
-                    </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      );
+          ))}
+        </tbody>
+      </table>
+    );
     return (
       <div className="dashboard">
         <div className="dashboard__header">
-          <h1>Category</h1>
+          <h1>Danh mục</h1>
         </div>
         <div className="dashboard__content">
-            {table}
-            <button
-                type="button"
-                className="dashboard__btn"
-                onClick={this.onOpenModal(null)}
-            >
-                <i className="fa fa-lg fa-plus" />
-            </button>
+          {table}
+          <button
+            type="button"
+            className="dashboard__btn"
+            onClick={this.onOpenModal(null)}
+          >
+            <i className="fa fa-lg fa-plus" />
+          </button>
         </div>
         {open && (
           <NewCategory
             onCloseModal={this.onCloseModal}
             open={this.state.open}
             itemInfo={this.state.dataItem}
+            renameCat={this.handleRenameCat}
           />
         )}
       </div>

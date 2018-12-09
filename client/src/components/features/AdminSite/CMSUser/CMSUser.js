@@ -6,10 +6,9 @@ export default class CMSUer extends Component {
   state = {
     users: [],
   }
-
-  componentDidMount() {
-    this.setState({
-      users: [
+  dummyRes = () => new Promise((resolve) => {
+    resolve({
+      data: [
         {
           id: "1",
           email: "abc@gmail.com",
@@ -22,6 +21,16 @@ export default class CMSUer extends Component {
         }
       ]
     });
+  })
+  componentDidMount() {
+
+    this.dummyRes()
+      .then(res => {
+        this.setState({ users: res.data });
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   handleDelete = (item) => () => {
@@ -40,6 +49,7 @@ export default class CMSUer extends Component {
     const { users } = this.state;
     console.log(users);
     let table = (
+
       <table className="table table-hover table-bordered">
         <thead>
           <tr>

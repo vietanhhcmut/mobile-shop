@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import "./LoginPage.css";
 import { Link } from "react-router-dom";
 import axios from "../../../../constants/axiosInstance";
+import Context from "../../../../Context";
 
 class LoginPage extends Component {
+  static contextType = Context;
   state = {
     showPassword: false,
     email: "",
     password: "",
     submitted: false,
     loginError: false
-  }
+  };
   handleValidateForm = () => {
     return this.state.password.length > 0;
   };
@@ -39,11 +41,10 @@ class LoginPage extends Component {
         password
       })
       .then(res => {
-        if (res.status === 200) {
-          localStorage.setItem("userToken", res.data.token);
-          // console.log("localStorage.getItem('userToken')", res.data.token);
-          this.props.history.push("/");
-        }
+        console.log("login:",res.data);
+        localStorage.setItem("userToken", res.data.token);
+        this.props.history.push("/");
+        this.context.handleGetCart();
       })
       .catch(err => {
         console.log("err", err);

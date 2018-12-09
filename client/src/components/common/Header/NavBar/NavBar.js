@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
-// import { withRouter } from "react-router-dom";
+import Context from "../../../../Context";
 
 export default class NavBar extends Component {
+  static contextType = Context;
   render() {
     const { categories, active, handleActivePage } = this.props;
     return (
@@ -74,6 +75,7 @@ export default class NavBar extends Component {
                 className="navbar-item"
                 onClick={e => {
                   localStorage.removeItem("userToken");
+                  this.context.handleGetCart();
                 }}
               >
                 Đăng xuất

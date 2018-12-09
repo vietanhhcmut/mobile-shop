@@ -14,7 +14,7 @@ class Header extends Component {
     toggle: false,
     showMenu: false,
     categories: []
-  };
+  }
   componentDidMount() {
     this.setState({
       active: this.props.location.pathname

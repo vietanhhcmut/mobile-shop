@@ -20,17 +20,7 @@
 
     // Get 
     public function read() {
-      $query = 'SELECT 
-            o.feeShip,
-            o.totalPrice,
-            o.city,
-            o.district,
-            o.ward,
-            o.address,
-            o.phonenumber,
-            o.type
-          FROM
-            ' . $this->table . ' o';
+      $query = 'SELECT * FROM ' . $this->table;
          
       $stmt = $this->conn->prepare($query);
       $stmt->execute();
