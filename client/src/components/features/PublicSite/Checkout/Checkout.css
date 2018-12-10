@@ -21,7 +21,7 @@
 .block__content {
     font-size: 14px;
 }
-.content__guest-or-signin {
+.content__guest-or-login {
     display: flex;
     justify-content: space-around;
     justify-content: space-evenly;
@@ -29,7 +29,7 @@
     font-weight: bold;
     margin-top: 1em;
 }
-.guest-or-signin {
+.guest-or-login {
     text-align: center;
     color: #aaa;
     cursor: pointer;

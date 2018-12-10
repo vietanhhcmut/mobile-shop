@@ -7,10 +7,19 @@
   use \Firebase\JWT\JWT;
 
   include_once '../../models/user.php';
-  
+
+  if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+    http_response_code(200);
+  }
+  else {
+    exit;
+  }
+
   $headers = apache_request_headers();
 
   $token = $headers["Authorization"];
+
+  if (!$token) http_response_code(400); 
 
   $decoded = JWT::decode($token, $key, array('HS256'));
 
