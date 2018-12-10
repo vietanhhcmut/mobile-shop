@@ -438,4 +438,51 @@
 
       return ceil($stmt->rowCount() / $this->limit);
     }
+    public function getAll() {
+      // Create query
+      $query = 'SELECT * FROM ' . $this->table;
+  
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute();
+  
+      $products_arr = array();
+  
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $query = 'SELECT color, name FROM colors, product_color WHERE (product_color.productId = ? AND colors.id=product_color.colorId)';
+        $stmt1 = $this->conn->prepare($query);
+        $stmt1->bindParam(1, $row['id']);
+        $stmt1->execute();
+          
+        $row['colors'] = array();
+        while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['colors'], $row1);
+        }
+  
+        $query = 'SELECT path FROM images WHERE images.productId = ?';
+        $stmt2 = $this->conn->prepare($query);
+        $stmt2->bindParam(1, $row['id']);
+        $stmt2->execute();
+          
+        $row['imgs'] = array();
+        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['imgs'], $row2['path']);
+        }
+  
+        $query = 'SELECT name FROM categories WHERE id = ?';
+        $stmt3 = $this->conn->prepare($query);
+        $stmt3->bindParam(1, $row['categoryId']);
+        $stmt3->execute();
+  
+        $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+  
+        $row['category'] = $row3['name'];
+  
+  
+        array_push($products_arr, $row);
+      }
+  
+      return $products_arr;
+    }
   }
+
+  

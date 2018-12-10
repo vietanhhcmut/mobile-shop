@@ -22,7 +22,7 @@ class InfoPage extends Component {
   };
 
   componentDidMount() {
-    axiosValidate
+    axiosValidate()
       .post("/api/user/getInfoUser.php")
       .then(res => {
         this.setState({
@@ -137,7 +137,7 @@ class InfoPage extends Component {
         //   firstname: firstName
         // });
 
-        axiosValidate
+        axiosValidate()
           .post("/api/user/update.php", {
             id: this.state.id,
             email: email,

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
-import axios from '../../../../constants/axiosInstance';
-
+import axiosValidate from '../../../../constants/axiosValidate';
 
 export default class NewProduct extends Component {
     state = {
@@ -79,7 +78,7 @@ export default class NewProduct extends Component {
     }
 
     handleUpdate = (data) => {
-        axios.post("/api/category/edit.php", {
+        axiosValidate().post("/api/category/edit.php", {
             id: data.id,
             name: data.name,
             image: data.image
@@ -93,7 +92,7 @@ export default class NewProduct extends Component {
     }
 
     handleCreate = (data) => {
-        axios.post("/api/category/add.php", {
+        axiosValidate().post("/api/category/add.php", {
             name: data.name,
             image: data.image
         })

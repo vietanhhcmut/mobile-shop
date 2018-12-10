@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import swal from 'sweetalert';
-import axios from '../../../../constants/axiosInstance';
+import axiosValidate from '../../../../constants/axiosValidate';
+import axios from '../../../../constants/axiosInstance'
 
 export default class CMSUer extends Component {
   state = {
@@ -26,13 +27,13 @@ export default class CMSUer extends Component {
       buttons: { cancel: true, confirm: true }
     }).then(isConfirm => {
       if (isConfirm) {
-        axios.post("/api/user/delete.php",
+        axiosValidate().post("/api/user/delete.php",
           {
             id: item
           }
         )
           .then(res => {
-            const users = this.state.users.filter(item => item.id !== res.data.id);
+            const users = this.state.users.filter(user => user.id !== item);
             this.setState({
               users
             });
