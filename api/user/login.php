@@ -22,14 +22,7 @@
 
   if($email_exists && password_verify($data->password, $user->password)) {
     $token = array(
-      // "iss" => $iss,
-      // "aud" => $aud,
-      // "iat" => $iat,
-      // "nbf" => $nbf,
-      "data" => array(
-          "id" => $user->id,
-          "isAdmin" => $user->isAdmin
-      )
+      "id" =>  $user->id
     );
     http_response_code(200);
     $jwt = JWT::encode($token, $key);

@@ -76,31 +76,32 @@
     include_once $url . '/config/core.php';
     include_once $url. '/helper/authen.php';
   
-    if ($jwt && authen($jwt, $key)) {
-      $id = authen($jwt, $key);
+    // if ($jwt && authen($jwt, $key)) {
+    //   $id = authen($jwt, $key);
       // echo json_encode($id->id);
      
-      if ($id->isAdmin) {
-          if($user->delete()){
-            http_response_code(200);
-            echo json_encode(
-                  array(
-                      "message" => "User was deleted."
-                  )
-              );
-          }
-          else {
-            http_response_code(401);
-            echo json_encode(array("message" => "Unable to delete user."));
-          }
+      // if ($id->isAdmin) {
+        $user->id = $id->id;
+        if($user->delete()){
+          http_response_code(200);
+          echo json_encode(
+                array(
+                    "message" => "User was deleted."
+                )
+            );
         }
         else {
-          http_response_code(403);
-          echo json_encode(array("message" => "Access denied"));
+          http_response_code(401);
+          echo json_encode(array("message" => "Unable to delete user."));
         }
-    }
-    else {
-      http_response_code(403);
-    }
+      // }
+      // else {
+      //   http_response_code(403);
+      //   echo json_encode(array("message" => "Access denied"));
+      // }
+    // }
+    // else {
+    //   http_response_code(403);
+    // }
   }
 ?>
