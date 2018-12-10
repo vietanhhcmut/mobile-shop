@@ -30,7 +30,20 @@ export default class CMSUer extends Component {
       buttons: { cancel: true, confirm: true }
     }).then(isConfirm => {
       if (isConfirm) {
-        console.log(item);
+        axios.post("/api/category/delete.php",
+          {
+            id: item
+          }
+        )
+          .then(res => {
+            const categories = this.state.categories.filter(category => category.id !== item);
+            this.setState({
+              categories
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     });
   }
@@ -56,9 +69,19 @@ export default class CMSUer extends Component {
       });
     }
   }
+  handlegetAll = (item) => {
+    const categories = [...this.state.categories];
+    
+    categories.push(item);
+    console.log(categories);
+    this.setState({
+      categories
+    });
+  }
 
   render() {
     const { categories, open } = this.state;
+    console.log(categories);
     let table = (
       <table className="table table-hover table-bordered">
         <thead>
@@ -115,6 +138,7 @@ export default class CMSUer extends Component {
             open={this.state.open}
             itemInfo={this.state.dataItem}
             renameCat={this.handleRenameCat}
+            getAll={this.handlegetAll}
           />
         )}
       </div>

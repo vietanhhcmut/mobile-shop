@@ -13,14 +13,11 @@ class App extends Component {
   state = {
     cart: [],
     totalPrice: 0,
-    addToCart: false
+    addToCart: false,
   };
-  componentDidMount() {
-    this.handleGetCart();
-  }
   handleGetCart = () => {
     if (localStorage.getItem('userToken')) {
-      axiosValidate.get('/api/cartItem/getUserCart.php')
+      axiosValidate().get('/api/cartItem/getUserCart.php')
         .then(res => {
           const cart = res.data.map(_ => ({
             userId: _.userId,
@@ -33,7 +30,7 @@ class App extends Component {
         })
         .catch(err => {
           console.log(err);
-        })
+        });
     }
     else {
       this.setState({ cart: JSON.parse(localStorage.getItem("cart")) || [] });
@@ -68,7 +65,7 @@ class App extends Component {
     }
 
     if (localStorage.getItem('userToken')) {
-      axiosValidate.post('/api/cartItem/add.php', { productId, quantity, color })
+      axiosValidate().post('/api/cartItem/add.php', { productId, quantity, color })
         .catch(err => {
           console.log(err);
         });
@@ -110,7 +107,7 @@ class App extends Component {
     this.handleCalcTotalPrice(cart);
     if (localStorage.getItem('userToken')) {
       const { productId, color } = cartItem;
-      axiosValidate.post('/api/cartItem/update.php', { productId, quantity, color })
+      axiosValidate().post('/api/cartItem/update.php', { productId, quantity, color })
         .catch(err => {
           console.log(err);
         });
@@ -127,7 +124,7 @@ class App extends Component {
     this.handleCalcTotalPrice(cart);
     if (localStorage.getItem('userToken')) {
       const { productId, color } = cartItem;
-      axiosValidate.delete(`/api/cartItem/delete.php?productId=${productId}&color=${color}`)
+      axiosValidate().delete(`/api/cartItem/delete.php?productId=${productId}&color=${color}`)
         .catch(err => {
           console.log(err);
         });
@@ -137,6 +134,7 @@ class App extends Component {
     }
     this.setState({ cart });
   };
+
   render() {
     const { cart, addToCart, totalPrice } = this.state;
     return (

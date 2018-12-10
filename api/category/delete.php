@@ -22,7 +22,7 @@
   if($category->delete()) {
     http_response_code(200);
     echo json_encode(
-      array('message' => 'Product was deleted')
+      array('message' => 'Category was deleted.')
     );
   } else {
     http_response_code(401);

@@ -52,7 +52,6 @@ export default class NewProduct extends Component {
         this.props.onCloseModal();
         const items = { ...this.state.items };
         if (this.state._upload_files) {
-            //  call api
             items.image = this.state.imagePreviewUrl;
             this.setStateInput();
         }
@@ -80,7 +79,7 @@ export default class NewProduct extends Component {
     }
 
     handleUpdate = (data) => {
-        axios.put("/api/category/edit.php", {
+        axios.post("/api/category/edit.php", {
             id: data.id,
             name: data.name,
             image: data.image
@@ -95,12 +94,11 @@ export default class NewProduct extends Component {
 
     handleCreate = (data) => {
         axios.post("/api/category/add.php", {
-            id: data.id,
             name: data.name,
             image: data.image
         })
         .then(res => {
-            this.props.renameCat(data.name, data.id);
+            this.props.getAll(data);
         })
         .catch(err => {
             console.log(err);
