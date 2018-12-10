@@ -165,4 +165,14 @@ class User{
     return false;
   }
 
+  //get all user
+  public function getAll() {
+    $query = 'SELECT * FROM ' . $this->table;
+       
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+
+    return $stmt;
+  }
+
 }

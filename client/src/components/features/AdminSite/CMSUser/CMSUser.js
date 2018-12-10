@@ -1,35 +1,20 @@
 import React, { Component } from "react";
 import swal from 'sweetalert';
-
+import axios from '../../../../constants/axiosInstance';
 
 export default class CMSUer extends Component {
   state = {
     users: [],
   }
-  dummyRes = () => new Promise((resolve) => {
-    resolve({
-      data: [
-        {
-          id: "1",
-          email: "abc@gmail.com",
-          name: "duyen"
-        },
-        {
-          id: "2",
-          email: "abcd@gmail.com",
-          name: "duyennguyen"
-        }
-      ]
-    });
-  })
   componentDidMount() {
-
-    this.dummyRes()
+    axios.get("/api/user/getAll.php")
       .then(res => {
-        this.setState({ users: res.data });
+        this.setState({
+          users: res.data
+        });
       })
-      .catch(e => {
-        console.log(e);
+      .catch(err => {
+        console.log(err);
       });
   }
 
