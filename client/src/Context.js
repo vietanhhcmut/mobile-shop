@@ -7,5 +7,5 @@ export default React.createContext({
     handleAddToCart: () => {},
     handleChangeQuantity: () => {},
     handleDeleteCartItem: () => {},
-    handleGetCart: () => {}
+    handleGetCart: () => {},
 });
