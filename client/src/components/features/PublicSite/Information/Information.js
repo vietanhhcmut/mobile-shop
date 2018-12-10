@@ -141,7 +141,6 @@ class InfoPage extends Component {
       pass,
       passOld
     );
-    console.log(this.state.gender);
     if (checkInfo) {
       axiosValidate()
         .post("/api/user/update.php", {
@@ -156,6 +155,9 @@ class InfoPage extends Component {
         })
         .then(res => {
           this.props.history.push("/info");
+          this.setState({
+            showModal: "show-modal-success"
+          });
         })
         .catch(err => {
           this.setState({
@@ -193,8 +195,21 @@ class InfoPage extends Component {
     return (
       <div>
         <section id="main">
-          <div className="modal-body" id={showModal}>
+          <div
+            className="modal-body"
+            id={showModal === "show-modal" ? "show-modal" : ""}
+          >
             <p>Password cũ bạn nhập chưa đúng.</p>
+            <span className="close-modal" onClick={this.handleCloseModal}>
+              x
+            </span>
+          </div>
+
+          <div
+            className="modal-body-success"
+            id={showModal === "show-modal-success" ? "show-modal-success" : ""}
+          >
+            <p>Sửa thông tin thành công!</p>
             <span className="close-modal" onClick={this.handleCloseModal}>
               x
             </span>
