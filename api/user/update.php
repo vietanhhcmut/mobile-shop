@@ -23,42 +23,57 @@
     $url = $_SERVER['DOCUMENT_ROOT'];
     include_once $url . '/config/core.php';
     include_once $url. '/helper/authen.php';
-  
+
     if ($jwt && authen($jwt, $key)) {
       $id = authen($jwt, $key);
-      $user->id = $id->id;
+      $user->id = $id;
       $result = $user->findUser();
-      echo json_encode($data);
       if ($result) {
-        try {
-          $user->firstname = $data->firstname;
-          $user->lastname = $data->lastname;
-          $user->email = $data->email;
-          $user->password = $data->password;
-          $user->gender = $data->gender;
-          $user->birthday = $data->birthday;
-          $user->id = $id->id;
+        if ($data->password) {
+          if (password_verify($data->passOld, $user->password)) {
+            try {
+              $user->firstname = $data->firstname;
+              $user->lastname = $data->lastname;
+              $user->email = $data->email;
+              $user->password = $data->password;
+              $user->gender = $data->gender;
+              $user->birthday = $data->birthday;
+              $user->id = $id;
 
-          if($user->update()) {
-            $token = array(
-              "data" => array(
-                  "id" => $user->id
-              )
-            );
-            $jwt = JWT::encode($token, $key);
-            http_response_code(200);
-            echo json_encode(
-              array(
-                  "token" => $jwt
-              )
-            );
+              if($user->update()) {
+                http_response_code(200);
+              }
+              else {
+                http_response_code(500);
+              }
+              
+            } catch (Exception $e) {    
+              http_response_code(500);
+            }
           }
           else {
-            http_response_code(500);
+            http_response_code(400);
           }
         }
-        catch (Exception $e) {    
-          http_response_code(500);
+        else {
+          try {
+            $user->firstname = $data->firstname;
+            $user->lastname = $data->lastname;
+            $user->email = $data->email;
+            $user->gender = $data->gender;
+            $user->birthday = $data->birthday;
+            $user->id = $id;
+
+            if($user->update()) {
+              http_response_code(200);
+            }
+            else {
+              http_response_code(500);
+            }
+            
+          } catch (Exception $e) {    
+            http_response_code(500);
+          }
         }
       }
       else {

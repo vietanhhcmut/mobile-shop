@@ -8,7 +8,7 @@ class InfoPage extends Component {
     lastName: "",
     email: "",
     pass: "",
-    gender: "nam",
+    gender: true,
     birthday: "",
     passOld: "",
 
@@ -24,7 +24,7 @@ class InfoPage extends Component {
   };
 
   componentDidMount() {
-    axiosValidate
+    axiosValidate()
       .get("/api/user/getInfoUser.php")
       .then(res => {
         this.setState({
@@ -56,15 +56,9 @@ class InfoPage extends Component {
     });
   };
 
-  handleChangeGenderMale = () => {
+  handleChangeGender = gender => () => {
     this.setState({
-      gender: "nam"
-    });
-  };
-
-  handleChangeGenderFemale = () => {
-    this.setState({
-      gender: "nu"
+      gender
     });
   };
 
@@ -147,9 +141,9 @@ class InfoPage extends Component {
       pass,
       passOld
     );
-
+    console.log(this.state.gender);
     if (checkInfo) {
-      axiosValidate
+      axiosValidate()
         .post("/api/user/update.php", {
           id: this.state.id,
           email: email,
@@ -157,10 +151,10 @@ class InfoPage extends Component {
           gender: this.state.gender,
           birthday: this.state.birthday,
           lastname: lastName,
-          firstname: firstName
+          firstname: firstName,
+          passOld: passOld
         })
         .then(res => {
-          console.log(res);
           this.props.history.push("/info");
         })
         .catch(err => {
@@ -200,7 +194,7 @@ class InfoPage extends Component {
       <div>
         <section id="main">
           <div className="modal-body" id={showModal}>
-            <p>Email đã được sử dụng.</p>
+            <p>Password cũ bạn nhập chưa đúng.</p>
             <span className="close-modal" onClick={this.handleCloseModal}>
               x
             </span>
@@ -222,8 +216,8 @@ class InfoPage extends Component {
                         <input
                           name="id_gender"
                           type="radio"
-                          checked={gender === "nam" ? true : false}
-                          onChange={this.handleChangeGenderMale}
+                          checked={gender}
+                          onChange={this.handleChangeGender(true)}
                         />
                       </span>
                       Nam
@@ -233,8 +227,8 @@ class InfoPage extends Component {
                         <input
                           name="id_gender"
                           type="radio"
-                          checked={gender === "nu" ? true : false}
-                          onChange={this.handleChangeGenderFemale}
+                          checked={!gender}
+                          onChange={this.handleChangeGender(false)}
                         />
                       </span>
                       Nữ
@@ -288,6 +282,7 @@ class InfoPage extends Component {
                   </label>
                   <div className="col-md-6">
                     <input
+                      disabled
                       name="email"
                       className={"form-control " + idEmail + validateEmail}
                       onChange={this.handleUserInput("idEmail")}
