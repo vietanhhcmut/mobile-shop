@@ -23,21 +23,16 @@ class InfoPage extends Component {
 
   componentDidMount() {
     axiosValidate
-      .post("/api/user/validate_token.php")
-      .then(respond => {
-        axiosValidate
-          .post("/api/user/info.php", { id: respond.data.id })
-          .then(res => {
-            this.setState({
-              id: respond.data.id,
-              firstName: res.data.firstname,
-              lastName: res.data.lastname,
-              email: res.data.email,
-              gender: res.data.gender,
-              birthday: res.data.birthday
-            });
-          })
-          .catch(err => console.log(err));
+      .post("/api/user/getInfoUser.php")
+      .then(res => {
+        this.setState({
+          id: res.data.id,
+          firstName: res.data.firstname,
+          lastName: res.data.lastname,
+          email: res.data.email,
+          gender: res.data.gender,
+          birthday: res.data.birthday
+        });
       })
       .catch(err => console.log(err));
   }
