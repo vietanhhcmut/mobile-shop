@@ -9,10 +9,11 @@
   include_once '../../models/user.php';
   
   $headers = apache_request_headers();
+
   $token = $headers["Authorization"];
 
   $decoded = JWT::decode($token, $key, array('HS256'));
-  
+
   $user = new User($db);
   $userId = $decoded->data->id;
   $user->id = $userId;
