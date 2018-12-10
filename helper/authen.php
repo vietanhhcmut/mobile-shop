@@ -8,7 +8,7 @@ use \Firebase\JWT\JWT;
 function authen($token, $key) {
     try {
           $decoded = JWT::decode($token, $key, array('HS256'));
-          return $decoded->data;
+          return $decoded->id;
           // Notice!!!
           // May get info of user and check any conditions here, then return any info in need
     }

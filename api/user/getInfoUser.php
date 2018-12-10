@@ -25,8 +25,8 @@ else {
   
   if ($jwt && authen($jwt, $key)) {
     $id = authen($jwt, $key);
-    if($id->id != NULL){
-      $user->id = $id->id;
+    if($id != NULL){
+      $user->id = $id;
       $result = $user->findUser();
       if ($result) {
         http_response_code(200);
@@ -37,7 +37,7 @@ else {
           "email" => $user->email,
           "isAdmin" => $user->isAdmin,
           "gender" => $user->gender,
-          "birthday"=>$user->birthday,
+          "birthday"=>$user->birthday
       ));
       }
       else {

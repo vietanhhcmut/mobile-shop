@@ -165,4 +165,14 @@ class User{
     return false;
   }
 
+  //get all user
+  public function getAll() {
+    $query = 'SELECT * FROM ' . $this->table_name . ' WHERE isAdmin = 0';
+       
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+
+    return $stmt;
+  }
+
 }
