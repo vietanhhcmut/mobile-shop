@@ -4,7 +4,7 @@ class CartItem {
  
   // database connection and table name
   private $conn;
-  private $table_name = "cartitem";
+  private $table_name = "cart_items";
 
   // object properties
   public $id;

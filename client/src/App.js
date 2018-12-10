@@ -15,6 +15,9 @@ class App extends Component {
     totalPrice: 0,
     addToCart: false,
   };
+  componentDidMount() {
+    this.handleGetCart();
+  }
   handleGetCart = () => {
     if (localStorage.getItem('userToken')) {
       axiosValidate().get('/api/cartItem/getUserCart.php')
