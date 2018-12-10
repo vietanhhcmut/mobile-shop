@@ -20,15 +20,7 @@
   $review->email = $data->email;
   $review->content = $data->content;
 
-  // Create product
-  if($review->create()) {
-    http_response_code(200);
-    echo json_encode(
-      array('message' => 'Review was created')
-    );
-  } else {
-    http_response_code(400);
-    echo json_encode(
-      array('message' => 'Unable to create review')
-    );
-  }
+  $result = $review->add();
+
+  if ($result) echo json_encode($result);
+  else http_response_code(500);

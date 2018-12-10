@@ -5,32 +5,25 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
-include_once '../../config/core.php';
-include_once '../../libs/php-jwt-master/src/JWT.php';
-use \Firebase\JWT\JWT;
 
-$data = json_decode(file_get_contents("php://input"));
-$jwt = isset($data->jwt) ? $data->jwt : "";
- 
-if($jwt) {
-  try {
-      $decoded = JWT::decode($jwt, $key, array('HS256'));
-      http_response_code(200);
-      echo json_encode(array(
-          "message" => "Access granted.",
-          "data" => $decoded->data
-      ));
-    }
-    catch (Exception $e) {
-      http_response_code(401);
-      echo json_encode(array(
-          "message" => "Access denied.",
-          "error" => $e->getMessage()
-      ));
-    }
+if($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+  http_response_code(200);
+}
+else {
+  $data = json_decode(file_get_contents("php://input"));
+  $headers = apache_request_headers();
+  $jwt = $headers['Authorization'];
+
+  $url = $_SERVER['DOCUMENT_ROOT'];
+  include_once $url . '/config/core.php';
+  include_once $url. '/helper/authen.php';
+
+  if ($jwt) {
+    $id = authen($jwt, $key);
+    echo json_encode($id);
   }
   else {
-    http_response_code(401);
-    echo json_encode(array("message" => "Access denied."));
+    http_response_code(403);
+  }
 }
 ?>

@@ -8,13 +8,13 @@
 
   include_once '../../models/user.php';
   
-
   $headers = apache_request_headers();
 
   $token = $headers["Authorization"];
-  $user = new User($db);
 
   $decoded = JWT::decode($token, $key, array('HS256'));
+
+  $user = new User($db);
   $userId = $decoded->data->id;
   $user->id = $userId;
   if (!$user->findUser()) http_response_code(401);    

@@ -10,37 +10,42 @@
     public $name;
     public $email;
     public $content;
-    public $createAt;
+    public $createdAt;
 
     public function __construct($db) {
       $this->conn = $db;
     }
 
-    public function getReviewOfProduct() {
+    public function getOne() {
+      $query = 'SELECT * FROM ' . $this->table . ' WHERE id = LAST_INSERT_ID()';
+
+      $stmt = $this->conn->prepare($query);
+
+      $stmt->execute();
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      return $row;
+    }
+
+    public function getProductReviews() {
       // Create query
-      $query = 'SELECT 
-        r.productId,
-        r.name,
-        r.email,
-        r.content,
-        r.createAt
-      FROM
-        ' . $this->table . ' r
-      WHERE
-        r.productId = ? ';
+      $query = 'SELECT * FROM ' . $this->table . ' WHERE productId = ? ';
 
       $stmt = $this->conn->prepare($query);
       $stmt->bindParam(1, $this->productId);
 
       $stmt->execute();
-      return $stmt;
+
+      $reviews = array();
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        array_push($reviews, $row);
+      }
+      return $reviews;
     }
 
      // Add 
-     public function create() {
+     public function add() {
       // Create query
-      $query = 'INSERT INTO ' . 
-          $this->table . '
+      $query = 'INSERT INTO ' . $this->table . '
         SET
           name = :name,
           email = :email,
@@ -63,13 +68,10 @@
       $stmt->bindParam(':productId', $this->productId);
   
       // Execute query
-      if($stmt->execute()) {
-        return true;
+      if ($stmt->execute()) {
+        $newReview = $this->getOne();
+        return $newReview;
       }
-
-      // Print error if something goes wrong
-      printf("Error: %s.\n", $stmt->error);
-
       return false;
     }
 

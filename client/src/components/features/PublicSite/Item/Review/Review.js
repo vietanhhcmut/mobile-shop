@@ -1,60 +1,97 @@
 import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import './Review.css';
+import axios from '../../../../../constants/axiosInstance';
 
 class Review extends Component {
     state = {
-        reviews: [
-            {
-                user: {
-                    name: 'Lê Hữu Việt Anh',
-                    img: 'https://hoanghamobile.com/Content/v2.0/images/no-avt.png',
-                },
-                time: '4 giờ trước',
-                content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel delectus dolorum dolore tempore! Incidunt fugit nobis, fuga tempore placeat modi hic nihil iste quod, dignissimos illum? Veritatis magni tenetur ipsa.'
-            },
-            {
-                user: {
-                    name: 'Lê Hữu Việt Anh',
-                    img: 'https://hoanghamobile.com/Content/v2.0/images/no-avt.png',
-                },
-                time: '4 giờ trước',
-                content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel delectus dolorum dolore tempore! Incidunt fugit nobis, fuga tempore placeat modi hic nihil iste quod, dignissimos illum? Veritatis magni tenetur ipsa.'
-            },
-            {
-                user: {
-                    name: 'Lê Hữu Việt Anh',
-                    img: 'https://hoanghamobile.com/Content/v2.0/images/no-avt.png',
-                },
-                time: '4 giờ trước',
-                content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel delectus dolorum dolore tempore! Incidunt fugit nobis, fuga tempore placeat modi hic nihil iste quod, dignissimos illum? Veritatis magni tenetur ipsa.'
-            }
-        ]
+        review: {
+            name: '',
+            email: '',
+            content: ''
+        },
+        reviews: [],
+        user: null
+    }
+    componentDidMount() {
+        axios.get(`/api/review/getProductReviews.php?productId=${this.props.productId}`)
+            .then(res => {
+                this.setState({ reviews: res.data });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+    handleAddReview = (e) => {
+        e.preventDefault();
+        const newReview = {
+            ...this.state.review,
+            productId: this.props.productId,
+        };
+        axios.post('/api/review/add.php', newReview)
+            .then(res => {
+                if (res.status === 200) {
+                    const reviews = [...this.state.reviews];
+                    reviews.push(res.data);
+                    this.setState({ reviews })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    
+    }
+    handleChange = (type) => (e) => {
+        const review = { ...this.state.review };
+        review[type] = e.target.value;
+        this.setState({ review });
+    }
+    handleCalcTime = (createdAt) => {
+        const reviewTime = new Date(createdAt);
+        const timeNow = new Date();
+        const diff = (timeNow.getTime() - reviewTime.getTime()) / 1000;
+        if (diff < 60) return Math.floor(diff) + ' giây trước';
+        else if (diff < 3600) return Math.floor(diff / 60) + ' phút trước';
+        else if (diff < 3600 * 24) return Math.floor(diff / 3600) + ' giờ trước';
+        else if (diff < 3600 * 24 * 30) return Math.floor(diff / (3600 * 24)) + ' ngày trước';
+        else if (diff < 3600 * 24 * 30 * 12) return Math.floor(diff / (3600 * 24 * 30)) + ' tháng trước';
+        else return Math.floor(diff / (3600 * 24 * 30 * 12)) + ' năm trước';
     }
     render() {
+        const { review } = this.state;
         const reviews = this.state.reviews.map((review, index) => (
             <div className="review" key={index}>
                 <div className="review__img" key={index}>
-                    <img src={review.user.img} alt="user"/>
+                    <img src={'https://hoanghamobile.com/Content/v2.0/images/no-avt.png'} alt="user" />
                 </div>
                 <div className="review__info">
-                    <p><b>{review.user.name}</b> - {review.time}</p>
+                    <p><b>{review.name}</b> - {this.handleCalcTime(review.createdAt)}</p>
                     <div className="review__content">
                         {review.content}
                     </div>
                 </div>
             </div>
         ));
+        const loginUser = false;
+        // const loginUser = localStorage.getItem('userToken') ? true : false;
         return (
             <div>
-                <div className="do-review">
-                    <input type="text" placeholder="Họ tên của bạn"/>
-                    <input type="text" placeholder="Email của bạn"/>
-                    <textarea 
+                <form className="do-review" onSubmit={this.handleAddReview}>
+                    {!loginUser &&
+                        <input type="text" placeholder="Họ tên của bạn" value={review.name} required
+                            onChange={this.handleChange('name')} />
+                    }
+                    {!loginUser &&
+                        <input type="text" placeholder="Email của bạn" value={review.email}
+                            onChange={this.handleChange('email')} />
+                    }
+                    <textarea
                         placeholder="Mời bạn nhập câu hỏi hoặc đánh giá cho sản phẩm"
-                        cols="30" rows="10" />
-                    <Button variant="contained"> Gửi bình luận </Button>
-                </div>
+                        cols="30" rows="10" required
+                        value={review.content}
+                        onChange={this.handleChange('content')} />
+                    <Button variant="contained" type='submit'> Gửi bình luận </Button>
+                </form>
                 <div className="review-number">{this.state.reviews.length} bình luận và đánh giá</div>
                 <div className="reviews">
                     {reviews}
