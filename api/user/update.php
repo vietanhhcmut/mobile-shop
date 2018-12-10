@@ -28,6 +28,7 @@
       $id = authen($jwt, $key);
       $user->id = $id->id;
       $result = $user->findUser();
+      echo json_encode($data);
       if ($result) {
         try {
           $user->firstname = $data->firstname;
@@ -36,17 +37,21 @@
           $user->password = $data->password;
           $user->gender = $data->gender;
           $user->birthday = $data->birthday;
-          $user->isAdmin = $data->isAdmin;
           $user->id = $id->id;
 
           if($user->update()) {
             $token = array(
               "data" => array(
-                  "id" => $user->id,
+                  "id" => $user->id
               )
             );
             $jwt = JWT::encode($token, $key);
             http_response_code(200);
+            echo json_encode(
+              array(
+                  "token" => $jwt
+              )
+            );
           }
           else {
             http_response_code(500);

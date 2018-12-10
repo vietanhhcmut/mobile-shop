@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "../../../../constants/axiosInstance";
 import axiosValidate from "../../../../constants/axiosValidate";
 
 class InfoPage extends Component {
@@ -11,19 +10,22 @@ class InfoPage extends Component {
     pass: "",
     gender: "nam",
     birthday: "",
+    passOld: "",
 
     showModal: "",
     showPassword: false,
+    showPasswordOld: false,
     idFirstName: "",
     idLastName: "",
     idEmail: "",
     idPass: "",
+    idPassOld: "",
     validateEmail: ""
   };
 
   componentDidMount() {
     axiosValidate
-      .post("/api/user/getInfoUser.php")
+      .get("/api/user/getInfoUser.php")
       .then(res => {
         this.setState({
           id: res.data.id,
@@ -37,12 +39,10 @@ class InfoPage extends Component {
       .catch(err => console.log(err));
   }
 
-  handleShowPassword = () => {
-    this.setState(prevState => {
-      return {
-        showPassword: !prevState.showPassword
-      };
-    });
+  handleShowPassword = typePass => () => {
+    this.setState(prevState => ({
+      [typePass]: !prevState[typePass]
+    }));
   };
 
   handleUserInput = nameField => e => {
@@ -75,20 +75,29 @@ class InfoPage extends Component {
   };
 
   handleValidateForm = (firstName, lastName, email, pass, passOld) => {
-    firstName === "" &&
+    let check = false;
+    if (firstName === "") {
       this.setState({
         idFirstName: "field-required"
       });
+      check = true;
+    }
 
-    lastName === "" &&
+    if (lastName === "") {
       this.setState({
-        idLastName: "field-required"
+        idLastName: "field-required",
+        err: true
       });
+      check = true;
+    }
 
-    email === "" &&
+    if (email === "") {
       this.setState({
-        idEmail: "field-required"
+        idEmail: "field-required",
+        err: true
       });
+      check = true;
+    }
 
     if (email !== "") {
       let lastAtPos = email.lastIndexOf("@");
@@ -106,57 +115,59 @@ class InfoPage extends Component {
         this.setState({
           validateEmail: "validate-email"
         });
+        check = true;
+      }
+    }
+    if (pass !== "" || passOld !== "") {
+      if (pass === "") {
+        this.setState({
+          idPass: "field-required"
+        });
+        check = true;
+      }
+      if (passOld === "") {
+        this.setState({
+          idPass: "field-required"
+        });
+        check = true;
       }
     }
 
-    pass === "" &&
-      this.setState({
-        idPass: "field-required"
-      });
+    if (check === true) {
+      // co loi
+      return false;
+    } else return true;
   };
 
-  handleUpdateUser = (firstName, lastName, email, pass) => {
-    this.handleValidateForm(firstName, lastName, email, pass);
-    if (firstName !== "" && lastName !== "" && email !== "" && pass !== "") {
-      let lastAtPos = email.lastIndexOf("@");
-      let lastDotPos = email.lastIndexOf(".");
-      if (
-        lastAtPos < lastDotPos &&
-        lastAtPos > 0 &&
-        email.indexOf("@@") === -1 &&
-        lastDotPos > 2 &&
-        email.length - lastDotPos > 2
-      ) {
-        // console.log({
-        //   id: this.state.id,
-        //   email: email,
-        //   password: pass,
-        //   gender: this.state.gender,
-        //   birthday: this.state.birthday,
-        //   lastname: lastName,
-        //   firstname: firstName
-        // });
+  handleUpdateUser = (firstName, lastName, email, pass, passOld) => {
+    const checkInfo = this.handleValidateForm(
+      firstName,
+      lastName,
+      email,
+      pass,
+      passOld
+    );
 
-        axiosValidate
-          .post("/api/user/update.php", {
-            id: this.state.id,
-            email: email,
-            password: pass,
-            gender: this.state.gender,
-            birthday: this.state.birthday,
-            lastname: lastName,
-            firstname: firstName
-          })
-          .then(res => {
-            console.log(res);
-            this.props.history.push("/info");
-          })
-          .catch(err => {
-            this.setState({
-              showModal: "show-modal"
-            });
+    if (checkInfo) {
+      axiosValidate
+        .post("/api/user/update.php", {
+          id: this.state.id,
+          email: email,
+          password: pass,
+          gender: this.state.gender,
+          birthday: this.state.birthday,
+          lastname: lastName,
+          firstname: firstName
+        })
+        .then(res => {
+          console.log(res);
+          this.props.history.push("/info");
+        })
+        .catch(err => {
+          this.setState({
+            showModal: "show-modal"
           });
-      }
+        });
     }
   };
 
@@ -180,7 +191,10 @@ class InfoPage extends Component {
       idPass,
       validateEmail,
       gender,
-      birthday
+      birthday,
+      idPassOld,
+      passOld,
+      showPasswordOld
     } = this.state;
     return (
       <div>
@@ -293,6 +307,37 @@ class InfoPage extends Component {
 
                 <div className="form-group row ">
                   <label className="col-md-3 form-control-label required">
+                    Mật khẩu cũ
+                  </label>
+                  <div className="col-md-6">
+                    <div className="input-group js-parent-focus">
+                      <input
+                        name="passOld"
+                        className={"form-control " + idPassOld}
+                        value={passOld}
+                        onChange={this.handleUserInput("idPassOld")}
+                        type={showPasswordOld ? "text" : "password"}
+                      />
+                      <span className="input-group-btn">
+                        <button
+                          onClick={this.handleShowPassword("showPasswordOld")}
+                          type="button"
+                          className="input-group-btn show"
+                        >
+                          {showPasswordOld ? "Ẩn" : "Hiện"}
+                        </button>
+                      </span>
+                    </div>
+                    <div className={"field-hide" + idPassOld}>
+                      Hãy nhập "Mật khẩu cũ" của bạn
+                    </div>
+                  </div>
+
+                  <div className="col-md-3 form-control-comment" />
+                </div>
+
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label required">
                     Mật khẩu mới
                   </label>
                   <div className="col-md-6">
@@ -306,7 +351,7 @@ class InfoPage extends Component {
                       />
                       <span className="input-group-btn">
                         <button
-                          onClick={this.handleShowPassword}
+                          onClick={this.handleShowPassword("showPassword")}
                           type="button"
                           className="input-group-btn show"
                         >
@@ -341,7 +386,13 @@ class InfoPage extends Component {
               <footer className="page-content__footer">
                 <button
                   onClick={() =>
-                    this.handleUpdateUser(firstName, lastName, email, pass)
+                    this.handleUpdateUser(
+                      firstName,
+                      lastName,
+                      email,
+                      pass,
+                      passOld
+                    )
                   }
                   className="button-save"
                   data-link-action="save-customer"
