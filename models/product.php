@@ -314,7 +314,7 @@
 
     public function getTop() {
       // Create query
-      $query = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt LIMIT 10';
+      $query = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt DESC LIMIT 10';
 
       $stmt = $this->conn->prepare($query);
       $stmt->execute();
@@ -360,7 +360,7 @@
 
     public function getTopCategoryProds() {
       // Create query
-      $query = 'SELECT * FROM ' . $this->table . ' WHERE categoryId= ? ORDER BY createdAt LIMIT 10';
+      $query = 'SELECT * FROM ' . $this->table . ' WHERE categoryId= ? ORDER BY createdAt DESC LIMIT 10';
 
       $stmt = $this->conn->prepare($query);
       $stmt->bindParam(1, $this->categoryId);

@@ -8,8 +8,8 @@
 .category__background img {
     width: 100%;
     height: auto;
-    max-height: 300px;
-    object-fit: cover;
+    max-height: 400px;
+    object-fit: fill;
 }
 .category__products {
     margin-top: 20px;
