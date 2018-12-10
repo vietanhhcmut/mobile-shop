@@ -8,7 +8,7 @@ class InfoPage extends Component {
     lastName: "",
     email: "",
     pass: "",
-    gender: true,
+    gender: "",
     birthday: "",
     passOld: "",
 
@@ -32,7 +32,7 @@ class InfoPage extends Component {
           firstName: res.data.firstname,
           lastName: res.data.lastname,
           email: res.data.email,
-          gender: res.data.gender,
+          gender: res.data.gender === "1" ? true : false,
           birthday: res.data.birthday
         });
       })
