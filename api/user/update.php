@@ -5,27 +5,32 @@
   header("Access-Control-Allow-Methods: POST");
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-  include_once '../../config/database.php';
-  include_once '../../models/user.php';
-  
-  $database = new Database();
-  $db = $database->getConnection();
-  $user = new User($db);
-
-  $data = json_decode(file_get_contents("php://input"));
-  $headers = apache_request_headers();
-  $jwt = $headers['Authorization'];
-
-  $url = $_SERVER['DOCUMENT_ROOT'];
-  include_once $url . '/config/core.php';
-  include_once $url. '/helper/authen.php';
-
-  if ($jwt) {
-    // $id = authen($jwt, $key);
-    echo json_encode("hi");
+  if($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+    http_response_code(200);
   }
   else {
-    http_response_code(403);
+    include_once '../../config/database.php';
+    include_once '../../models/user.php';
+    
+    $database = new Database();
+    $db = $database->getConnection();
+    $user = new User($db);
+  
+    $data = json_decode(file_get_contents("php://input"));
+    $headers = apache_request_headers();
+    $jwt = $headers['Authorization'];
+  
+    $url = $_SERVER['DOCUMENT_ROOT'];
+    include_once $url . '/config/core.php';
+    include_once $url. '/helper/authen.php';
+  
+    if ($jwt && authen($jwt, $key)) {
+      $id = authen($jwt, $key);
+      echo json_encode($id->id);
+    }
+    else {
+      http_response_code(403);
+    }
   }
 
 

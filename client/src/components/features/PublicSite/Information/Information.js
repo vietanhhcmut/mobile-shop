@@ -22,16 +22,14 @@ class InfoPage extends Component {
   };
 
   componentDidMount() {
-    axios
-      .post("/api/user/validate_token.php", {
-        jwt: localStorage.getItem("userToken")
-      })
+    axiosValidate
+      .post("/api/user/validate_token.php")
       .then(respond => {
-        axios
-          .post("/api/user/info.php", { id: respond.data.data.id })
+        axiosValidate
+          .post("/api/user/info.php", { id: respond.data.id })
           .then(res => {
             this.setState({
-              id: respond.data.data.id,
+              id: respond.data.id,
               firstName: res.data.firstname,
               lastName: res.data.lastname,
               email: res.data.email,
