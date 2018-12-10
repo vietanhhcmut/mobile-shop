@@ -5,14 +5,17 @@
     private $table = 'orders';
 
     public $id;
-    public $feeShip;
     public $totalPrice;
     public $city;
     public $district;
-    public $ward;
-    public $address;
+    public $wards;
+    public $street;
     public $phonenumber;
-    public $type;
+    public $name;
+    public $gender;
+    public $email;
+    public $paid;
+    public $delivered;
 
     public function __construct($db) {
       $this->conn = $db;
@@ -31,50 +34,50 @@
     // Add 
     public function add() {
       // Create query
-      $query = 'INSERT INTO ' . 
-          $this->table . '
+      $query = 'INSERT INTO ' . $this->table . '
         SET
-        feeShip = :feeShip,
-        totalPrice = :totalPrice,
-        city = :city,
-        district = :district,
-        ward = :ward,
-        address = :address,
-        phonenumber = :phonenumber,
-        type = :type';
+          totalPrice = :totalPrice,
+          city = :city,
+          district = :district,
+          wards = :wards,
+          street = :street,
+          phonenumber = :phonenumber,
+          name = :name,
+          gender = :gender,
+          email = :email,
+          paid = :paid';
 
       // Prepare statement
       $stmt = $this->conn->prepare($query);
 
       // Clean data
-      $this->feeShip = htmlspecialchars(strip_tags($this->feeShip));
       $this->totalPrice = htmlspecialchars(strip_tags($this->totalPrice));
       $this->city = htmlspecialchars(strip_tags($this->city));
       $this->district = htmlspecialchars(strip_tags($this->district));
-      $this->ward = htmlspecialchars(strip_tags($this->ward));
-      $this->address = htmlspecialchars(strip_tags($this->address));
+      $this->wards = htmlspecialchars(strip_tags($this->wards));
+      $this->street = htmlspecialchars(strip_tags($this->street));
       $this->phonenumber = htmlspecialchars(strip_tags($this->phonenumber));
-      $this->type = htmlspecialchars(strip_tags($this->type));
+      $this->name = htmlspecialchars(strip_tags($this->name));
+      $this->gender = htmlspecialchars(strip_tags($this->gender));
+      $this->email = htmlspecialchars(strip_tags($this->email));
+      $this->paid = htmlspecialchars(strip_tags($this->paid));
 
-      
       // Bind data
-      $stmt->bindParam(':feeShip', $this->feeShip);
       $stmt->bindParam(':totalPrice', $this->totalPrice);
       $stmt->bindParam(':city', $this->city);
       $stmt->bindParam(':district', $this->district);
-      $stmt->bindParam(':ward', $this->ward);
-      $stmt->bindParam(':address', $this->address);
+      $stmt->bindParam(':wards', $this->wards);
+      $stmt->bindParam(':street', $this->street);
       $stmt->bindParam(':phonenumber', $this->phonenumber);
-      $stmt->bindParam(':type', $this->type);
+      $stmt->bindParam(':name', $this->name);
+      $stmt->bindParam(':gender', $this->gender);
+      $stmt->bindParam(':email', $this->email);
+      $stmt->bindParam(':paid', $this->paid);
 
       // Execute query
-      if($stmt->execute()) {
-        return true;
+      if ($stmt->execute()) {
+        return $this->conn->lastInsertId();
       }
-
-      // Print error if something goes wrong
-      printf("Error: %s.\n", $stmt->error);
-
       return false;
     }
 
@@ -96,6 +99,37 @@
       if($stmt->execute()) {
         return true;
       }
+      printf("Error: %s.\n", $stmt->error);
+
+      return false;
+    }
+
+    public function update() {
+      // Create query
+      $query = 'UPDATE ' . 
+          $this->table . '
+        SET
+          delivered = :delivered
+
+        WHERE
+          id = :id';
+
+      // Prepare statement
+      $stmt = $this->conn->prepare($query);
+
+      $this->delivered = htmlspecialchars(strip_tags($this->delivered));
+
+
+      // Bind data
+      $stmt->bindParam(':id', $this->id);
+      $stmt->bindParam(':delivered', $this->delivered);
+
+      // Execute query
+      if($stmt->execute()) {
+        return true;
+      }
+
+      // Print error if something goes wrong
       printf("Error: %s.\n", $stmt->error);
 
       return false;

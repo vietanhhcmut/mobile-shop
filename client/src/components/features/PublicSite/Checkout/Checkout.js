@@ -3,43 +3,49 @@ import './Checkout.css';
 import { bankImages } from '../../../../constants/constants';
 import Cart from './Cart/Cart';
 import Context from '../../../../Context';
+import axiosValidate from '../../../../constants/axiosValidate';
+import axios from '../../../../constants/axiosInstance';
+import { Link } from 'react-router-dom';
 
 class Checkout extends Component {
     static contextType = Context;
     state = {
         currentBlock: 0,
         payMethod: 'cash',
-        user: {
-            firstname: 'Đào',
-            lastname: 'Mai'
+        user: null,
+        guest: {
+            name: '',
+            gender: true,
+            email: ''
         },
-        isGuest: true,
         showLoginPass: false,
         showSignupPass: false,
-        selectedBank: 0
+        selectedBank: 0,
+        address: {
+            city: '',
+            district: '',
+            wards: '',
+            street: '',
+            phonenumber: ''
+        }
     }
     componentDidMount() {
-        // if (localStorage.getItem('userToken')) {
-        //     axiosValidate.get('/api/user/info.php')
-        //         .then(res => {
-        //             this.setState({ user: res.data });
-        //         })
-        //         .catch(err => {
-        //             console.log(err);
-        //         });
-        // }
+        if (localStorage.getItem('userToken')) {
+            axiosValidate().get('/api/user/getInfoUser.php')
+                .then(res => {
+                    this.setState({ user: res.data });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     }
     handleChooseBlock = (block) => () => {
+        if (block > this.state.currentBlock) return;
         this.setState({ currentBlock: block });
     }
     handleChangePayMethod = (payMethod) => () => {
         this.setState({ payMethod });
-    }
-    handleChooseLogin = () => {
-        this.setState({ isGuest: false });
-    }
-    handleChooseGuest = () => {
-        this.setState({ isGuest: true });
     }
     handleToggleShowLoginPass = () => {
         this.setState(prevState => {
@@ -52,7 +58,48 @@ class Checkout extends Component {
         });
     }
     handleOrder = () => {
-        alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!')
+        const { user, address, guest, payMethod } = this.state;
+        if (user) {
+            axiosValidate().post('/api/order/userAdd.php', {
+                ...address,
+                totalPrice: this.context.totalPrice,
+                name: user.lastname + ' ' + user.firstname,
+                gender: user.gender,
+                email: user.email,
+                paid: payMethod === 'cash' ? false : true
+            })
+                .then(res => {
+                    if (res.status === 200) {
+                        alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!');
+                        this.context.handleGetCart();
+                        this.props.history.push("/");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+        else {
+            axios.post('/api/order/guestAdd.php', {
+                cart: this.context.cart,
+                ...address,
+                totalPrice: this.context.totalPrice,
+                ...guest,
+                paid: payMethod === 'cash' ? false : true
+            })
+                .then(res => {
+                    if (res.status === 200) {
+                        console.log(res.data);
+                        localStorage.removeItem('cart');
+                        alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!');
+                        this.context.handleGetCart();
+                        this.props.history.push("/");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     }
     handleChooseBank = (index) => () => {
         this.setState({ selectedBank: index });
@@ -62,10 +109,37 @@ class Checkout extends Component {
         this.context.handleGetCart();
         this.props.history.push('/');
     }
+    handleChangeAddress = (type) => (e) => {
+        const address = { ...this.state.address };
+        address[type] = e.target.value;
+        this.setState({ address });
+    }
+    handleChangeGuest = (type) => (e) => {
+        const guest = { ...this.state.guest };
+        guest[type] = e.target.value;
+        this.setState({ guest });
+    }
+    handleContinue = (block) => (e) => {
+        e.preventDefault();
+        this.setState({ currentBlock: block });
+    }
+    handleChangeGender = (gender) => () => {
+        const guest = { ...this.state.guest };
+        guest['gender'] = gender;
+        this.setState({ guest });
+    }
     render() {
-        const { currentBlock, payMethod, isGuest, showSignupPass, showLoginPass, selectedBank, user } = this.state;
+        const { currentBlock, payMethod, selectedBank, user, address, guest } = this.state;
         if (this.context.cart.length === 0) return (
-            <p>Không có sản phẩm nào trong giỏ hàng của bạn. Quay lại mua nào!</p>
+            <div>
+                <p style={{ margin: '20px auto', textAlign: 'center' }}>
+                    <em>Không có sản phẩm nào trong giỏ hàng của bạn. Quay lại mua nào!</em>
+                </p>
+                <Link to='/' className='left-side__continue-shopping'>
+                    <i className="material-icons">keyboard_arrow_left</i>
+                    <span>Tiếp tục mua hàng</span>
+                </Link>
+            </div>
         );
         else
             return (
@@ -77,85 +151,45 @@ class Checkout extends Component {
                                 <span>THÔNG TIN CÁ NHÂN</span>
                             </div>
                             {currentBlock === 0 &&
-                                user ?
-                                <div className='block__content'>
-                                    <p>Lấy thông tin từ tài khoản {user.lastname + ' ' + user.firstname}</p>
-                                    <p>Nếu không phải là bạn.
-                                    <span onClick={this.handleLogout}> Đăng xuất</span>
-                                    </p>
-                                </div>
-                                :
-                                <div className='block__content'>
-                                    <div className='content__guest-or-login'>
-                                        <span className={'guest-or-login ' + (isGuest ? 'guest-or-signin__active' : '')}
-                                            onClick={this.handleChooseGuest}>Khách</span>
-                                        |
-                                    <span className={'guest-or-login ' + (isGuest ? '' : 'guest-or-signin__active')}
-                                            onClick={this.handleChooseLogin}>Đăng nhập</span>
+                                (user ?
+                                    <div className='block__content'>
+                                        <p>Lấy thông tin từ tài khoản <Link to='/info'>{user.lastname + ' ' + user.firstname}</Link></p>
+                                        <p>Nếu không phải là bạn.<span onClick={this.handleLogout}> Đăng xuất</span></p>
+                                        <button className='content__continue-button' style={{ margin: '0 auto' }}
+                                            onClick={this.handleContinue(1)}>TIẾP TỤC</button>
                                     </div>
-                                    {isGuest ?
+                                    :
+                                    <form className='block__content' onSubmit={this.handleContinue(1)}>
                                         <div className='content__personal-info'>
                                             <div className='personal-info__row'>
                                                 <span>Họ và tên</span>
-                                                <input type="text" />
+                                                <input type="text" required
+                                                    value={guest.name}
+                                                    onChange={this.handleChangeGuest('name')} />
                                             </div>
                                             <div className='personal-info__row'>
                                                 <span>Giới tính</span>
                                                 <div className='row__gender'>
-                                                    <span><input type="radio" name='gender' defaultChecked /> Nam</span>
-                                                    <span><input type="radio" name='gender' /> Nữ</span>
+                                                    <span><input type="radio" name='gender' defaultChecked
+                                                        onChange={this.handleChangeGender(true)} /> Nam</span>
+                                                    <span><input type="radio" name='gender'
+                                                        onChange={this.handleChangeGender(false)} /> Nữ</span>
                                                 </div>
                                             </div>
                                             <div className='personal-info__row'>
                                                 <span>Email</span>
-                                                <input type="text" />
+                                                <input type="text"
+                                                    value={guest.email}
+                                                    onChange={this.handleChangeGuest('email')} />
                                             </div>
-                                            <div className='personal-info__signup-row'>
-                                                <span><b>Tạo tài khoản</b> <i>(Không bắt buộc)</i></span>
-                                                <p>Để tiết kiệm thời gian hơn trong đơn hàng tiếp theo của bạn.</p>
-                                            </div>
-                                            <div className='personal-info__row'>
-                                                <span>Mật khẩu</span>
-                                                <div className='row__password'>
-                                                    <input type={showLoginPass ? "text" : "password"} />
-                                                    <button onClick={this.handleToggleShowLoginPass}>
-                                                        {showLoginPass ? 'Ẩn' : 'Hiện'}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div className='personal-info__row'>
-                                                <span>Ngày sinh</span>
-                                                <input type="date" />
-                                            </div>
-                                            <button className='content__continue-button'
-                                                onClick={this.handleChooseBlock(1)}>TIẾP TỤC</button>
-                                        </div>
-                                        :
-                                        <div className='content__personal-info'>
-                                            <div className='personal-info__row'>
-                                                <span>Email</span>
-                                                <input type="text" />
-                                            </div>
-                                            <div className='personal-info__row'>
-                                                <span>Mật khẩu</span>
-                                                <div className='row__password'>
-                                                    <input type={showSignupPass ? "text" : "password"} />
-                                                    <button onClick={this.handleToggleShowSignupPass}>
-                                                        {showSignupPass ? 'Ẩn' : 'Hiện'}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <p className='personal-info__forget-password'><span>Quên mật khẩu?</span></p>
-                                            <button className='content__continue-button'
-                                                onClick={this.handleChooseBlock(1)}>TIẾP TỤC</button>
-                                        </div>
-                                    }
-                                </div>
 
-                            }
+                                            <button className='content__continue-button' type='submit'>TIẾP TỤC</button>
+                                        </div>
+                                    </form>
+                                )}
                         </div>
 
-                        <div className='info__block'>
+                        <form className='info__block' onSubmit={this.handleContinue(2)}>
                             <div className='block__title' onClick={this.handleChooseBlock(1)}>
                                 <span>2</span>
                                 <span>ĐỊA CHỈ GIAO HÀNG</span>
@@ -165,30 +199,39 @@ class Checkout extends Component {
                                     <div className='content__personal-info'>
                                         <div className='personal-info__row'>
                                             <span>Tỉnh/Thành phố</span>
-                                            <input type="text" />
+                                            <input type="text" required
+                                                value={address.city}
+                                                onChange={this.handleChangeAddress('city')} />
                                         </div>
                                         <div className='personal-info__row'>
                                             <span>Quận/Huyện</span>
-                                            <input type="text" />
+                                            <input type="text" required
+                                                value={address.district}
+                                                onChange={this.handleChangeAddress('district')} />
                                         </div>
                                         <div className='personal-info__row'>
                                             <span>Phường/Xã</span>
-                                            <input type="text" />
+                                            <input type="text" required
+                                                value={address.wards}
+                                                onChange={this.handleChangeAddress('wards')} />
                                         </div>
                                         <div className='personal-info__row'>
                                             <span>Số nhà, Đường</span>
-                                            <input type="text" />
+                                            <input type="text" required
+                                                value={address.street}
+                                                onChange={this.handleChangeAddress('street')} />
                                         </div>
                                         <div className='personal-info__row'>
                                             <span>Số điện thoại</span>
-                                            <input type="text" />
+                                            <input type="text" required
+                                                value={address.phonenumber}
+                                                onChange={this.handleChangeAddress('phonenumber')} />
                                         </div>
-                                        <button className='content__continue-button'
-                                            onClick={this.handleChooseBlock(2)}>TIẾP TỤC</button>
+                                        <button className='content__continue-button' type='submit'>TIẾP TỤC</button>
                                     </div>
                                 </div>
                             }
-                        </div>
+                        </form>
 
                         <div className='info__block'>
                             <div className='block__title' onClick={this.handleChooseBlock(2)}>

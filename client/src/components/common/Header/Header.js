@@ -13,7 +13,8 @@ class Header extends Component {
     active: "",
     toggle: false,
     showMenu: false,
-    categories: []
+    categories: [],
+    keyword: ''
   }
   componentDidMount() {
     this.setState({
@@ -58,8 +59,19 @@ class Header extends Component {
       };
     });
   };
+  handleChangeSearch = (e) => {
+    this.setState({ keyword: e.target.value });
+  }
+  handleEnterSearch = (e) => {
+    if (e.keyCode === 13 || e.which === 13) this.handleSearch();
+  }
+  handleSearch = () => {
+    const { keyword } = this.state;
+    if (keyword === '') return;
+    this.props.history.push('/search/' + keyword);
+  }
   render() {
-    const { active, toggle, showMenu, categories } = this.state;
+    const { active, toggle, showMenu, categories, keyword } = this.state;
     return (
       <header>
         <div className="logo">
@@ -90,8 +102,12 @@ class Header extends Component {
             type="text"
             placeholder="Tìm kiếm..."
             autoComplete="off"
+            value={keyword}
+            onChange={this.handleChangeSearch}
+            onKeyPress={this.handleEnterSearch}
           />
-          <i className="material-icons search-big__icon">search</i>
+          <i className="material-icons search-big__icon"
+            onClick={this.handleSearch}>search</i>
         </div>
         <nav>
           <div className="navbar-big">
@@ -128,8 +144,12 @@ class Header extends Component {
                 type="text"
                 placeholder="Tìm kiếm..."
                 autoComplete="off"
+                value={keyword}
+                onChange={this.handleChangeSearch}
+                onKeyPress={this.handleEnterSearch}
               />
-              <i className="material-icons search-big2__icon">search</i>
+              <i className="material-icons search-big2__icon"
+                onClick={this.handleSearch}>search</i>
             </div>
           </div>
 

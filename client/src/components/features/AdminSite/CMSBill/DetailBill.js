@@ -5,15 +5,19 @@ import { formatPrice } from './../../../../constants/constants';
 export default class NewProduct extends Component {
   state = {
     items: {
-        id: '',
-        feeShip: '',
-        totalPrice: '',
         city: "",
+        createdAt: "",
+        delivered: "",
         district: "",
-        ward: "",
-        address: "",
+        email: "",
+        gender: "",
+        id: "",
+        name: "",
+        paid: "",
         phonenumber: "",
-        type: false
+        street: "",
+        totalPrice: "",
+        wards: ""
     }
   }
   componentDidMount() {
@@ -37,13 +41,13 @@ export default class NewProduct extends Component {
 
                     <div className="modal-body CMSModal__body">
                         <p>Mã đơn hàng: {items.id}</p>
-                        <p>Khách hàng: Duyên</p>
+                        <p>Khách hàng: {items.name}</p>
                         <p>Sản phẩm: Samsung</p>
                         <p>Giá tiền: {formatPrice(items.totalPrice)}</p>
                         <p>Tiền ship: {formatPrice(items.feeShip)}</p>
-                        <p>Địa chỉ: {items.address + "," + items.ward + "," + items.district + "," + items.city}</p>
+                        <p>Địa chỉ: {items.street + "," + items.wards + "," + items.district + "," + items.city}</p>
                         <p>Số điện thoại: {items.phonenumber}</p>
-                        <p>Tình trạng đơn hàng: {items.type? "Đã giao":"Đang xử lý"}</p>
+                        <p>Tình trạng đơn hàng: {items.delivered === "1"? "Đã giao":"Đang xử lý"}</p>
                     </div>
                     <button onClick={this.props.onCloseModal} className="closeModal">
                         <i class="fas fa-times"></i>

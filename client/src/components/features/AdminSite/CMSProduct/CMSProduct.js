@@ -106,6 +106,7 @@ export default class CMSProduct extends Component {
   }
   render() {
     const { open, categories, category, items } = this.state;
+    console.log(items);
     const listItem = items.map(item => (
       <div className="dashboard__product" key={item.id} >
         <img src={item.imgs[0]} alt="item" />

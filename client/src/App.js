@@ -33,7 +33,9 @@ class App extends Component {
         });
     }
     else {
-      this.setState({ cart: JSON.parse(localStorage.getItem("cart")) || [] });
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      this.setState({ cart });
+      this.handleCalcTotalPrice(cart);
     }
   }
   handleCalcTotalPrice = cart => {

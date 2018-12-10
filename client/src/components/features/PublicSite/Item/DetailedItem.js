@@ -62,7 +62,7 @@ class DetailedItem extends Component {
                     <div className="previewed-item-detail__price">
                         {formatPrice(calcDiscountPrice(item.price, item.saleoff))}
                         {
-                            item.saleoff ?
+                            parseInt(item.saleoff) ?
                                 <span className="previewed-item-detail-saleoff">
                                     <span>{formatPrice(item.price)}</span>
                                     <span>Tiết kiệm {item.saleoff}</span>

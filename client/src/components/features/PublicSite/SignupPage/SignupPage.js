@@ -9,7 +9,7 @@ class SignupPage extends Component {
     lastName: "",
     email: "",
     pass: "",
-    gender: "nam",
+    gender: true, //nam
     birthday: "",
 
     showModal: "",
@@ -39,15 +39,9 @@ class SignupPage extends Component {
     });
   };
 
-  handleChangeGenderMale = () => {
+  handleChangeGender = gender => () => {
     this.setState({
-      gender: "nam"
-    });
-  };
-
-  handleChangeGenderFemale = () => {
-    this.setState({
-      gender: "nu"
+      gender
     });
   };
 
@@ -189,8 +183,8 @@ class SignupPage extends Component {
                         <input
                           name="id_gender"
                           type="radio"
-                          checked={gender === "nam" ? true : false}
-                          onChange={this.handleChangeGenderMale}
+                          checked={gender}
+                          onChange={this.handleChangeGender(true)}
                         />
                       </span>
                       Nam
@@ -200,8 +194,8 @@ class SignupPage extends Component {
                         <input
                           name="id_gender"
                           type="radio"
-                          checked={gender === "nu" ? true : false}
-                          onChange={this.handleChangeGenderFemale}
+                          checked={!gender}
+                          onChange={this.handleChangeGender(false)}
                         />
                       </span>
                       Nữ
