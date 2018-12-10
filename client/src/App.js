@@ -15,9 +15,6 @@ class App extends Component {
     totalPrice: 0,
     addToCart: false,
   };
-  componentDidMount() {
-    this.handleGetCart();
-  }
   handleGetCart = () => {
     if (localStorage.getItem('userToken')) {
       axiosValidate().get('/api/cartItem/getUserCart.php')
@@ -36,7 +33,9 @@ class App extends Component {
         });
     }
     else {
-      this.setState({ cart: JSON.parse(localStorage.getItem("cart")) || [] });
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      this.setState({ cart });
+      this.handleCalcTotalPrice(cart);
     }
   }
   handleCalcTotalPrice = cart => {

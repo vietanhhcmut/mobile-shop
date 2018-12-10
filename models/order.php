@@ -14,6 +14,7 @@
     public $name;
     public $gender;
     public $email;
+    public $paid;
 
     public function __construct($db) {
       $this->conn = $db;
@@ -42,7 +43,8 @@
           phonenumber = :phonenumber,
           name = :name,
           gender = :gender,
-          email = :email';
+          email = :email,
+          paid = :paid';
 
       // Prepare statement
       $stmt = $this->conn->prepare($query);
@@ -57,7 +59,8 @@
       $this->name = htmlspecialchars(strip_tags($this->name));
       $this->gender = htmlspecialchars(strip_tags($this->gender));
       $this->email = htmlspecialchars(strip_tags($this->email));
-      
+      $this->paid = htmlspecialchars(strip_tags($this->paid));
+
       // Bind data
       $stmt->bindParam(':totalPrice', $this->totalPrice);
       $stmt->bindParam(':city', $this->city);
@@ -68,6 +71,7 @@
       $stmt->bindParam(':name', $this->name);
       $stmt->bindParam(':gender', $this->gender);
       $stmt->bindParam(':email', $this->email);
+      $stmt->bindParam(':paid', $this->paid);
 
       // Execute query
       if ($stmt->execute()) {

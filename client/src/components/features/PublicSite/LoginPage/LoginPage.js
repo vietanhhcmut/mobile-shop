@@ -42,6 +42,7 @@ class LoginPage extends Component {
       })
       .then(res => {
         localStorage.setItem("userToken", res.data.token);
+        this.context.handleGetCart();
         this.props.history.push("/");
       })
       .catch(err => {

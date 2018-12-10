@@ -14,8 +14,13 @@ import SignupPage from "./SignupPage/SignupPage";
 import HomePage from "./HomePage/HomePage";
 import CartModal from "../../common/CartModal/CartModal";
 import PasswordRecoveryPage from "./PasswordRecoveryPage/PasswordRecoveryPage";
+import Context from "../../../Context";
 
 class PublicSite extends Component {
+  static contextType = Context;
+  componentDidMount() {
+    this.context.handleGetCart();
+  }
   render() {
     return (
       <div className="public-site">

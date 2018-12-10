@@ -23,11 +23,8 @@
     
       if (!$token) http_response_code(400); 
       else {
-        $auth = authen($token, $key);
-        if ($auth) {
-
-          $userId = $auth->id; 
-          
+        $userId = authen($token, $key);
+        if ($userId) {
           $database = new Database();
           $db = $database->getConnection();
         
@@ -48,6 +45,7 @@
           $order->name = $data->name;
           $order->gender = $data->gender;
           $order->email = $data->email;
+          $order->paid = $data->paid;
          
           $orderId = $order->add();
           if ($orderId) {
@@ -57,11 +55,13 @@
               $orderitem->quantity = $item['quantity'];
               $orderitem->color = $item['color'];
               $orderitem->orderId = $orderId;
-              if ($orderitem->add()) http_response_code(200);
-              else http_response_code(500);
+              $orderitem->add();
+
+              $cartitem->id = $item['id'];
+              $cartitem->deleteWithId();
             }
-          }
-        
+            http_response_code(200);
+          } 
           else{
             http_response_code(500);
           }

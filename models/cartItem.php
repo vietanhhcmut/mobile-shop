@@ -144,5 +144,21 @@ class CartItem {
     return false;
   }
 
+  public function deleteWithId(){
+    // Create query
+    $query = "DELETE FROM " . $this->table_name . " WHERE id=?";
+
+    // Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+    // Bind data
+    $stmt->bindParam(1, $this->id);
+
+    // execute the query
+    if ($stmt->execute()) return true;
+    return false;
+  }
+
+
 
 }

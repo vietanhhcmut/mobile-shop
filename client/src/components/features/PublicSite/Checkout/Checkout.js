@@ -5,6 +5,7 @@ import Cart from './Cart/Cart';
 import Context from '../../../../Context';
 import axiosValidate from '../../../../constants/axiosValidate';
 import axios from '../../../../constants/axiosInstance';
+import { Link } from 'react-router-dom';
 
 class Checkout extends Component {
     static contextType = Context;
@@ -46,12 +47,6 @@ class Checkout extends Component {
     handleChangePayMethod = (payMethod) => () => {
         this.setState({ payMethod });
     }
-    handleChooseLogin = () => {
-        this.setState({ isGuest: false });
-    }
-    handleChooseGuest = () => {
-        this.setState({ isGuest: true });
-    }
     handleToggleShowLoginPass = () => {
         this.setState(prevState => {
             return { showLoginPass: !prevState.showLoginPass };
@@ -63,21 +58,48 @@ class Checkout extends Component {
         });
     }
     handleOrder = () => {
-        const { user, address } = this.state;
-        axiosValidate().post('/api/order/add.php', {
-            ...address,
-            totalPrice: this.context.totalPrice,
-            name: user.lastname + ' ' + user.firstname,
-            gender: user.gender,
-            email: user.email
-        })
-            .then(res => {
-                if (res.status === 200)
-                    alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!');
+        const { user, address, guest, payMethod } = this.state;
+        if (user) {
+            axiosValidate().post('/api/order/userAdd.php', {
+                ...address,
+                totalPrice: this.context.totalPrice,
+                name: user.lastname + ' ' + user.firstname,
+                gender: user.gender,
+                email: user.email,
+                paid: payMethod === 'cash' ? false : true
             })
-            .catch(err => {
-                console.log(err);
-            });
+                .then(res => {
+                    if (res.status === 200) {
+                        alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!');
+                        this.context.handleGetCart();
+                        this.props.history.push("/");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+        else {
+            axios.post('/api/order/guestAdd.php', {
+                cart: this.context.cart,
+                ...address,
+                totalPrice: this.context.totalPrice,
+                ...guest,
+                paid: payMethod === 'cash' ? false : true
+            })
+                .then(res => {
+                    if (res.status === 200) {
+                        console.log(res.data);
+                        localStorage.removeItem('cart');
+                        alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!');
+                        this.context.handleGetCart();
+                        this.props.history.push("/");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     }
     handleChooseBank = (index) => () => {
         this.setState({ selectedBank: index });
@@ -101,10 +123,23 @@ class Checkout extends Component {
         e.preventDefault();
         this.setState({ currentBlock: block });
     }
+    handleChangeGender = (gender) => () => {
+        const guest = { ...this.state.guest };
+        guest['gender'] = gender;
+        this.setState({ guest });
+    }
     render() {
-        const { currentBlock, payMethod, isGuest, showSignupPass, showLoginPass, selectedBank, user, address, guest } = this.state;
+        const { currentBlock, payMethod, selectedBank, user, address, guest } = this.state;
         if (this.context.cart.length === 0) return (
-            <p>Không có sản phẩm nào trong giỏ hàng của bạn. Quay lại mua nào!</p>
+            <div>
+                <p style={{ margin: '20px auto', textAlign: 'center' }}>
+                    <em>Không có sản phẩm nào trong giỏ hàng của bạn. Quay lại mua nào!</em>
+                </p>
+                <Link to='/' className='left-side__continue-shopping'>
+                    <i className="material-icons">keyboard_arrow_left</i>
+                    <span>Tiếp tục mua hàng</span>
+                </Link>
+            </div>
         );
         else
             return (
@@ -135,17 +170,19 @@ class Checkout extends Component {
                                             <div className='personal-info__row'>
                                                 <span>Giới tính</span>
                                                 <div className='row__gender'>
-                                                    <span><input type="radio" name='gender' defaultChecked /> Nam</span>
-                                                    <span><input type="radio" name='gender' /> Nữ</span>
+                                                    <span><input type="radio" name='gender' defaultChecked
+                                                        onChange={this.handleChangeGender(true)} /> Nam</span>
+                                                    <span><input type="radio" name='gender'
+                                                        onChange={this.handleChangeGender(false)} /> Nữ</span>
                                                 </div>
                                             </div>
                                             <div className='personal-info__row'>
                                                 <span>Email</span>
-                                                <input type="text" required
+                                                <input type="text"
                                                     value={guest.email}
                                                     onChange={this.handleChangeGuest('email')} />
                                             </div>
-                                        
+
                                             <button className='content__continue-button' type='submit'>TIẾP TỤC</button>
                                         </div>
                                     </form>
