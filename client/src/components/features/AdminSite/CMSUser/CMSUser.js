@@ -26,7 +26,20 @@ export default class CMSUer extends Component {
       buttons: { cancel: true, confirm: true }
     }).then(isConfirm => {
       if (isConfirm) {
-        console.log(item);
+        axios.post("/api/user/delete.php",
+          {
+            id: item
+          }
+        )
+          .then(res => {
+            const users = this.state.users.filter(item => item.id !== res.data.id);
+            this.setState({
+              users
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     });
   }
@@ -46,7 +59,7 @@ export default class CMSUer extends Component {
         <tbody>
           {users.map((item, index) => (
             <tr key={index}>
-              <td>{item.name}</td>
+              <td>{item.firstname} {item.lastname}</td>
 
               <td>{item.email}</td>
 

@@ -167,7 +167,7 @@ class User{
 
   //get all user
   public function getAll() {
-    $query = 'SELECT * FROM ' . $this->table;
+    $query = 'SELECT * FROM ' . $this->table_name . ' WHERE isAdmin = 0';
        
     $stmt = $this->conn->prepare($query);
     $stmt->execute();

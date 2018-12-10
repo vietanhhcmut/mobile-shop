@@ -36,8 +36,7 @@ export default class CMSUer extends Component {
           }
         )
           .then(res => {
-            const categories = this.state.categories.filter(item => item.id !== res.data.id);
-            console.log(categories);
+            const categories = this.state.categories.filter(category => category.id !== item);
             this.setState({
               categories
             });
@@ -72,7 +71,9 @@ export default class CMSUer extends Component {
   }
   handlegetAll = (item) => {
     const categories = [...this.state.categories];
+    
     categories.push(item);
+    console.log(categories);
     this.setState({
       categories
     });
@@ -80,6 +81,7 @@ export default class CMSUer extends Component {
 
   render() {
     const { categories, open } = this.state;
+    console.log(categories);
     let table = (
       <table className="table table-hover table-bordered">
         <thead>

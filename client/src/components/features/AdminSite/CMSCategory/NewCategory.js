@@ -93,14 +93,12 @@ export default class NewProduct extends Component {
     }
 
     handleCreate = (data) => {
-        console.log(data);
         axios.post("/api/category/add.php", {
             name: data.name,
             image: data.image
         })
         .then(res => {
             this.props.getAll(data);
-            console.log(res.data);
         })
         .catch(err => {
             console.log(err);
