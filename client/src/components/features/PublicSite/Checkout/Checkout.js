@@ -153,7 +153,7 @@ class Checkout extends Component {
                             {currentBlock === 0 &&
                                 (user ?
                                     <div className='block__content'>
-                                        <p>Lấy thông tin từ tài khoản <span>{user.lastname + ' ' + user.firstname}</span></p>
+                                        <p>Lấy thông tin từ tài khoản <Link to='/info'>{user.lastname + ' ' + user.firstname}</Link></p>
                                         <p>Nếu không phải là bạn.<span onClick={this.handleLogout}> Đăng xuất</span></p>
                                         <button className='content__continue-button' style={{ margin: '0 auto' }}
                                             onClick={this.handleContinue(1)}>TIẾP TỤC</button>
