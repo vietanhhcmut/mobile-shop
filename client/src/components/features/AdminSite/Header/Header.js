@@ -9,7 +9,7 @@ export default class Header extends Component {
             <div>
                 <header>
                     <div className="logo__admin">
-                        <img src={logoSite} alt="not found" />
+                        <Link to="/"> <img src={logoSite} alt="not found" /> </Link>
                     </div>
                 </header>
                 <div className="sidebar">

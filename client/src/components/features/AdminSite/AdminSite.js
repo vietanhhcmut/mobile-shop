@@ -6,8 +6,10 @@ import CMSUser from "../AdminSite/CMSUser/CMSUser";
 import CMSBill from "../AdminSite/CMSBill/CMSBill";
 import CMSCategory from "../AdminSite/CMSCategory/CMSCategory";
 import './AdminSite.css'
+import withAuthen from '../../HOC/withAuthen';
 
-export default class AdminSite extends Component {
+
+class AdminSite extends Component {
     render() {
         return (
             <div className="admin-site">
@@ -24,3 +26,4 @@ export default class AdminSite extends Component {
         );
     }
 }
+export default withAuthen(AdminSite);
