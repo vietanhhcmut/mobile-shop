@@ -3,6 +3,7 @@ import swal from 'sweetalert';
 import './CMSBill.css';
 import DetailBill from './DetailBill';
 import axios from '../../../../constants/axiosInstance';
+import axiosValidate from '../../../../constants/axiosValidate';
 
 export default class CMSUer extends Component {
   state = {
@@ -12,40 +13,14 @@ export default class CMSUer extends Component {
   }
 
   componentDidMount() {
-    // this.setState({
-    //   orders: [
-    //     {
-    //       id: 1,
-    //       feeShip: 30000,
-    //       totalPrice: 100000,
-    //       city: "Ho Chi Minh",
-    //       district: "Thu Duc",
-    //       ward: "Linh Trung",
-    //       address: "KTX Khu A",
-    //       phonenumber: "0123456789",
-    //       type: true
-    //     },
-    //     {
-    //       id: 2,
-    //       feeShip: 30000,
-    //       totalPrice: 100000,
-    //       city: "Ho Chi Minh",
-    //       district: "Thu Duc",
-    //       ward: "Linh Trung",
-    //       address: "KTX Khu A",
-    //       phonenumber: "0123456789",
-    //       type: false
-    //     }
-    //   ],
-    // });
     axios.get("/api/order/getAll.php")
       .then(res => {
-          this.setState({
-            orders: res.data
-          });
+        this.setState({
+          orders: res.data
+        });
       })
       .catch(err => {
-          console.log(err);
+        console.log(err);
       });
   }
 
@@ -57,14 +32,38 @@ export default class CMSUer extends Component {
       buttons: { cancel: true, confirm: true }
     }).then(isConfirm => {
       if (isConfirm) {
-        console.log(item);
+        axiosValidate().post("/api/order/delete.php",
+          {
+            id: item
+          }
+        )
+          .then(res => {
+            const orders = this.state.orders.filter(order => order.id !== item);
+            this.setState({
+              orders
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     });
   }
-  changeType = (item, index) => () => {
+  changeType = (data, index) => () => {
     const state = Object.assign({}, this.state);
-    state.orders[index].type = !item.type;
-    this.setState(state);
+    console.log(state);
+    state.orders[index].delivered = data.delivered === "0" ? "1" : "0";
+    axiosValidate().post("/api/order/update.php", {
+      id: data.id,
+      delivered: data.delivered,
+    })
+      .then(res => {
+        
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
   }
 
   onOpenModal = (item) => () => {
@@ -80,7 +79,6 @@ export default class CMSUer extends Component {
 
   render() {
     const { orders, open } = this.state;
-    console.log(orders);
     let table = (
       <table className="table table-hover table-bordered">
         <thead>
@@ -88,7 +86,7 @@ export default class CMSUer extends Component {
             <th>STT</th>
             <th>Mã Đơn hàng</th>
             <th>Người mua</th>
-            <th>Trạng thái</th>
+            <th>Đã giao</th>
             <th>Hành động</th>
           </tr>
         </thead>
@@ -99,12 +97,12 @@ export default class CMSUer extends Component {
 
               <td>{item.id}</td>
 
-              <td>Duyen</td>
+              <td>{item.name}</td>
 
               <td>
-                <label class="switch">
-                  <input type="checkbox" defaultChecked={item.type} onClick={this.changeType(item, index)} />
-                  <span class="slider round"></span>
+                <label className="switch">
+                  <input type="checkbox" defaultChecked={item.delivered === "0" ? false : true} onClick={this.changeType(item, index)} />
+                  <span className="slider round"></span>
                 </label>
               </td>
               <td className="btn-action-delete">
@@ -113,7 +111,7 @@ export default class CMSUer extends Component {
                   href="#!"
                   onClick={this.onOpenModal(item)}
                 >
-                  <i class="fas fa-eye"></i>
+                  <i className="fas fa-eye"></i>
                 </a>
 
                 <a

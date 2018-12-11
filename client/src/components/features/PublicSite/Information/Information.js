@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "../../../../constants/axiosInstance";
 import axiosValidate from "../../../../constants/axiosValidate";
 
 class InfoPage extends Component {
@@ -9,45 +8,42 @@ class InfoPage extends Component {
     lastName: "",
     email: "",
     pass: "",
-    gender: "nam",
+    gender: true,
     birthday: "",
+    passOld: "",
 
     showModal: "",
     showPassword: false,
+    showPasswordOld: false,
     idFirstName: "",
     idLastName: "",
     idEmail: "",
     idPass: "",
+    idPassOld: "",
     validateEmail: ""
   };
 
   componentDidMount() {
-    axiosValidate
-      .post("/api/user/validate_token.php")
-      .then(respond => {
-        axiosValidate
-          .post("/api/user/info.php", { id: respond.data.id })
-          .then(res => {
-            this.setState({
-              id: respond.data.id,
-              firstName: res.data.firstname,
-              lastName: res.data.lastname,
-              email: res.data.email,
-              gender: res.data.gender,
-              birthday: res.data.birthday
-            });
-          })
-          .catch(err => console.log(err));
+    axiosValidate()
+      .get("/api/user/getInfoUser.php")
+      .then(res => {
+        this.setState({
+          id: res.data.id,
+          firstName: res.data.firstname,
+          lastName: res.data.lastname,
+          email: res.data.email,
+          gender: res.data.gender,
+          birthday: res.data.birthday
+        });
       })
       .catch(err => console.log(err));
   }
 
-  handleShowPassword = () => {
-    this.setState(prevState => {
-      return {
-        showPassword: !prevState.showPassword
-      };
-    });
+  
+  handleShowPassword = typePass => () => {
+    this.setState(prevState => ({
+      [typePass]: !prevState[typePass]
+    }));
   };
 
   handleUserInput = nameField => e => {
@@ -61,17 +57,12 @@ class InfoPage extends Component {
     });
   };
 
-  handleChangeGenderMale = () => {
+  handleChangeGender = gender => () => {
     this.setState({
-      gender: "nam"
+      gender
     });
   };
 
-  handleChangeGenderFemale = () => {
-    this.setState({
-      gender: "nu"
-    });
-  };
 
   getBirthday = e => {
     this.setState({
@@ -80,20 +71,29 @@ class InfoPage extends Component {
   };
 
   handleValidateForm = (firstName, lastName, email, pass, passOld) => {
-    firstName === "" &&
+    let check = false;
+    if (firstName === "") {
       this.setState({
         idFirstName: "field-required"
       });
+      check = true;
+    }
 
-    lastName === "" &&
+    if (lastName === "") {
       this.setState({
-        idLastName: "field-required"
+        idLastName: "field-required",
+        err: true
       });
+      check = true;
+    }
 
-    email === "" &&
+    if (email === "") {
       this.setState({
-        idEmail: "field-required"
+        idEmail: "field-required",
+        err: true
       });
+      check = true;
+    }
 
     if (email !== "") {
       let lastAtPos = email.lastIndexOf("@");
@@ -111,57 +111,62 @@ class InfoPage extends Component {
         this.setState({
           validateEmail: "validate-email"
         });
+        check = true;
+      }
+    }
+    if (pass !== "" || passOld !== "") {
+      if (pass === "") {
+        this.setState({
+          idPass: "field-required"
+        });
+        check = true;
+      }
+      if (passOld === "") {
+        this.setState({
+          idPass: "field-required"
+        });
+        check = true;
       }
     }
 
-    pass === "" &&
-      this.setState({
-        idPass: "field-required"
-      });
+    if (check === true) {
+      // co loi
+      return false;
+    } else return true;
   };
 
-  handleUpdateUser = (firstName, lastName, email, pass) => {
-    this.handleValidateForm(firstName, lastName, email, pass);
-    if (firstName !== "" && lastName !== "" && email !== "" && pass !== "") {
-      let lastAtPos = email.lastIndexOf("@");
-      let lastDotPos = email.lastIndexOf(".");
-      if (
-        lastAtPos < lastDotPos &&
-        lastAtPos > 0 &&
-        email.indexOf("@@") === -1 &&
-        lastDotPos > 2 &&
-        email.length - lastDotPos > 2
-      ) {
-        // console.log({
-        //   id: this.state.id,
-        //   email: email,
-        //   password: pass,
-        //   gender: this.state.gender,
-        //   birthday: this.state.birthday,
-        //   lastname: lastName,
-        //   firstname: firstName
-        // });
 
-        axiosValidate
-          .post("/api/user/update.php", {
-            id: this.state.id,
-            email: email,
-            password: pass,
-            gender: this.state.gender,
-            birthday: this.state.birthday,
-            lastname: lastName,
-            firstname: firstName
-          })
-          .then(res => {
-            console.log(res);
-            this.props.history.push("/info");
-          })
-          .catch(err => {
-            this.setState({
-              showModal: "show-modal"
-            });
+  handleUpdateUser = (firstName, lastName, email, pass, passOld) => {
+    const checkInfo = this.handleValidateForm(
+      firstName,
+      lastName,
+      email,
+      pass,
+      passOld
+    );
+    if (checkInfo) {
+      axiosValidate()
+        .post("/api/user/update.php", {
+          id: this.state.id,
+          email: email,
+          password: pass.trim(),
+          gender: this.state.gender,
+          birthday: this.state.birthday,
+          lastname: lastName,
+          firstname: firstName,
+          passOld: passOld
+        })
+        .then(res => {
+          this.props.history.push("/info");
+          this.setState({
+            showModal: "show-modal-success"
           });
-      }
+        })
+        .catch(err => {
+          this.setState({
+            showModal: "show-modal"
+          });
+        });
     }
   };
 
@@ -185,13 +190,29 @@ class InfoPage extends Component {
       idPass,
       validateEmail,
       gender,
-      birthday
+      birthday,
+      idPassOld,
+      passOld,
+      showPasswordOld
     } = this.state;
     return (
       <div>
         <section id="main">
-          <div className="modal-body" id={showModal}>
-            <p>Email đã được sử dụng.</p>
+          <div
+            className="modal-body"
+            id={showModal === "show-modal" ? "show-modal" : ""}
+          >
+            <p>Password cũ bạn nhập chưa đúng.</p>
+            <span className="close-modal" onClick={this.handleCloseModal}>
+              x
+            </span>
+          </div>
+
+          <div
+            className="modal-body-success"
+            id={showModal === "show-modal-success" ? "show-modal-success" : ""}
+          >
+            <p>Sửa thông tin thành công!</p>
             <span className="close-modal" onClick={this.handleCloseModal}>
               x
             </span>
@@ -213,8 +234,8 @@ class InfoPage extends Component {
                         <input
                           name="id_gender"
                           type="radio"
-                          checked={gender === "nam" ? true : false}
-                          onChange={this.handleChangeGenderMale}
+                          checked={gender}
+                          onChange={this.handleChangeGender(true)}
                         />
                       </span>
                       Nam
@@ -224,8 +245,8 @@ class InfoPage extends Component {
                         <input
                           name="id_gender"
                           type="radio"
-                          checked={gender === "nu" ? true : false}
-                          onChange={this.handleChangeGenderFemale}
+                          checked={!gender}
+                          onChange={this.handleChangeGender(false)}
                         />
                       </span>
                       Nữ
@@ -279,6 +300,7 @@ class InfoPage extends Component {
                   </label>
                   <div className="col-md-6">
                     <input
+                      disabled
                       name="email"
                       className={"form-control " + idEmail + validateEmail}
                       onChange={this.handleUserInput("idEmail")}
@@ -290,6 +312,37 @@ class InfoPage extends Component {
                     </div>
                     <div className={"field-hide" + validateEmail}>
                       Email của bạn không hợp lệ
+                    </div>
+                  </div>
+
+                  <div className="col-md-3 form-control-comment" />
+                </div>
+
+                <div className="form-group row ">
+                  <label className="col-md-3 form-control-label required">
+                    Mật khẩu cũ
+                  </label>
+                  <div className="col-md-6">
+                    <div className="input-group js-parent-focus">
+                      <input
+                        name="passOld"
+                        className={"form-control " + idPassOld}
+                        value={passOld}
+                        onChange={this.handleUserInput("idPassOld")}
+                        type={showPasswordOld ? "text" : "password"}
+                      />
+                      <span className="input-group-btn">
+                        <button
+                          onClick={this.handleShowPassword("showPasswordOld")}
+                          type="button"
+                          className="input-group-btn show"
+                        >
+                          {showPasswordOld ? "Ẩn" : "Hiện"}
+                        </button>
+                      </span>
+                    </div>
+                    <div className={"field-hide" + idPassOld}>
+                      Hãy nhập "Mật khẩu cũ" của bạn
                     </div>
                   </div>
 
@@ -311,7 +364,7 @@ class InfoPage extends Component {
                       />
                       <span className="input-group-btn">
                         <button
-                          onClick={this.handleShowPassword}
+                          onClick={this.handleShowPassword("showPassword")}
                           type="button"
                           className="input-group-btn show"
                         >
@@ -346,7 +399,13 @@ class InfoPage extends Component {
               <footer className="page-content__footer">
                 <button
                   onClick={() =>
-                    this.handleUpdateUser(firstName, lastName, email, pass)
+                    this.handleUpdateUser(
+                      firstName,
+                      lastName,
+                      email,
+                      pass,
+                      passOld
+                    )
                   }
                   className="button-save"
                   data-link-action="save-customer"

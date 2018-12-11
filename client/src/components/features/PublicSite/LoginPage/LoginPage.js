@@ -41,10 +41,9 @@ class LoginPage extends Component {
         password
       })
       .then(res => {
-        console.log("login:",res.data);
         localStorage.setItem("userToken", res.data.token);
-        this.props.history.push("/");
         this.context.handleGetCart();
+        this.props.history.push("/");
       })
       .catch(err => {
         console.log("err", err);

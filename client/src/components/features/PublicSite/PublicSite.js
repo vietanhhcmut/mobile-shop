@@ -13,9 +13,15 @@ import Information from "./Information/Information";
 import SignupPage from "./SignupPage/SignupPage";
 import HomePage from "./HomePage/HomePage";
 import CartModal from "../../common/CartModal/CartModal";
+import Search from "../../common/Search/Search";
 import PasswordRecoveryPage from "./PasswordRecoveryPage/PasswordRecoveryPage";
+import Context from "../../../Context";
 
 class PublicSite extends Component {
+  static contextType = Context;
+  componentDidMount() {
+    this.context.handleGetCart();
+  }
   render() {
     return (
       <div className="public-site">
@@ -30,6 +36,7 @@ class PublicSite extends Component {
           <Route path="/item/:id" exact component={DetailedItem} />
           <Route path="/login" exact component={LoginPage} />
           <Route path="/signup" exact component={SignupPage} />
+          <Route path="/search/:keyword" exact component={Search} />
           <Route
             path="/password-recovery"
             exact

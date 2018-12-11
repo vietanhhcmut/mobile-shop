@@ -11,12 +11,12 @@
   else {
     include_once '../../config/database.php';
     include_once '../../models/user.php';
-    include_once '../../models/category.php';
+    include_once '../../models/order.php';
     
     $database = new Database();
     $db = $database->getConnection();
     $user = new User($db);
-    $category = new Category($db);
+    $order = new Order($db);
 
     $data = json_decode(file_get_contents("php://input"));
     $headers = apache_request_headers();
@@ -33,19 +33,19 @@
       if ($result) {
         if ($user->isAdmin) {
 
-          $category->id = $data->id;
-          $category->name = $data->name;
-          $category->image = $data->image;
-
-          if($category->update()) {
+          $order->id = $data->id;
+          $order->delivered = $data->delivered;
+          
+       
+          if($order->update()) {
             http_response_code(200);
             echo json_encode(
-              array('message' => 'Category was updated.')
+              array('message' => 'Order was updated.')
             );
           } else {
             http_response_code(401);
             echo json_encode(
-              array('message' => 'Unable to update category')
+              array('message' => 'Unable to update order')
             );
           }
         }

@@ -195,6 +195,7 @@ span.header-card__icon {
     top: 50%;
     margin-left: -30px;
     transform: translateY(-50%);
+    cursor: pointer;
   }
 
   .toggle__icon {

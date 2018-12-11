@@ -107,6 +107,21 @@ button.input-group-btn.show {
   animation: showmodal 1s ease-out;
 }
 
+.modal-body-success {
+  display: none;
+  right: 10%;
+  z-index: 100;
+  padding: 16px 50px;
+  position: fixed;
+  background-color: white;
+  border: 1px solid rgb(18, 201, 28);
+  animation-duration: 1s;
+  color: rgb(18, 201, 28);
+  border-radius: 5px;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  animation: showmodal 1s ease-out;
+}
+
 .required-enter {
   color: red;
   padding-left: 3px;
@@ -123,11 +138,16 @@ button.input-group-btn.show {
   }
 }
 
-#show-modal {
+#show-modal,
+#show-modal-success {
   display: block;
 }
 
 .modal-body p {
+  margin-bottom: 0px;
+}
+
+.modal-body-success p {
   margin-bottom: 0px;
 }
 

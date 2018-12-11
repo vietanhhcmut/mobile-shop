@@ -4,7 +4,7 @@ class CartItem {
  
   // database connection and table name
   private $conn;
-  private $table_name = "cartitem";
+  private $table_name = "cart_items";
 
   // object properties
   public $id;
@@ -143,6 +143,22 @@ class CartItem {
     if ($stmt->execute()) return true;
     return false;
   }
+
+  public function deleteWithId(){
+    // Create query
+    $query = "DELETE FROM " . $this->table_name . " WHERE id=?";
+
+    // Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+    // Bind data
+    $stmt->bindParam(1, $this->id);
+
+    // execute the query
+    if ($stmt->execute()) return true;
+    return false;
+  }
+
 
 
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import swal from 'sweetalert';
 import axios from '../../../../constants/axiosInstance';
+import axiosValidate from '../../../../constants/axiosValidate';
 import NewCategory from './NewCategory';
 
 export default class CMSUer extends Component {
@@ -30,7 +31,20 @@ export default class CMSUer extends Component {
       buttons: { cancel: true, confirm: true }
     }).then(isConfirm => {
       if (isConfirm) {
-        console.log(item);
+        axiosValidate().post("/api/category/delete.php",
+          {
+            id: item
+          }
+        )
+          .then(res => {
+            const categories = this.state.categories.filter(category => category.id !== item);
+            this.setState({
+              categories
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     });
   }
@@ -55,6 +69,14 @@ export default class CMSUer extends Component {
         categories
       });
     }
+  }
+  handlegetAll = (item) => {
+    const categories = [...this.state.categories];
+    categories.push(item);
+    console.log(categories);
+    this.setState({
+      categories
+    });
   }
 
   render() {
@@ -115,6 +137,7 @@ export default class CMSUer extends Component {
             open={this.state.open}
             itemInfo={this.state.dataItem}
             renameCat={this.handleRenameCat}
+            getAll={this.handlegetAll}
           />
         )}
       </div>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
-import axios from '../../../../constants/axiosInstance';
-
+import axiosValidate from '../../../../constants/axiosValidate';
 
 export default class NewProduct extends Component {
     state = {
@@ -52,7 +51,6 @@ export default class NewProduct extends Component {
         this.props.onCloseModal();
         const items = { ...this.state.items };
         if (this.state._upload_files) {
-            //  call api
             items.image = this.state.imagePreviewUrl;
             this.setStateInput();
         }
@@ -80,7 +78,7 @@ export default class NewProduct extends Component {
     }
 
     handleUpdate = (data) => {
-        axios.put("/api/category/edit.php", {
+        axiosValidate().post("/api/category/edit.php", {
             id: data.id,
             name: data.name,
             image: data.image
@@ -94,13 +92,12 @@ export default class NewProduct extends Component {
     }
 
     handleCreate = (data) => {
-        axios.post("/api/category/add.php", {
-            id: data.id,
+        axiosValidate().post("/api/category/add.php", {
             name: data.name,
             image: data.image
         })
         .then(res => {
-            this.props.renameCat(data.name, data.id);
+            this.props.getAll(data);
         })
         .catch(err => {
             console.log(err);

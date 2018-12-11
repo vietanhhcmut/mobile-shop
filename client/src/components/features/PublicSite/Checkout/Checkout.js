@@ -2,198 +2,275 @@ import React, { Component } from 'react';
 import './Checkout.css';
 import { bankImages } from '../../../../constants/constants';
 import Cart from './Cart/Cart';
+import Context from '../../../../Context';
+import axiosValidate from '../../../../constants/axiosValidate';
+import axios from '../../../../constants/axiosInstance';
+import { Link } from 'react-router-dom';
 
 class Checkout extends Component {
+    static contextType = Context;
     state = {
         currentBlock: 0,
         payMethod: 'cash',
-        signIn: true,
-        isGuest: true,
-        showPasswordSignUp: false,
-        showPasswordSignIn: false,
-        selectedBank: 0
+        user: null,
+        guest: {
+            name: '',
+            gender: true,
+            email: ''
+        },
+        showLoginPass: false,
+        showSignupPass: false,
+        selectedBank: 0,
+        address: {
+            city: '',
+            district: '',
+            wards: '',
+            street: '',
+            phonenumber: ''
+        }
     }
-    handleClickBlock = (block) => () => {
+    componentDidMount() {
+        if (localStorage.getItem('userToken')) {
+            axiosValidate().get('/api/user/getInfoUser.php')
+                .then(res => {
+                    this.setState({ user: res.data });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    }
+    handleChooseBlock = (block) => () => {
+        if (block > this.state.currentBlock) return;
         this.setState({ currentBlock: block });
     }
     handleChangePayMethod = (payMethod) => () => {
         this.setState({ payMethod });
     }
-    handleClickSignIn = () => {
-        this.setState({ isGuest: false });
-    }
-    handleClickGuest = () => {
-        this.setState({ isGuest: true });
-    }
-    handleClickTogglePasswordSignUp = () => {
+    handleToggleShowLoginPass = () => {
         this.setState(prevState => {
-            return { showPasswordSignUp: !prevState.showPasswordSignUp };
+            return { showLoginPass: !prevState.showLoginPass };
         });
     }
-    handleClickTogglePasswordSignIn = () => {
+    handleToggleShowSignupPass = () => {
         this.setState(prevState => {
-            return { showPasswordSignIn: !prevState.showPasswordSignIn };
+            return { showSignupPass: !prevState.showSignupPass };
         });
     }
-    handleClickOrder = () => {
-        alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!')
+    handleOrder = () => {
+        const { user, address, guest, payMethod } = this.state;
+        if (user) {
+            axiosValidate().post('/api/order/userAdd.php', {
+                ...address,
+                totalPrice: this.context.totalPrice,
+                name: user.firstname + ' ' + user.lastname,
+                gender: user.gender,
+                email: user.email,
+                paid: payMethod === 'cash' ? false : true
+            })
+                .then(res => {
+                    if (res.status === 200) {
+                        alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!');
+                        this.context.handleGetCart();
+                        this.props.history.push("/");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+        else {
+            axios.post('/api/order/guestAdd.php', {
+                cart: this.context.cart,
+                ...address,
+                totalPrice: this.context.totalPrice,
+                ...guest,
+                paid: payMethod === 'cash' ? false : true
+            })
+                .then(res => {
+                    if (res.status === 200) {
+                        console.log(res.data);
+                        localStorage.removeItem('cart');
+                        alert('Đặt hàng thành công. Chúng tôi sẽ giao hàng sớm nhất cho bạn. Cảm ơn quý khách!');
+                        this.context.handleGetCart();
+                        this.props.history.push("/");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     }
-    handleClickBank = (index) => () => {
+    handleChooseBank = (index) => () => {
         this.setState({ selectedBank: index });
     }
+    handleLogout = () => {
+        localStorage.removeItem("userToken");
+        this.context.handleGetCart();
+        this.props.history.push('/');
+    }
+    handleChangeAddress = (type) => (e) => {
+        const address = { ...this.state.address };
+        address[type] = e.target.value;
+        this.setState({ address });
+    }
+    handleChangeGuest = (type) => (e) => {
+        const guest = { ...this.state.guest };
+        guest[type] = e.target.value;
+        this.setState({ guest });
+    }
+    handleContinue = (block) => (e) => {
+        e.preventDefault();
+        this.setState({ currentBlock: block });
+    }
+    handleChangeGender = (gender) => () => {
+        const guest = { ...this.state.guest };
+        guest['gender'] = gender;
+        this.setState({ guest });
+    }
     render() {
-        const { currentBlock, payMethod, isGuest, showPasswordSignIn, showPasswordSignUp, selectedBank } = this.state;
-        return (
-            <div className='checkout'>
-                <div className='checkout__info'>
-                    <div className='info__block'>
-                        <div className='block__title' onClick={this.handleClickBlock(0)}>
-                            <span>1</span>
-                            <span>THÔNG TIN CÁ NHÂN</span>
-                        </div>
-                        {currentBlock === 0 &&
-                            <div className='block__content'>
-                                <div className='content__guest-or-signin'>
-                                    <span className={'guest-or-signin ' + (isGuest ? 'guest-or-signin__active' : '')}
-                                        onClick={this.handleClickGuest}>Khách</span>
-                                    |
-                                    <span className={'guest-or-signin ' + (isGuest ? '' : 'guest-or-signin__active')}
-                                        onClick={this.handleClickSignIn}>Đăng nhập</span>
-                                </div>
-                                {isGuest ?
-                                    <div className='content__personal-info'>
-                                        <div className='personal-info__row'>
-                                            <span>Họ và tên</span>
-                                            <input type="text" />
-                                        </div>
-                                        <div className='personal-info__row'>
-                                            <span>Giới tính</span>
-                                            <div className='row__gender'>
-                                                <span><input type="radio" name='gender' defaultChecked /> Nam</span>
-                                                <span><input type="radio" name='gender' /> Nữ</span>
-                                            </div>
-                                        </div>
-                                        <div className='personal-info__row'>
-                                            <span>Email</span>
-                                            <input type="text" />
-                                        </div>
-                                        <div className='personal-info__signup-row'>
-                                            <span><b>Tạo tài khoản</b> <i>(Không bắt buộc)</i></span>
-                                            <p>Để tiết kiệm thời gian hơn trong đơn hàng tiếp theo của bạn.</p>
-                                        </div>
-                                        <div className='personal-info__row'>
-                                            <span>Mật khẩu</span>
-                                            <div className='row__password'>
-                                                <input type={showPasswordSignUp ? "text" : "password"} />
-                                                <button onClick={this.handleClickTogglePasswordSignUp}>
-                                                    {showPasswordSignUp ? 'Ẩn' : 'Hiện'}
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className='personal-info__row'>
-                                            <span>Ngày sinh</span>
-                                            <input type="date" />
-                                        </div>
-                                        <button className='content__continue-button'
-                                            onClick={this.handleClickBlock(1)}>TIẾP TỤC</button>
-                                    </div>
-                                    :
-                                    <div className='content__personal-info'>
-                                        <div className='personal-info__row'>
-                                            <span>Email</span>
-                                            <input type="text" />
-                                        </div>
-                                        <div className='personal-info__row'>
-                                            <span>Mật khẩu</span>
-                                            <div className='row__password'>
-                                                <input type={showPasswordSignIn ? "text" : "password"} />
-                                                <button onClick={this.handleClickTogglePasswordSignIn}>
-                                                    {showPasswordSignIn ? 'Ẩn' : 'Hiện'}
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <p className='personal-info__forget-password'><span>Quên mật khẩu?</span></p>
-                                        <button className='content__continue-button'
-                                            onClick={this.handleClickBlock(1)}>TIẾP TỤC</button>
-                                    </div>
-                                }
-                            </div>
-                        }
-                    </div>
-
-                    <div className='info__block'>
-                        <div className='block__title' onClick={this.handleClickBlock(1)}>
-                            <span>2</span>
-                            <span>ĐỊA CHỈ GIAO HÀNG</span>
-                        </div>
-                        {currentBlock === 1 &&
-                            <div className='block__content'>
-                                <div className='content__personal-info'>
-                                    <div className='personal-info__row'>
-                                        <span>Tỉnh/Thành phố</span>
-                                        <input type="text" />
-                                    </div>
-                                    <div className='personal-info__row'>
-                                        <span>Quận/Huyện</span>
-                                        <input type="text" />
-                                    </div>
-                                    <div className='personal-info__row'>
-                                        <span>Phường/Xã</span>
-                                        <input type="text" />
-                                    </div>
-                                    <div className='personal-info__row'>
-                                        <span>Số nhà, Đường</span>
-                                        <input type="text" />
-                                    </div>
-                                    <div className='personal-info__row'>
-                                        <span>Số điện thoại</span>
-                                        <input type="text" />
-                                    </div>
-                                    <button className='content__continue-button'
-                                        onClick={this.handleClickBlock(2)}>TIẾP TỤC</button>
-                                </div>
-                            </div>
-                        }
-                    </div>
-
-                    <div className='info__block'>
-                        <div className='block__title' onClick={this.handleClickBlock(2)}>
-                            <span>3</span>
-                            <span>THANH TOÁN</span>
-                        </div>
-                        {currentBlock === 2 &&
-                            <div className='block__content'>
-                                <div className='content__pay-method'>
-                                    <input type="radio" name='pay-method' value='cash' defaultChecked
-                                        onChange={this.handleChangePayMethod('cash')} />
-                                    <span>Thanh toán tiền mặt khi nhận hàng</span>
-                                </div>
-                                <div className='content__pay-method'>
-                                    <input type="radio" name='pay-method' value='atm'
-                                        onChange={this.handleChangePayMethod('atm')} />
-                                    <span>Thẻ ATM nội địa/Internet Banking</span>
-                                </div>
-                                {payMethod === 'atm' &&
-                                    <div className='content__banks'>
-                                        {bankImages.map((bankImage, index) =>
-                                            <div key={'bank' + index}
-                                                className={'banks__bank ' + (selectedBank === index ? 'banks__active' : '')}
-                                                onClick={this.handleClickBank(index)} >
-                                                <img src={bankImage} alt='Bank' />
-                                            </div>
-                                        )}
-                                    </div>
-                                }
-                                <button className='content__order-button'
-                                    onClick={this.handleClickOrder}>ĐẶT HÀNG</button>
-                            </div>
-                        }
-                    </div>
-
-                </div>
-                <Cart />
+        const { currentBlock, payMethod, selectedBank, user, address, guest } = this.state;
+        if (this.context.cart.length === 0) return (
+            <div>
+                <p style={{ margin: '20px auto', textAlign: 'center' }}>
+                    <em>Không có sản phẩm nào trong giỏ hàng của bạn. Quay lại mua nào!</em>
+                </p>
+                <Link to='/' className='left-side__continue-shopping'>
+                    <i className="material-icons">keyboard_arrow_left</i>
+                    <span>Tiếp tục mua hàng</span>
+                </Link>
             </div>
         );
+        else
+            return (
+                <div className='checkout'>
+                    <div className='checkout__info'>
+                        <div className='info__block'>
+                            <div className='block__title' onClick={this.handleChooseBlock(0)}>
+                                <span>1</span>
+                                <span>THÔNG TIN CÁ NHÂN</span>
+                            </div>
+                            {currentBlock === 0 &&
+                                (user ?
+                                    <div className='block__content'>
+                                        <p>Lấy thông tin từ tài khoản <Link to='/info'>{user.lastname + ' ' + user.firstname}</Link></p>
+                                        <p>Nếu không phải là bạn.<span onClick={this.handleLogout}> Đăng xuất</span></p>
+                                        <button className='content__continue-button' style={{ margin: '0 auto' }}
+                                            onClick={this.handleContinue(1)}>TIẾP TỤC</button>
+                                    </div>
+                                    :
+                                    <form className='block__content' onSubmit={this.handleContinue(1)}>
+                                        <div className='content__personal-info'>
+                                            <div className='personal-info__row'>
+                                                <span>Họ và tên</span>
+                                                <input type="text" required
+                                                    value={guest.name}
+                                                    onChange={this.handleChangeGuest('name')} />
+                                            </div>
+                                            <div className='personal-info__row'>
+                                                <span>Giới tính</span>
+                                                <div className='row__gender'>
+                                                    <span><input type="radio" name='gender' defaultChecked
+                                                        onChange={this.handleChangeGender(true)} /> Nam</span>
+                                                    <span><input type="radio" name='gender'
+                                                        onChange={this.handleChangeGender(false)} /> Nữ</span>
+                                                </div>
+                                            </div>
+                                            <div className='personal-info__row'>
+                                                <span>Email</span>
+                                                <input type="text"
+                                                    value={guest.email}
+                                                    onChange={this.handleChangeGuest('email')} />
+                                            </div>
+
+                                            <button className='content__continue-button' type='submit'>TIẾP TỤC</button>
+                                        </div>
+                                    </form>
+                                )}
+                        </div>
+
+                        <form className='info__block' onSubmit={this.handleContinue(2)}>
+                            <div className='block__title' onClick={this.handleChooseBlock(1)}>
+                                <span>2</span>
+                                <span>ĐỊA CHỈ GIAO HÀNG</span>
+                            </div>
+                            {currentBlock === 1 &&
+                                <div className='block__content'>
+                                    <div className='content__personal-info'>
+                                        <div className='personal-info__row'>
+                                            <span>Tỉnh/Thành phố</span>
+                                            <input type="text" required
+                                                value={address.city}
+                                                onChange={this.handleChangeAddress('city')} />
+                                        </div>
+                                        <div className='personal-info__row'>
+                                            <span>Quận/Huyện</span>
+                                            <input type="text" required
+                                                value={address.district}
+                                                onChange={this.handleChangeAddress('district')} />
+                                        </div>
+                                        <div className='personal-info__row'>
+                                            <span>Phường/Xã</span>
+                                            <input type="text" required
+                                                value={address.wards}
+                                                onChange={this.handleChangeAddress('wards')} />
+                                        </div>
+                                        <div className='personal-info__row'>
+                                            <span>Số nhà, Đường</span>
+                                            <input type="text" required
+                                                value={address.street}
+                                                onChange={this.handleChangeAddress('street')} />
+                                        </div>
+                                        <div className='personal-info__row'>
+                                            <span>Số điện thoại</span>
+                                            <input type="text" required
+                                                value={address.phonenumber}
+                                                onChange={this.handleChangeAddress('phonenumber')} />
+                                        </div>
+                                        <button className='content__continue-button' type='submit'>TIẾP TỤC</button>
+                                    </div>
+                                </div>
+                            }
+                        </form>
+
+                        <div className='info__block'>
+                            <div className='block__title' onClick={this.handleChooseBlock(2)}>
+                                <span>3</span>
+                                <span>THANH TOÁN</span>
+                            </div>
+                            {currentBlock === 2 &&
+                                <div className='block__content'>
+                                    <div className='content__pay-method'>
+                                        <input type="radio" name='pay-method' value='cash' defaultChecked
+                                            onChange={this.handleChangePayMethod('cash')} />
+                                        <span>Thanh toán tiền mặt khi nhận hàng</span>
+                                    </div>
+                                    <div className='content__pay-method'>
+                                        <input type="radio" name='pay-method' value='atm'
+                                            onChange={this.handleChangePayMethod('atm')} />
+                                        <span>Thẻ ATM nội địa/Internet Banking</span>
+                                    </div>
+                                    {payMethod === 'atm' &&
+                                        <div className='content__banks'>
+                                            {bankImages.map((bankImage, index) =>
+                                                <div key={'bank' + index}
+                                                    className={'banks__bank ' + (selectedBank === index ? 'banks__active' : '')}
+                                                    onClick={this.handleChooseBank(index)} >
+                                                    <img src={bankImage} alt='Bank' />
+                                                </div>
+                                            )}
+                                        </div>
+                                    }
+                                    <button className='content__order-button'
+                                        onClick={this.handleOrder}>ĐẶT HÀNG</button>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                    <Cart />
+                </div>
+            );
     }
 }
 
