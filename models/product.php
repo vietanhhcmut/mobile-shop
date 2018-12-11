@@ -136,7 +136,8 @@
 
       // Execute query
       if($stmt->execute()) {
-        return true;
+        // return true;
+        return $this->conn->lastInsertId();
       }
 
       // Print error if something goes wrong

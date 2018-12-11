@@ -33,9 +33,8 @@
       if ($result) {
         if ($user->isAdmin) {
 
-          $category->image = $data->image;
+          $category->image = $data->image[0];
           $category->name = $data->name;
-
           if($category->add()) {
             http_response_code(200);
             echo json_encode(

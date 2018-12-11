@@ -12,12 +12,13 @@
     include_once '../../config/database.php';
     include_once '../../models/user.php';
     include_once '../../models/product.php';
+    include_once '../../models/image.php';
     
     $database = new Database();
     $db = $database->getConnection();
     $user = new User($db);
     $product = new Product($db);
-
+    $image = new Image($db);
     $data = json_decode(file_get_contents("php://input"));
     $headers = apache_request_headers();
     $jwt = $headers['Authorization'];
@@ -51,10 +52,23 @@
           $product->os = $data->os;
 
           if($product->update()) {
+
+            $image->productId = $product->id;
+
+            if ($image->delete()) {
+              http_response_code(200);
+            } else {
+              http_response_code(400);
+            }
+            foreach ($data->imgs as $item) {
+              $image_new = new Image($db);
+              $image_new->path = $item;
+              $image_new->productId = $product->id;
+              $image_new->add();
+            }
             http_response_code(200);
             echo json_encode(
               array('message' => 'Product was updated.')
-              // $product
             );
           } else {
             http_response_code(401);

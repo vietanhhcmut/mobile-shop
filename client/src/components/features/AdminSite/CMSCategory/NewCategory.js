@@ -9,8 +9,9 @@ export default class NewProduct extends Component {
             name: '',
             image: ''
         },
-        _upload_files: '',
-        imagePreviewUrl: ''
+        _upload_files: [],
+        imageUrl: [],
+        imagePreviewUrl: []
     }
     componentDidMount = () => {
         if (this.props.itemInfo !== null) {
@@ -24,18 +25,7 @@ export default class NewProduct extends Component {
         }
     }
 
-    setStateInput = () => {
-        this.setState({
-            items: {
-                id: '',
-                name: '',
-                image: ''
-            },
-            _upload_files: '',
-            imagePreviewUrl: ''
-        });
-    }
-
+   
     handleChange = event => {
         this.setState({
             items: {
@@ -50,10 +40,13 @@ export default class NewProduct extends Component {
         e.preventDefault();
         this.props.onCloseModal();
         const items = { ...this.state.items };
-        if (this.state._upload_files) {
-            items.image = this.state.imagePreviewUrl;
-            this.setStateInput();
+        if (this.state._upload_files.length > 0) {
+            items.image = this.state.imageUrl;
         }
+        // console.log(items.image);
+        this.setState({
+            items
+        })
         this.props.itemInfo !== null ?
                             this.handleUpdate(items)
                             : this.handleCreate(items);
@@ -61,20 +54,48 @@ export default class NewProduct extends Component {
 
     handleImageChange = e => {
         e.preventDefault();
-        if (e.target.files.length > 0) {
-            let file = e.target.files[0];
-            this.setState({
-                _upload_files: file,
-                imagePreviewUrl: URL.createObjectURL(e.target.files[0])
-            });
-        }
+        var base64data = [];
+        
+        for (let i = 0; i < e.target.files.length; i++) {
 
+            var isExist = false;
+            for (let k = 0; k < this.state._upload_files.length; k++) { // Check file exist
+                if (e.target.files[i].size === this.state._upload_files[k].size &&
+                    e.target.files[i].name === this.state._upload_files[k].name &&
+                    e.target.files[i].lastModified === this.state._upload_files[k].lastModified) {
+                    isExist = true;
+                }
+            }
+            if (!isExist) {
+                this.state._upload_files.push(e.target.files[i]);
+                this.state.imagePreviewUrl.push(URL.createObjectURL(e.target.files[i]));
+                var reader = new FileReader();
+                
+                reader.onloadend = function(e) {
+                    base64data.push(e.target.result);
+                }
+                reader.readAsDataURL(e.target.files[i]); 
+                this.state.imageUrl = base64data;
+                this.setState({
+                    imageUrl: this.state.imageUrl,
+                    imagePreviewUrl: this.state.imagePreviewUrl
+                });
+                
+            }
+        }
+        
     }
     handleDelteImg = () => {
+        this.state._upload_files = [];
+        const state = Object.assign({}, this.state);
+        state.imageUrl = [];
+        state.imagePreviewUrl = [];
+        
         this.setState({
-            _upload_files: '',
-            imagePreviewUrl: ''
+            _upload_files: [],
+            imagePreviewUrl: []
         })
+        
     }
 
     handleUpdate = (data) => {
@@ -84,7 +105,7 @@ export default class NewProduct extends Component {
             image: data.image
         })
         .then(res => {
-            this.props.renameCat(data.name, data.id);
+            this.props.renameCat(data, data.id);
         })
         .catch(err => {
             console.log(err);
@@ -105,8 +126,8 @@ export default class NewProduct extends Component {
     }
 
     render() {
-        const { items, imagePreviewUrl } = this.state;
-        console.log(items);
+        const { items,imagePreviewUrl } = this.state;
+        console.log(this.state._upload_files);
         return (
             <Modal isOpen={this.props.open} onRequestClose={this.props.onCloseModal} center className="CMSModal">
                 <div className="modal-dialog">
@@ -114,6 +135,7 @@ export default class NewProduct extends Component {
                         onSubmit={e => {
                             this.handleSubmit(e);
                         }}
+                        enctype="multipart/form-data"
                     >
                         <div className="modal-content">
                             <div className="modal-header">
@@ -145,8 +167,9 @@ export default class NewProduct extends Component {
                                         type="file"
                                         onChange={(e) => this.handleImageChange(e)} />
                                     <div className="imgPreview">
-                                        {imagePreviewUrl && <div className="imgPreview__content">
-                                            <img src={imagePreviewUrl} alt={items.name} />
+                                        {imagePreviewUrl.length > 0 && 
+                                        <div className="imgPreview__content">
+                                            <img src={imagePreviewUrl[0]} alt={items.name} />
                                             <span className="delete-imagePreview" onClick={this.handleDelteImg}><i class="fas fa-times"></i></span>
                                         </div>}
                                     </div>

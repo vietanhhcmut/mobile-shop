@@ -26,6 +26,7 @@ export default class NewProduct extends Component {
             imgs: []
         },
         _upload_files: [],
+        imageUrl: [],
         imagePreviewUrl: []
     }
     componentDidMount() {
@@ -36,38 +37,6 @@ export default class NewProduct extends Component {
         }
     }
 
-    setStateInput = () => {
-        this.setState({
-            items: {
-                id: '',
-                name: '',
-                categoryId: '',
-                color: [],
-                price: '',
-                saleoff: '',
-                description: '',
-                screen: '',
-                sim: '',
-                memory: '',
-                ram: '',
-                bluetooth: '',
-                wlan: '',
-                gps: '',
-                pin: '',
-                camera: '',
-                os: '',
-                imgs: [],
-            }
-        });
-    }
-
-    // handleChange = (event, namefile => {
-    //     this.setState({
-    //         items: {
-    //             [event.target.name]: event.target.value
-    //         }
-    //     });
-    // };
     handleUserInput = nameField => e => {
         this.setState({
             items: {
@@ -97,14 +66,8 @@ export default class NewProduct extends Component {
         this.props.onCloseModal();
         const items = { ...this.state.items };
         if (this.state._upload_files.length > 0) {
-            items.imgs = [];
-            for (var i = 0; i < this.state._upload_files.length; i++) {
-                items.imgs.push(this.state._upload_files[i].name);
-            }
-            // this.setStateInput();
-            console.log(items);
+            items.imgs = this.state.imageUrl;
         }
-        
         {
             this.props.itemInfo !== null
                 ? this.handleUpdate(items)
@@ -130,7 +93,8 @@ export default class NewProduct extends Component {
             gps: data.gps,
             pin: data.pin,
             camera: data.camera,
-            os: data.os
+            os: data.os,
+            imgs: data.imgs,
         })
             .then(res => {
                 this.props.editValue(data, data.id);
@@ -156,7 +120,8 @@ export default class NewProduct extends Component {
             gps: data.gps,
             pin: data.pin,
             camera: data.camera,
-            os: data.os
+            os: data.os,
+            imgs: data.imgs,
         })
             .then(res => {
                 this.props.getAll(data);
@@ -168,6 +133,8 @@ export default class NewProduct extends Component {
 
     handleImageChange = e => {
         e.preventDefault();
+        var base64data = [];
+        
         for (let i = 0; i < e.target.files.length; i++) {
 
             var isExist = false;
@@ -181,32 +148,53 @@ export default class NewProduct extends Component {
             if (!isExist) {
                 this.state._upload_files.push(e.target.files[i]);
                 this.state.imagePreviewUrl.push(URL.createObjectURL(e.target.files[i]));
+                var reader = new FileReader();
+                
+                reader.onloadend = function(e) {
+                    base64data.push(e.target.result);
+                }
+                reader.readAsDataURL(e.target.files[i]); 
+                this.state.imageUrl = base64data;
                 this.setState({
+                    imageUrl: this.state.imageUrl,
                     imagePreviewUrl: this.state.imagePreviewUrl
                 });
-
+                
             }
         }
+        
     }
     handleDelteImg = (index) => () => {
         this.state._upload_files.splice(index, 1);
         const state = Object.assign({}, this.state);
+        state.imageUrl = [];
         state.imagePreviewUrl = [];
+        var base64data = [];
         for (let k = 0; k < this.state._upload_files.length; k++) { // Check file exist
-            this.state.imagePreviewUrl.push(URL.createObjectURL(this.state._upload_files[k]));
+            state.imagePreviewUrl.push(URL.createObjectURL(this.state._upload_files[k]));
+            var reader = new FileReader();
+                
+            reader.onloadend = function(e) {
+                base64data.push(e.target.result);
+            }
+            
+            reader.readAsDataURL(this.state._upload_files[k]); 
+            state.imageUrl = base64data;
             this.setState({
-                imagePreviewUrl: this.state.imagePreviewUrl
+                imageUrl: state.imageUrl,
+                imagePreviewUrl: state.imagePreviewUrl
             });
         }
+
         if (this.state._upload_files.length === 0) {
             this.setState({
                 imagePreviewUrl: []
             });
         }
+        
     }
     render() {
         const { items, imagePreviewUrl } = this.state;
-        console.log(items);
         return (
             <Modal isOpen={this.props.open} onRequestClose={this.props.onCloseModal} center className="CMSModal">
                 <div className="modal-dialog">
