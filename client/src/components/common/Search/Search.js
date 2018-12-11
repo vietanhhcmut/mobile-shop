@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import './Category.css';
+import './Search.css';
 import { Button } from '@material-ui/core';
-import ProductItem from './../../../common/ProductItem/ProductItem';
-import PreviewedItem from './../../../common/ProductItem/PreviewedItem/PreviewedItem';
-import axios from '../../../../constants/axiosInstance';
+import ProductItem from '../ProductItem/ProductItem';
+import PreviewedItem from '../ProductItem/PreviewedItem/PreviewedItem';
+import axios from '../../../constants/axiosInstance';
 
-class Category extends Component {
+class Search extends Component {
     state = {
-        category: {
-            id: 1,
-            name: "",
-            background: ""
-        },
         items: [],
         previewingItem: null,
         currentPage: 0,
@@ -20,33 +15,28 @@ class Category extends Component {
         prodFilter: 0
     }
     componentDidMount() {
-        const id = this.props.match.params.id;
-        this.handleInit(id);
+        const { currentPage, prodArrange, prodFilter } = this.state;
+        this.handleGetProducts(currentPage, prodArrange, prodFilter);
+        this.handleGetTotalPage(prodFilter);
     }
     componentDidUpdate(prevProps) {
-        if (prevProps.match.params.id !== this.props.match.params.id) {
-            this.handleInit(this.props.match.params.id);
-        }
-    }
-    handleInit = (id) => {
-        axios.get('/api/category/getOne.php?id=' + id)
-            .then(res => {
-                this.setState({ category: res.data });
-            })
-            .catch(err => {
-                console.log(err);
+        if (prevProps.match.params.keyword !== this.props.match.params.keyword) {
+            this.setState({
+                currentPage: 0,
+                prodArrange: 1,
+                prodFilter: 0
             });
-        const { currentPage, prodArrange, prodFilter } = this.state;
-        this.handleGetCategoryProds(currentPage, prodArrange, prodFilter);
-        this.handleGetTotalPage(prodFilter);
+            this.handleGetProducts(0, 1, 0);
+            this.handleGetTotalPage(0);
+        }
     }
     handlePreviewItem = (previewingItem) => e => {
         this.setState({ previewingItem });
     }
-    handleGetCategoryProds = (currentPage, prodArrange, prodFilter) => {
-        const id = this.props.match.params.id;
-        axios.post('/api/product/getCategoryProds.php', {
-            categoryId: id,
+    handleGetProducts = (currentPage, prodArrange, prodFilter) => {
+        const keyword = this.props.match.params.keyword;
+        axios.post('/api/product/search.php', {
+            keyword,
             currentPage,
             prodArrange,
             prodFilter
@@ -59,9 +49,9 @@ class Category extends Component {
             });
     }
     handleGetTotalPage = (prodFilter) => {
-        const id = this.props.match.params.id;
-        axios.post('/api/product/getTotalPage.php', {
-            categoryId: id,
+        const keyword = this.props.match.params.keyword;
+        axios.post('/api/product/getSearchTotalPage.php', {
+            keyword,
             prodFilter
         })
             .then(res => {
@@ -73,16 +63,16 @@ class Category extends Component {
     }
     handleSelectPage = (index) => () => {
         this.setState({ currentPage: index });
-        this.handleGetCategoryProds(index, this.state.prodArrange, this.state.prodFilter);
+        this.handleGetProducts(index, this.state.prodArrange, this.state.prodFilter);
     }
     handleArrangeProducts = (e) => {
         this.setState({ prodArrange: e.target.value, currentPage: 0 });
-        this.handleGetCategoryProds(0, e.target.value, this.state.prodFilter);
+        this.handleGetProducts(0, e.target.value, this.state.prodFilter);
     }
     handleFilterPrice = (prodFilter) => () => {
         if (this.state.prodFilter === prodFilter) return;
         this.setState({ prodFilter, currentPage: 0 });
-        this.handleGetCategoryProds(0, this.state.prodArrange, prodFilter);
+        this.handleGetProducts(0, this.state.prodArrange, prodFilter);
         this.handleGetTotalPage(prodFilter);
     }
     render() {
@@ -97,10 +87,6 @@ class Category extends Component {
         ))
         return (
             <div className="category">
-                <h2 className="category__title">{this.state.category.name}</h2>
-                <div className="category__background">
-                    <img src={this.state.category.image} alt="background" />
-                </div>
                 <div className="category__products">
                     <div className="category-products-arrange">
                         <select value={prodArrange} onChange={this.handleArrangeProducts}>
@@ -130,7 +116,7 @@ class Category extends Component {
                     </div>
                     <div className="category-products-grid">
                         {items.length === 0 &&
-                            <p style={{ textAlign: 'center', width: '100%' }}><em>Không có sản phẩm nào</em></p>}
+                            <p style={{textAlign: 'center', width: '100%'}}><em>Không có sản phẩm nào</em></p>}
                         {items}
                     </div>
                 </div>
@@ -160,4 +146,4 @@ class Category extends Component {
     }
 }
 
-export default Category;
+export default Search;

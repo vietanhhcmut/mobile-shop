@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import swal from 'sweetalert';
 import axios from '../../../../constants/axiosInstance';
+import axiosValidate from '../../../../constants/axiosValidate';
 import NewCategory from './NewCategory';
 
 export default class CMSUer extends Component {
@@ -30,7 +31,7 @@ export default class CMSUer extends Component {
       buttons: { cancel: true, confirm: true }
     }).then(isConfirm => {
       if (isConfirm) {
-        axios.post("/api/category/delete.php",
+        axiosValidate().post("/api/category/delete.php",
           {
             id: item
           }
@@ -71,7 +72,6 @@ export default class CMSUer extends Component {
   }
   handlegetAll = (item) => {
     const categories = [...this.state.categories];
-    
     categories.push(item);
     console.log(categories);
     this.setState({
@@ -81,7 +81,6 @@ export default class CMSUer extends Component {
 
   render() {
     const { categories, open } = this.state;
-    console.log(categories);
     let table = (
       <table className="table table-hover table-bordered">
         <thead>

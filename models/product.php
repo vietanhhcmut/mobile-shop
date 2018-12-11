@@ -29,6 +29,8 @@
     public $prodArrange;
     private $limit = 8;
 
+    public $keyword;
+
     public function __construct($db) {
       $this->conn = $db;
     }
@@ -314,7 +316,7 @@
 
     public function getTop() {
       // Create query
-      $query = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt LIMIT 10';
+      $query = 'SELECT * FROM ' . $this->table . ' ORDER BY createdAt DESC LIMIT 10';
 
       $stmt = $this->conn->prepare($query);
       $stmt->execute();
@@ -360,7 +362,7 @@
 
     public function getTopCategoryProds() {
       // Create query
-      $query = 'SELECT * FROM ' . $this->table . ' WHERE categoryId= ? ORDER BY createdAt LIMIT 10';
+      $query = 'SELECT * FROM ' . $this->table . ' WHERE categoryId= ? ORDER BY createdAt DESC LIMIT 10';
 
       $stmt = $this->conn->prepare($query);
       $stmt->bindParam(1, $this->categoryId);
@@ -434,6 +436,155 @@
 
       $stmt = $this->conn->prepare($query);
       $stmt->bindParam(1, $this->categoryId);
+      $stmt->execute();
+
+      return ceil($stmt->rowCount() / $this->limit);
+    }
+    public function getAll() {
+      // Create query
+      $query = 'SELECT * FROM ' . $this->table;
+  
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute();
+  
+      $products_arr = array();
+  
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $query = 'SELECT color, name FROM colors, product_color WHERE (product_color.productId = ? AND colors.id=product_color.colorId)';
+        $stmt1 = $this->conn->prepare($query);
+        $stmt1->bindParam(1, $row['id']);
+        $stmt1->execute();
+          
+        $row['colors'] = array();
+        while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['colors'], $row1);
+        }
+  
+        $query = 'SELECT path FROM images WHERE images.productId = ?';
+        $stmt2 = $this->conn->prepare($query);
+        $stmt2->bindParam(1, $row['id']);
+        $stmt2->execute();
+          
+        $row['imgs'] = array();
+        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['imgs'], $row2['path']);
+        }
+  
+        $query = 'SELECT name FROM categories WHERE id = ?';
+        $stmt3 = $this->conn->prepare($query);
+        $stmt3->bindParam(1, $row['categoryId']);
+        $stmt3->execute();
+  
+        $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+  
+        $row['category'] = $row3['name'];
+  
+  
+        array_push($products_arr, $row);
+      }
+  
+      return $products_arr;
+    }
+  
+
+  
+
+    public function search() {
+      $keywords = explode(" ", $this->keyword);
+      // $query = 'SELECT * FROM ' . $this->table . ' WHERE name LIKE "%'.join('%', $keywords).'%"';
+      $start = $this->currentPage * $this->limit;
+      $arrange = 'ORDER BY createdAt DESC';
+      switch ($this->prodArrange) {
+        case 1: $arrange = 'ORDER BY createdAt DESC'; break;
+        case 2: $arrange = 'ORDER BY createdAt'; break;
+        case 3: $arrange = 'ORDER BY price*(100-saleoff) DESC'; break;
+        case 4: $arrange = 'ORDER BY price*(100-saleoff)'; break;
+        case 5: $arrange = 'ORDER BY name'; break;
+        case 6: $arrange = 'ORDER BY name DESC'; break;
+        default: break;
+      }
+      $filter = '';
+      switch ($this->prodFilter) {
+        case 1: $filter = 'AND price*(100 - saleoff)/100 < 3000000'; break;
+        case 2: $filter = 'AND price*(100 - saleoff)/100 >= 3000000 AND price*(100 - saleoff)/100 < 6000000'; break;
+        case 3: $filter = 'AND price*(100 - saleoff)/100 >= 6000000 AND price*(100 - saleoff)/100 < 10000000'; break;
+        case 4: $filter = 'AND price*(100 - saleoff)/100 >= 10000000 AND price*(100 - saleoff)/100 < 15000000'; break;
+        case 5: $filter = 'AND price*(100 - saleoff)/100 >= 15000000'; break;
+        default: break;
+      }
+      // Create query
+      $query = 'SELECT * FROM ' . $this->table . ' 
+        WHERE name LIKE "%'.join('%', $keywords).'%" '. $filter. ' '.
+        $arrange.
+        ' LIMIT ' .  $start . ',' . $this->limit;
+
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute();
+
+      $products_arr = array();
+
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $query = 'SELECT color, name FROM colors, product_color WHERE (product_color.productId = ? AND colors.id=product_color.colorId)';
+        $stmt1 = $this->conn->prepare($query);
+        $stmt1->bindParam(1, $row['id']);
+        $stmt1->execute();
+          
+        $row['colors'] = array();
+        while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['colors'], $row1);
+        }
+
+        $query = 'SELECT path FROM images WHERE images.productId = ?';
+        $stmt2 = $this->conn->prepare($query);
+        $stmt2->bindParam(1, $row['id']);
+        $stmt2->execute();
+          
+        $row['imgs'] = array();
+        while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['imgs'], $row2['path']);
+        }
+
+        $query = 'SELECT name FROM categories WHERE id = ?';
+        $stmt3 = $this->conn->prepare($query);
+        $stmt3->bindParam(1, $row['categoryId']);
+        $stmt3->execute();
+
+        $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+
+        $row['category'] = $row3['name'];
+        array_push($products_arr, $row);
+      }
+
+      return $products_arr;
+
+      
+
+      // $stmt = $this->conn->prepare($query);
+      // $stmt->execute();
+
+      // $products = array();
+      // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      //   array_push($products, $row);
+      // }
+      // return $products;
+    }
+
+    public function getSearchTotalPage() {
+      $filter = '';
+      switch ($this->prodFilter) {
+        case 1: $filter = 'AND price*(100 - saleoff)/100 < 3000000'; break;
+        case 2: $filter = 'AND price*(100 - saleoff)/100 >= 3000000 AND price*(100 - saleoff)/100 < 6000000'; break;
+        case 3: $filter = 'AND price*(100 - saleoff)/100 >= 6000000 AND price*(100 - saleoff)/100 < 10000000'; break;
+        case 4: $filter = 'AND price*(100 - saleoff)/100 >= 10000000 AND price*(100 - saleoff)/100 < 15000000'; break;
+        case 5: $filter = 'AND price*(100 - saleoff)/100 >= 15000000'; break;
+        default: break;
+      }
+      // Create query
+      $keywords = explode(" ", $this->keyword);
+      $query = 'SELECT * FROM ' . $this->table . ' 
+        WHERE name LIKE "%'.join('%', $keywords).'%" '. $filter;
+
+      $stmt = $this->conn->prepare($query);
       $stmt->execute();
 
       return ceil($stmt->rowCount() / $this->limit);

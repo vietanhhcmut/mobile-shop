@@ -39,6 +39,7 @@ class InfoPage extends Component {
       .catch(err => console.log(err));
   }
 
+  
   handleShowPassword = typePass => () => {
     this.setState(prevState => ({
       [typePass]: !prevState[typePass]
@@ -61,6 +62,7 @@ class InfoPage extends Component {
       gender
     });
   };
+
 
   getBirthday = e => {
     this.setState({
@@ -133,6 +135,7 @@ class InfoPage extends Component {
     } else return true;
   };
 
+
   handleUpdateUser = (firstName, lastName, email, pass, passOld) => {
     const checkInfo = this.handleValidateForm(
       firstName,
@@ -146,7 +149,7 @@ class InfoPage extends Component {
         .post("/api/user/update.php", {
           id: this.state.id,
           email: email,
-          password: pass,
+          password: pass.trim(),
           gender: this.state.gender,
           birthday: this.state.birthday,
           lastname: lastName,

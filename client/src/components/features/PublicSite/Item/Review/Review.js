@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import './Review.css';
 import axios from '../../../../../constants/axiosInstance';
+import axiosValidate from '../../../../../constants/axiosValidate';
 
 class Review extends Component {
     state = {
@@ -21,13 +22,36 @@ class Review extends Component {
             .catch(err => {
                 console.log(err);
             });
+        
+        if (localStorage.getItem('userToken')) {
+            axiosValidate().get('/api/user/getInfoUser.php')
+                .then(res => {
+                    this.setState({ user: res.data });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     }
     handleAddReview = (e) => {
         e.preventDefault();
-        const newReview = {
-            ...this.state.review,
-            productId: this.props.productId,
-        };
+        const { user, review } = this.state;
+        let newReview = null;
+        console.log(user);
+        if (user) {
+            newReview = {
+                name: user.firstname + ' ' + user.lastname,
+                email: user.email,
+                content: review.content,
+                productId: this.props.productId
+            }
+        }
+        else {
+            newReview = {
+                ...this.state.review,
+                productId: this.props.productId,
+            };
+        }
         axios.post('/api/review/add.php', newReview)
             .then(res => {
                 if (res.status === 200) {
@@ -58,7 +82,7 @@ class Review extends Component {
         else return Math.floor(diff / (3600 * 24 * 30 * 12)) + ' năm trước';
     }
     render() {
-        const { review } = this.state;
+        const { review, user } = this.state;
         const reviews = this.state.reviews.map((review, index) => (
             <div className="review" key={index}>
                 <div className="review__img" key={index}>
@@ -72,16 +96,14 @@ class Review extends Component {
                 </div>
             </div>
         ));
-        const loginUser = false;
-        // const loginUser = localStorage.getItem('userToken') ? true : false;
         return (
             <div>
                 <form className="do-review" onSubmit={this.handleAddReview}>
-                    {!loginUser &&
+                    {!user &&
                         <input type="text" placeholder="Họ tên của bạn" value={review.name} required
                             onChange={this.handleChange('name')} />
                     }
-                    {!loginUser &&
+                    {!user &&
                         <input type="text" placeholder="Email của bạn" value={review.email}
                             onChange={this.handleChange('email')} />
                     }
