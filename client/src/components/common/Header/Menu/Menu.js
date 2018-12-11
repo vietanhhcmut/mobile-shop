@@ -6,12 +6,15 @@ import Context from "../../../../Context";
 class Menu extends Component {
   static contextType = Context;
   render() {
-    const { showMenu,
+    const {
+      showMenu,
       handleShowMenu,
       categories,
       handleToggle,
       handleActivePage,
-      active } = this.props;
+      active,
+      isAdmin
+    } = this.props;
     return (
       <ul className="menu-items">
         <Link to="/" className="link">
@@ -29,7 +32,7 @@ class Menu extends Component {
         <div className={showMenu ? "menu-items__list-categories" : ""}>
           <li
             className="menu-items2"
-            id={active === "danh-muc" ? "menu-items__active" : ""}
+            id={active.indexOf("/category") >= 0 ? "active-page" : ""}
             onClick={handleShowMenu}
           >
             <span className="menu-items2__text">Danh mục</span>
@@ -44,7 +47,7 @@ class Menu extends Component {
                       key={category.id}
                       onClick={e => {
                         handleToggle();
-                        handleActivePage("danh-muc");
+                        handleActivePage(`/category/${category.id}`);
                       }}
                     >
                       {category.name}
@@ -87,6 +90,17 @@ class Menu extends Component {
                 Thông tin
               </li>
             </Link>
+            {isAdmin === "1" && (
+              <Link to="/admin" className="link">
+                <li
+                  className="menu-items5"
+                  id={active === "/admin" ? "menu-items__active" : ""}
+                  onClick={() => handleActivePage("/admin")}
+                >
+                  Admin
+                </li>
+              </Link>
+            )}
             <Link to="/login" className="link">
               <li
                 className="menu-items5"
@@ -100,33 +114,33 @@ class Menu extends Component {
             </Link>
           </Fragment>
         ) : (
-            <Fragment>
-              <Link to="/login" className="link">
-                <li
-                  id={active === "/login" ? "menu-items__active" : ""}
-                  className="menu-items4"
-                  onClick={e => {
-                    handleToggle();
-                    handleActivePage("/login");
-                  }}
-                >
-                  Đăng nhập
+          <Fragment>
+            <Link to="/login" className="link">
+              <li
+                id={active === "/login" ? "menu-items__active" : ""}
+                className="menu-items4"
+                onClick={e => {
+                  handleToggle();
+                  handleActivePage("/login");
+                }}
+              >
+                Đăng nhập
               </li>
-              </Link>
-              <Link to="/signup" className="link">
-                <li
-                  id={active === "/signup" ? "menu-items__active" : ""}
-                  className="menu-items5"
-                  onClick={e => {
-                    handleToggle();
-                    handleActivePage("/signup");
-                  }}
-                >
-                  Đăng kí
+            </Link>
+            <Link to="/signup" className="link">
+              <li
+                id={active === "/signup" ? "menu-items__active" : ""}
+                className="menu-items5"
+                onClick={e => {
+                  handleToggle();
+                  handleActivePage("/signup");
+                }}
+              >
+                Đăng kí
               </li>
-              </Link>
-            </Fragment>
-          )}
+            </Link>
+          </Fragment>
+        )}
       </ul>
     );
   }

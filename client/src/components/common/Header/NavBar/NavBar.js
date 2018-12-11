@@ -6,7 +6,7 @@ import Context from "../../../../Context";
 export default class NavBar extends Component {
   static contextType = Context;
   render() {
-    const { categories, active, handleActivePage } = this.props;
+    const { categories, active, handleActivePage, isAdmin } = this.props;
     return (
       <ul className="navbar-items">
         <Link to="/" className="navbar-item__link">
@@ -21,7 +21,7 @@ export default class NavBar extends Component {
 
         <li
           className="navbar-item category"
-          id={active === "danh-muc" ? "active-page" : ""}
+          id={active.indexOf("/category") >= 0 ? "active-page" : ""}
         >
           <span className="navbar-item__categories">
             Danh mục
@@ -35,7 +35,9 @@ export default class NavBar extends Component {
                   className="link"
                   key={category.id}
                 >
-                  <div onClick={() => handleActivePage("danh-muc")}>
+                  <div
+                    onClick={() => handleActivePage(`/category/${category.id}`)}
+                  >
                     {category.name}
                   </div>
                 </Link>
@@ -70,6 +72,17 @@ export default class NavBar extends Component {
                 Thông tin
               </li>
             </Link>
+            {isAdmin === "1" && (
+              <Link to="/admin" className="navbar-item__link">
+                <li
+                  className="navbar-item"
+                  id={active === "/admin" ? "active-page" : ""}
+                  onClick={() => handleActivePage("/admin")}
+                >
+                  Admin
+                </li>
+              </Link>
+            )}
             <Link to="/" className="navbar-item__link">
               <li
                 className="navbar-item"

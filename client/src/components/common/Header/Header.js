@@ -7,6 +7,7 @@ import { logoSite, calcTotalQuantity } from "../../../constants/constants";
 import Context from "../../../Context";
 import axios from "../../../constants/axiosInstance";
 import { withRouter } from "react-router-dom";
+import axiosValidate from "../../../constants/axiosValidate";
 
 class Header extends Component {
   state = {
@@ -14,12 +15,21 @@ class Header extends Component {
     toggle: false,
     showMenu: false,
     categories: [],
-    keyword: ''
-  }
+    keyword: "",
+    isAdmin: "0"
+  };
   componentDidMount() {
     this.setState({
       active: this.props.location.pathname
     });
+    axiosValidate()
+      .get("/api/user/getInfoUser.php")
+      .then(res => {
+        this.setState({
+          isAdmin: res.data.isAdmin
+        });
+      })
+      .catch(err => console.log(err));
     axios
       .get("/api/category/getAll.php")
       .then(res => {
@@ -59,23 +69,30 @@ class Header extends Component {
       };
     });
   };
-  handleChangeSearch = (e) => {
+  handleChangeSearch = e => {
     this.setState({ keyword: e.target.value });
-  }
-  handleEnterSearch = (e) => {
+  };
+  handleEnterSearch = e => {
     if (e.keyCode === 13 || e.which === 13) this.handleSearch();
-  }
+  };
   handleSearch = () => {
     const { keyword } = this.state;
-    if (keyword === '') return;
-    this.props.history.push('/search/' + keyword);
-  }
+    if (keyword === "") return;
+    this.props.history.push("/search/" + keyword);
+  };
   render() {
-    const { active, toggle, showMenu, categories, keyword } = this.state;
+    const {
+      active,
+      toggle,
+      showMenu,
+      categories,
+      keyword,
+      isAdmin
+    } = this.state;
     return (
       <header>
         <div className="logo">
-          <Link to='/' className="logo__main-logo">
+          <Link to="/" className="logo__main-logo">
             <img src={logoSite} alt="not found" />
           </Link>
           <Link to="/cart">
@@ -106,8 +123,12 @@ class Header extends Component {
             onChange={this.handleChangeSearch}
             onKeyPress={this.handleEnterSearch}
           />
-          <i className="material-icons search-big__icon"
-            onClick={this.handleSearch}>search</i>
+          <i
+            className="material-icons search-big__icon"
+            onClick={this.handleSearch}
+          >
+            search
+          </i>
         </div>
         <nav>
           <div className="navbar-big">
@@ -115,6 +136,7 @@ class Header extends Component {
               active={active}
               handleActivePage={this.handleActivePage}
               categories={this.state.categories}
+              isAdmin={isAdmin}
             />
           </div>
           <div className="toggle" onClick={this.handleToggle}>
@@ -148,8 +170,12 @@ class Header extends Component {
                 onChange={this.handleChangeSearch}
                 onKeyPress={this.handleEnterSearch}
               />
-              <i className="material-icons search-big2__icon"
-                onClick={this.handleSearch}>search</i>
+              <i
+                className="material-icons search-big2__icon"
+                onClick={this.handleSearch}
+              >
+                search
+              </i>
             </div>
           </div>
 
@@ -161,6 +187,7 @@ class Header extends Component {
               showMenu={showMenu}
               handleShowMenu={this.handleShowMenu}
               categories={categories}
+              isAdmin={isAdmin}
             />
           )}
         </nav>

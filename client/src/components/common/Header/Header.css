@@ -11,6 +11,7 @@
 }
 
 input.search-big__text {
+  padding-right: 30px;
   border: 1px solid rgb(228, 226, 226);
   border-radius: 20px;
   height: 35px;
@@ -20,6 +21,8 @@ input.search-big__text {
 }
 
 input.search-big2__text {
+  padding-right: 30px;
+  width: 208px;
   border: 1px solid rgb(228, 226, 226);
   border-radius: 12px;
   height: 30px;
