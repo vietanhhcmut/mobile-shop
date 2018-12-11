@@ -64,7 +64,7 @@
             $user->birthday = $data->birthday;
             $user->id = $id;
 
-            if($user->update()) {
+            if($user->updateNoPass()) {
               http_response_code(200);
             }
             else {

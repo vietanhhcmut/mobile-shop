@@ -119,11 +119,6 @@ class LoginPage extends Component {
               <div className="clear" />
             </div>
             <div className="login__form">
-              <Link to="/password-recovery" className="login_form-forgot">
-                Bạn quên mật khẩu?
-              </Link>
-            </div>
-            <div className="login__form">
               <button className="login__form-input__submit" type="submit">
                 ĐĂNG NHẬP
               </button>

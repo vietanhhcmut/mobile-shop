@@ -152,6 +152,42 @@ class User{
     return false;
   }
 
+  public function updateNoPass(){
+    $query = "UPDATE " . $this->table_name . "
+            SET
+                firstname = :firstname,
+                lastname = :lastname,
+                gender = :gender,
+                birthday = :birthday,
+                email = :email,
+                isAdmin = :isAdmin
+            WHERE id = :id";
+
+    $stmt = $this->conn->prepare($query);
+
+    $this->firstname=htmlspecialchars(strip_tags($this->firstname));
+    $this->lastname=htmlspecialchars(strip_tags($this->lastname));
+    $this->email=htmlspecialchars(strip_tags($this->email));
+    $this->gender=htmlspecialchars(strip_tags($this->gender));
+    $this->birthday=htmlspecialchars(strip_tags($this->birthday));
+    $this->isAdmin=htmlspecialchars(strip_tags($this->isAdmin));
+
+    $stmt->bindParam(':firstname', $this->firstname);
+    $stmt->bindParam(':lastname', $this->lastname);
+    $stmt->bindParam(':email', $this->email);
+    $stmt->bindParam(':gender', $this->gender);
+    $stmt->bindParam(':birthday', $this->birthday);
+    $stmt->bindParam(':isAdmin', $this->isAdmin);
+
+    $stmt->bindParam(':id', $this->id);
+
+    if($stmt->execute()){
+        return true;
+    }
+    return false;
+  }
+
+
   // Delete 
   public function delete(){
     $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
