@@ -23,6 +23,7 @@
     $url = $_SERVER['DOCUMENT_ROOT'];
     include_once $url . '/config/core.php';
     include_once $url. '/helper/authen.php';
+    echo json_encode($data);
 
     if ($jwt && authen($jwt, $key)) {
       $id = authen($jwt, $key);
@@ -32,9 +33,9 @@
         if ($data->password) {
           if (password_verify($data->passOld, $user->password)) {
             try {
-              $user->firstname = $data->firstname;
-              $user->lastname = $data->lastname;
-              $user->email = $data->email;
+              $user->firstname = htmlspecialchars(strip_tags($data->firstname));
+              $user->lastname = htmlspecialchars(strip_tags($data->lastname));
+              $user->email = htmlspecialchars(strip_tags($data->email));
               $user->password = $data->password;
               $user->gender = $data->gender;
               $user->birthday = $data->birthday;

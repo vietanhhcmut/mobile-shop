@@ -32,9 +32,9 @@ else {
         http_response_code(200);
         echo json_encode(array(
           "id" => $user->id,
-          "firstname" => $user->firstname,
-          "lastname" => $user->lastname,
-          "email" => $user->email,
+          "firstname" => htmlspecialchars_decode($user->firstname),
+          "lastname" => htmlspecialchars_decode($user->lastname),
+          "email" => htmlspecialchars_decode($user->email),
           "isAdmin" => $user->isAdmin,
           "gender" => $user->gender,
           "birthday"=>$user->birthday
