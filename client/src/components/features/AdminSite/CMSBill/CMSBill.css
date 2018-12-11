@@ -61,3 +61,19 @@
   .detailBill {
     height: 420px;
   }
+
+  .modal-body__products table {
+    width: 100%;
+  }
+  .modal-body__products td,
+  .modal-body__products th {
+    border: 1px solid;
+  }
+
+  .modal-body__products th {
+    text-align: center;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }

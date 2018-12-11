@@ -114,21 +114,23 @@ class Category extends Component {
                         <Button variant="contained">Sắp xếp</Button>
                     </div>
                     <div className="category-products-filter">
-                        <b>Chọn mức giá:</b> 
-                        <span className={'filter-price ' + (prodFilter === 0 ? 'filter--active' : '')} 
+                        <b>Chọn mức giá:</b>
+                        <span className={'filter-price ' + (prodFilter === 0 ? 'filter--active' : '')}
                             onClick={this.handleFilterPrice(0)}>Tất cả</span>
-                        <span className={'filter-price ' + (prodFilter === 1 ? 'filter--active' : '')} 
+                        <span className={'filter-price ' + (prodFilter === 1 ? 'filter--active' : '')}
                             onClick={this.handleFilterPrice(1)}>Dưới 3 triệu</span>
-                        <span className={'filter-price ' + (prodFilter === 2 ? 'filter--active' : '')} 
+                        <span className={'filter-price ' + (prodFilter === 2 ? 'filter--active' : '')}
                             onClick={this.handleFilterPrice(2)}>Từ 3 - 6 triệu</span>
-                        <span className={'filter-price ' + (prodFilter === 3 ? 'filter--active' : '')} 
+                        <span className={'filter-price ' + (prodFilter === 3 ? 'filter--active' : '')}
                             onClick={this.handleFilterPrice(3)}>Từ 6 - 10 triệu</span>
-                        <span className={'filter-price ' + (prodFilter === 4 ? 'filter--active' : '')}  
+                        <span className={'filter-price ' + (prodFilter === 4 ? 'filter--active' : '')}
                             onClick={this.handleFilterPrice(4)}>Từ 10 - 15 triệu</span>
-                        <span className={'filter-price ' + (prodFilter === 5 ? 'filter--active' : '')}  
+                        <span className={'filter-price ' + (prodFilter === 5 ? 'filter--active' : '')}
                             onClick={this.handleFilterPrice(5)}>Trên 15 triệu</span>
                     </div>
                     <div className="category-products-grid">
+                        {items.length === 0 &&
+                            <p style={{ textAlign: 'center', width: '100%' }}><em>Không có sản phẩm nào</em></p>}
                         {items}
                     </div>
                 </div>

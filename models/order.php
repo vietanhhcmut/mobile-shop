@@ -22,13 +22,27 @@
     }
 
     // Get 
-    public function read() {
+    public function getAll() {
       $query = 'SELECT * FROM ' . $this->table;
          
       $stmt = $this->conn->prepare($query);
       $stmt->execute();
 
-      return $stmt;
+      $orders = array();
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $query = 'SELECT o.*, p.name FROM order_items as o, products as p WHERE o.orderId=? AND o.productId=p.id';
+        $stmt1 = $this->conn->prepare($query);
+        $stmt1->bindParam(1, $row['id']);
+        $stmt1->execute();
+
+        $row['orderItems'] = array();
+        while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+          array_push($row['orderItems'], $row1);
+        }
+        array_push($orders, $row);
+      }
+
+      return $orders;
     }
 
     // Add 

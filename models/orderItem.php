@@ -87,20 +87,13 @@ class OrderItem {
   // Delete 
   public function delete(){
     // Create query
-    $query = "DELETE FROM " . $this->table_name . " WHERE orderId=:orderId AND productId=:productId AND color=:color";
+    $query = "DELETE FROM " . $this->table_name . " WHERE orderId=?";
 
     // Prepare statement
     $stmt = $this->conn->prepare($query);
 
-    // Clean data
-    $this->orderId = htmlspecialchars(strip_tags($this->orderId));
-    $this->productId = htmlspecialchars(strip_tags($this->productId));
-    $this->color = htmlspecialchars(strip_tags($this->color));
-
     // Bind data
-    $stmt->bindParam(':orderId', $this->orderId);
-    $stmt->bindParam(':productId', $this->productId);
-    $stmt->bindParam(':color', $this->color);
+    $stmt->bindParam(1, $this->orderId);
 
     // execute the query
     if ($stmt->execute()) return true;

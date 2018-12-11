@@ -4,7 +4,7 @@ import { formatPrice } from './../../../../constants/constants';
 
 export default class NewProduct extends Component {
   state = {
-    items: {
+    order: {
         city: "",
         createdAt: "",
         delivered: "",
@@ -17,19 +17,20 @@ export default class NewProduct extends Component {
         phonenumber: "",
         street: "",
         totalPrice: "",
-        wards: ""
+        wards: "",
+        orderItems: []
     }
   }
   componentDidMount() {
     if (this.props.itemInfo !== null) {
         this.setState({
-          items: this.props.itemInfo,
+          order: this.props.itemInfo,
         });
       }
   }
   
   render() {
-    const {items} = this.state;
+    const {order} = this.state;
     return (
         <Modal isOpen={this.props.open} onRequestClose={this.props.onCloseModal} center className="CMSModal detailBill">
             <div className="modal-dialog">
@@ -40,17 +41,34 @@ export default class NewProduct extends Component {
                     </div>
 
                     <div className="modal-body CMSModal__body">
-                        <p>Mã đơn hàng: {items.id}</p>
-                        <p>Khách hàng: {items.name}</p>
-                        <p>Sản phẩm: Samsung</p>
-                        <p>Giá tiền: {formatPrice(items.totalPrice)}</p>
-                        <p>Tiền ship: {formatPrice(items.feeShip)}</p>
-                        <p>Địa chỉ: {items.street + "," + items.wards + "," + items.district + "," + items.city}</p>
-                        <p>Số điện thoại: {items.phonenumber}</p>
-                        <p>Tình trạng đơn hàng: {items.delivered === "1"? "Đã giao":"Đang xử lý"}</p>
+                        <p>Mã đơn hàng: {order.id}</p>
+                        <p>Khách hàng: {order.name}</p>
+                        <p>Tổng tiền: {formatPrice(order.totalPrice)}</p>
+                        <p>Tiền ship: Miễn phí</p>
+                        <p>Địa chỉ: {order.street + "," + order.wards + "," + order.district + "," + order.city}</p>
+                        <p>Số điện thoại: {order.phonenumber}</p>
+                        <p>Tình trạng thanh toán: {order.paid === "1"? "Đã thanh toán" : "Thanh toán khi nhận hàng"}</p>
+                        <p>Tình trạng đơn hàng: {order.delivered === "1"? "Đã giao" : "Đang xử lý"}</p>
+                        <p>Các sản phẩm:</p>
+                        <table className='modal-body__products'>
+                            <tr>
+                                <th>Mã sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Màu sắc</th>
+                            </tr>
+                            {order.orderItems.map(item => 
+                                <tr key={item.id}>
+                                    <td style={{textAlign: 'center'}}>{item.productId}</td>
+                                    <td>{item.name}</td>
+                                    <td style={{textAlign: 'center'}}>{item.quantity}</td>
+                                    <td style={{textAlign: 'center'}}>{item.color}</td>
+                                </tr>
+                            )}
+                        </table>
                     </div>
                     <button onClick={this.props.onCloseModal} className="closeModal">
-                        <i class="fas fa-times"></i>
+                        <i className="fas fa-times"></i>
                     </button>
                 </div>
                 

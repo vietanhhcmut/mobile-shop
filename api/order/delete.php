@@ -7,24 +7,22 @@
 
   include_once '../../config/database.php';
   include_once '../../models/order.php';
+  include_once '../../models/orderItem.php';
 
   $database = new Database();
   $db = $database->getConnection();
 
   $order = new Order($db);
+  $orderItem = new OrderItem($db);
 
   $data = json_decode(file_get_contents("php://input"));
 
   $order->id = $data->id;
 
-  if($order->delete()) {
-    http_response_code(200);
-    echo json_encode(
-      array('message' => 'Order was deleted')
-    );
+  if ($order->delete()) {
+    $orderItem->orderId = $data->id;
+    if ($orderItem->delete()) http_response_code(200);
+    else http_response_code(500);
   } else {
-    http_response_code(401);
-    echo json_encode(
-      array('message' => 'Unable to delete order')
-    );
+    http_response_code(500);;
   }

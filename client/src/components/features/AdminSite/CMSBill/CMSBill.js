@@ -51,6 +51,7 @@ export default class CMSUer extends Component {
   }
   changeType = (data, index) => () => {
     const state = Object.assign({}, this.state);
+    console.log(state);
     state.orders[index].delivered = data.delivered === "0" ? "1" : "0";
     axiosValidate().post("/api/order/update.php", {
       id: data.id,
@@ -78,7 +79,6 @@ export default class CMSUer extends Component {
 
   render() {
     const { orders, open } = this.state;
-    console.log(orders);
     let table = (
       <table className="table table-hover table-bordered">
         <thead>
@@ -86,7 +86,7 @@ export default class CMSUer extends Component {
             <th>STT</th>
             <th>Mã Đơn hàng</th>
             <th>Người mua</th>
-            <th>Trạng thái</th>
+            <th>Đã giao</th>
             <th>Hành động</th>
           </tr>
         </thead>
@@ -100,9 +100,9 @@ export default class CMSUer extends Component {
               <td>{item.name}</td>
 
               <td>
-                <label class="switch">
+                <label className="switch">
                   <input type="checkbox" defaultChecked={item.delivered === "0" ? false : true} onClick={this.changeType(item, index)} />
-                  <span class="slider round"></span>
+                  <span className="slider round"></span>
                 </label>
               </td>
               <td className="btn-action-delete">
@@ -111,7 +111,7 @@ export default class CMSUer extends Component {
                   href="#!"
                   onClick={this.onOpenModal(item)}
                 >
-                  <i class="fas fa-eye"></i>
+                  <i className="fas fa-eye"></i>
                 </a>
 
                 <a
