@@ -35,7 +35,7 @@
 
           $category->id = $data->id;
           $category->name = $data->name;
-          $category->image = $data->image;
+          $category->image = $data->image[0];
 
           if($category->update()) {
             http_response_code(200);

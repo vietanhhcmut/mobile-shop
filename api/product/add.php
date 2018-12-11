@@ -5,42 +5,6 @@
   header('Access-Control-Allow-Methods: GET');
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-  // include_once '../../config/database.php';
-  // include_once '../../models/product.php';
-
-  // $database = new Database();
-  // $db = $database->getConnection();
-
-  // $product = new Product($db);
-
-  // $data = json_decode(file_get_contents("php://input"));
-
-  // $product->id = $data->id;
-  // $product->categoryId = $data->categoryId;
-  // $product->name = $data->name;
-  // $product->price = $data->price;
-  // $product->saleoff = $data->saleoff;
-  // $product->description = $data->description;
-  // $product->screen = $data->screen;
-  // $product->sim = $data->sim;
-  // $product->memory = $data->memory;
-  // $product->ram = $data->ram;
-  // $product->bluetooth = $data->bluetooth;
-  // $product->wlan = $data->wlan;
-  // $product->gps = $data->gps;
-  // $product->pin = $data->pin;
-  // $product->camera = $data->camera;
-  // $product->os = $data->os;
-
-  // if ($product->add()) {
-  //   http_response_code(200);
-  //   echo json_encode(array("message" => "Product was added"));
-  // }
-
-  // else {
-  //   http_response_code(400);
-  //   echo json_encode(array("message" => "Unable to add product."));
-  // }
   if($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
     http_response_code(200);
   }
@@ -48,6 +12,7 @@
     include_once '../../config/database.php';
     include_once '../../models/user.php';
     include_once '../../models/product.php';
+    include_once '../../models/image.php';
     
     $database = new Database();
     $db = $database->getConnection();
@@ -85,16 +50,19 @@
           $product->camera = $data->camera;
           $product->os = $data->os;
 
-          if($product->add()) {
+          $productId = $product->add();
+          if ($productId) {
+
+            foreach ($data->imgs as $item) {
+              $image = new Image($db);
+              $image->path = $item;
+              $image->productId = $productId;
+              $image->add();
+            }
             http_response_code(200);
-            echo json_encode(
-              array('message' => 'Product was added.')
-            );
-          } else {
-            http_response_code(401);
-            echo json_encode(
-              array('message' => 'Unable to add product')
-            );
+          } 
+          else{
+            http_response_code(500);
           }
         }
         else {

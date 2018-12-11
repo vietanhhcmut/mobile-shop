@@ -64,7 +64,7 @@ export default class CMSUer extends Component {
     const categories = [...this.state.categories];
     const id = categories.findIndex(cat => cat.id === _id);
     if (id >= 0) {
-      categories[id].name = newName;
+      categories[id] = newName;
       this.setState({
         categories
       });

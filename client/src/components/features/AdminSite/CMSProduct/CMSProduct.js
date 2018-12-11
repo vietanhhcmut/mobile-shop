@@ -16,7 +16,15 @@ export default class CMSProduct extends Component {
     category: '',
     categories: []
   }
-
+  handleGetProduct = (categoryId) => {
+    axios.post("/api/product/getTopCategoryProds.php", { categoryId })
+      .then(res => {
+        this.setState({ items: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   componentDidMount() {
     axios.get("/api/category/getAll.php")
       .then(res => {
@@ -24,19 +32,20 @@ export default class CMSProduct extends Component {
           categories: res.data,
           category: res.data[0].id
         });
+        this.handleGetProduct(res.data[0].id);
       })
       .catch(err => {
         console.log(err);
       });
-    axios.get("/api/product/getAll.php")
-      .then(res => {
-        this.setState({
-          items: res.data
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // axios.get("/api/product/getAll.php")
+    //   .then(res => {
+    //     this.setState({
+    //       items: res.data
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
   onOpenModal = (item) => () => {
@@ -80,6 +89,7 @@ export default class CMSProduct extends Component {
     this.setState({
       category: event.target.value
     });
+    this.handleGetProduct(event.target.value);
   }
 
   handleEditValue = (newValue, _id) => {
@@ -87,10 +97,7 @@ export default class CMSProduct extends Component {
 
     const id = items.findIndex(cat => cat.id === _id);
     if (id >= 0) {
-      items[id].name = newValue.name;
-      items[id].price = newValue.price;
-      items[id].saleoff = newValue.saleoff;
-      console.log(items);
+      items[id] = newValue;
       this.setState({
         items
       });
