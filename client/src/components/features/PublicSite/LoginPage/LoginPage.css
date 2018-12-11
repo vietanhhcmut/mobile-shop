@@ -1,131 +1,142 @@
 .login-page h2 {
-    text-align: center;
-    margin: 50px 0 25px 0;
+  text-align: center;
+  margin: 50px 0 25px 0;
 }
 
 .login-page__content {
-    box-shadow: 2px 2px 11px 0 rgba(0,0,0,.1);
-    background: white;
-    padding: 16px;
-    max-width: 640px;
-    margin: 0 auto;
-    border-radius: 5px;
-    border: 1px solid rgba(0,0,0,.125);
-    margin-bottom: 25px;
+  box-shadow: 2px 2px 11px 0 rgba(0, 0, 0, 0.1);
+  background: white;
+  padding: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  margin-bottom: 25px;
 }
 
 .login__form {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .login__form label {
-    font-size: 13px;
-    width: 25%;
-    float: left;
-    margin-bottom: 0;
-    line-height: 37px;
+  font-size: 13px;
+  width: 25%;
+  float: left;
+  margin-bottom: 0;
+  line-height: 37px;
 }
 
-.login__form-inputemail, .login__form-inputpassword {
-    float: left;
-    width: 50%;
-    
+.login__form-inputemail,
+.login__form-inputpassword {
+  float: left;
+  width: 50%;
 }
 
-.login__form-inputemail input , .login__form-inputpassword input{
-    padding: 8px 16px;
-    font-size: 14px;
-    background: #ebebeb;
-    color: #acaaa6;
-    border: none;
-    display: block;
-    border-radius: 0.25rem;
+.login__form-inputemail input,
+.login__form-inputpassword input {
+  padding: 8px 16px;
+  font-size: 14px;
+  background: #ebebeb;
+  color: #acaaa6;
+  border: none;
+  display: block;
+  border-radius: 0.25rem;
 }
 
 .login__form-inputemail input {
-    width: 100%;
+  width: 100%;
 }
 
-.login__form-inputpassword input{
-    float: left;
-    width: calc(100% - 50px);
+.login__form-inputpassword input {
+  float: left;
+  width: calc(100% - 50px);
 }
 
-.login__form-inputpassword input:focus, .login__form-inputemail input:focus {
-    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
-    color: #495057;
-    background-color: #fff;
-    border-color: #80bdff;
-    outline: 0;
+.login__form-inputpassword input:focus,
+.login__form-inputemail input:focus {
+  box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
 }
 
 .login__form:nth-child(2) {
-    position: relative;
+  position: relative;
 }
 
 .login__form-input__show {
-    height: 36px;
-    background: #7e7f80;
-    border: none;
-    color: white;
-    width: 50px;
-    cursor: pointer;
-    outline: none;
+  height: 36px;
+  background: #7e7f80;
+  border: none;
+  color: white;
+  width: 50px;
+  cursor: pointer;
+  outline: none;
 }
 
 .login__form-input__show:disabled {
-    cursor: default;
+  cursor: default;
 }
 
 .login__form-help {
-    font-size: 12px;
-    color: red;
-    clear: both;
+  /* text-align: center; */
+  font-size: 12px;
+  color: red;
+  clear: both;
+}
+
+.email-pass {
+  text-align: center;
 }
 .login__form-input__submit {
-    font-size: 12px;
-    padding: 8px 20px;
-    border: none;
-    background: #3387f2;
-    color: #fff;
-    font-weight: 400;
-    outline: none;
-    cursor: pointer;
-    border-radius: 2px;
+  font-size: 12px;
+  padding: 8px 20px;
+  border: none;
+  background: #3387f2;
+  color: #fff;
+  font-weight: 400;
+  outline: none;
+  cursor: pointer;
+  border-radius: 2px;
 }
 
 .login__form-input__submit:hover {
-    background: #0e6ce4;
+  background: #0e6ce4;
 }
 
-.login_form-forgot , .no-account {
-    color: #666;
-    font-size: 13px;
+.login_form-forgot,
+.no-account {
+  color: #666;
+  font-size: 13px;
 }
 
-.login_form-forgot:hover , .no-account:hover {
-    color: #58b0da;
-    text-decoration: none;
+.login_form-forgot:hover,
+.no-account:hover {
+  color: #58b0da;
+  text-decoration: none;
 }
 
-.login__form:nth-child(4) , .login__form:nth-child(3) {
-    text-align: center
+.login__form:nth-child(4),
+.login__form:nth-child(3) {
+  text-align: center;
 }
 
 .login-page__no-account {
-    text-align: center;
-    border-top: 1px solid #eee;
-    padding-top: 16px;
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 16px;
 }
 
 .has-error input {
-    background-color: #fff;
-    outline: 0;
-    box-shadow: 0 0 0 0.08rem red;
+  background-color: #fff;
+  outline: 0;
+  box-shadow: 0 0 0 0.08rem red;
 }
 @media only screen and (max-width: 767px) {
-    .login__form label ,.login__form-inputemail, .login__form-inputpassword {
-        width: 100%;
-    }
+  .login__form label,
+  .login__form-inputemail,
+  .login__form-inputpassword {
+    width: 100%;
+  }
 }
-

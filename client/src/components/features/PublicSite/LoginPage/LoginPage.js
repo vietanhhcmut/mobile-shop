@@ -11,7 +11,7 @@ class LoginPage extends Component {
     email: "",
     password: "",
     submitted: false,
-    loginError: false
+    err: true
   };
   handleValidateForm = () => {
     return this.state.password.length > 0;
@@ -32,28 +32,42 @@ class LoginPage extends Component {
     });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    const { email, password } = this.state;
-    axios
-      .post("/api/user/login.php", {
-        email,
-        password
-      })
-      .then(res => {
-        localStorage.setItem("userToken", res.data.token);
-        this.context.handleGetCart();
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        console.log("err", err);
-      });
+  handleSubmit = (password, email) => e => {
+    e.preventDefault();
+    this.setState({
+      submitted: true
+    });
+    if (password !== "" && email !== "") {
+      axios
+        .post("/api/user/login.php", {
+          email,
+          password
+        })
+        .then(res => {
+          localStorage.setItem("userToken", res.data.token);
+          this.context.handleGetCart();
+          this.props.history.push("/");
+        })
+        .catch(err => {
+          console.log("err", err);
+          this.setState({
+            err: false
+          });
+        });
+    } else {
+      console.log("err");
+    }
   };
 
   render() {
-    const { email, password, submitted, showPassword, loginError } = this.state;
+    const { email, password, submitted, showPassword, err } = this.state;
     let typePass = "password";
     let showPass = "Hiện";
+
+    let loginError = false;
+    if (err) {
+      loginError = true;
+    }
 
     if (showPassword === true) {
       typePass = "text";
@@ -65,7 +79,7 @@ class LoginPage extends Component {
         <div className="login-page__content">
           <form
             name="form"
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleSubmit(password, email)}
             className="login-page__form"
           >
             <div
@@ -128,7 +142,7 @@ class LoginPage extends Component {
               !loginError &&
               password &&
               email && (
-                <div className="login__form-help">
+                <div className="login__form-help email-pass">
                   Email và mật khẩu không hợp lệ!
                 </div>
               )}
