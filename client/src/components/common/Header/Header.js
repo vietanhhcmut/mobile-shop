@@ -75,9 +75,9 @@ class Header extends Component {
     return (
       <header>
         <div className="logo">
-          <div className="logo__main-logo">
+          <Link to='/' className="logo__main-logo">
             <img src={logoSite} alt="not found" />
-          </div>
+          </Link>
           <Link to="/cart">
             <div className="header-card-big">
               <span className="header-card-big__icon">

@@ -149,7 +149,7 @@ class InfoPage extends Component {
         .post("/api/user/update.php", {
           id: this.state.id,
           email: email,
-          password: pass,
+          password: pass.trim(),
           gender: this.state.gender,
           birthday: this.state.birthday,
           lastname: lastName,

@@ -63,7 +63,7 @@ class Checkout extends Component {
             axiosValidate().post('/api/order/userAdd.php', {
                 ...address,
                 totalPrice: this.context.totalPrice,
-                name: user.lastname + ' ' + user.firstname,
+                name: user.firstname + ' ' + user.lastname,
                 gender: user.gender,
                 email: user.email,
                 paid: payMethod === 'cash' ? false : true
