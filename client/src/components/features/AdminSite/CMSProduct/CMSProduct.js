@@ -121,7 +121,7 @@ export default class CMSProduct extends Component {
         <div className="dashboard__product-price">
           {formatPrice(calcDiscountPrice(item.price, item.saleoff))}
           {
-            item.saleoff ?
+            parseInt(item.saleoff) ?
               <div className="dashboard__product-saleoff">
                 <span>{formatPrice(item.price)}</span>
                 <span>-{item.saleoff}</span>

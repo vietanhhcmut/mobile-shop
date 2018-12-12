@@ -35,7 +35,8 @@ class LoginPage extends Component {
   handleSubmit = (password, email) => e => {
     e.preventDefault();
     this.setState({
-      submitted: true
+      submitted: true,
+      err: true
     });
     if (password !== "" && email !== "") {
       axios
